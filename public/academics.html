@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Academics at Nirmaan Public School — National Curriculum, Smart Classrooms, Activity-Based Learning, and holistic education from Playgroup to Grade 10 in Sultanpur, U.P." />
+  <title>Academics | Nirmaan Public School — Sultanpur</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    /* ==========================================
+       ACADEMICS PAGE STYLES
+       ========================================== */
+
+    /* Curriculum overview cards */
+    .curriculum-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 28px;
+    }
+    .curriculum-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-200);
+      transition: var(--transition);
+    }
+    .curriculum-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
+    .curriculum-card-img {
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
+    .curriculum-card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: var(--transition-slow);
+    }
+    .curriculum-card:hover .curriculum-card-img img { transform: scale(1.06); }
+    .curriculum-card-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(15,31,92,0.5) 0%, transparent 60%);
+    }
+    .curriculum-badge {
+      position: absolute;
+      top: 16px; left: 16px;
+      background: var(--yellow-bright);
+      color: var(--blue-deep);
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 5px 14px;
+      border-radius: var(--radius-full);
+    }
+    .curriculum-card-body { padding: 28px; }
+    .curriculum-card-body h3 { margin-bottom: 8px; font-size: 1.15rem; }
+    .curriculum-card-body .grades-range {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--blue-light);
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .curriculum-card-body p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .curriculum-subjects {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .subject-chip {
+      background: var(--blue-pale);
+      color: var(--blue-mid);
+      font-size: 0.73rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(42,71,168,0.15);
+    }
+
+    /* Smart Classroom Section */
+    .smart-section {
+      background: linear-gradient(135deg, var(--blue-deep) 0%, #1e3a9f 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .smart-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .smart-img-wrap {
+      position: relative;
+    }
+    .smart-img-main {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+    }
+    .smart-img-main img { width: 100%; height: 380px; object-fit: cover; }
+    .smart-float-stat {
+      position: absolute;
+      bottom: -20px; right: -20px;
+      background: var(--yellow-bright);
+      color: var(--blue-deep);
+      border-radius: var(--radius-md);
+      padding: 18px 24px;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+    }
+    .smart-float-stat .big { font-size: 2.2rem; font-weight: 900; line-height: 1; }
+    .smart-float-stat .sm  { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px; }
+
+    .smart-text h2 { color: white; margin-bottom: 16px; }
+    .smart-text p  { color: rgba(255,255,255,0.78); font-size: 0.95rem; line-height: 1.8; margin-bottom: 20px; }
+
+    .smart-features {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin: 28px 0;
+    }
+    .smart-feature-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-md);
+      transition: var(--transition);
+    }
+    .smart-feature-item:hover {
+      background: rgba(255,255,255,0.14);
+      border-color: rgba(245,166,35,0.4);
+    }
+    .smart-feature-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: rgba(245,166,35,0.2);
+      color: var(--yellow-bright);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .smart-feature-text { color: rgba(255,255,255,0.88); font-size: 0.9rem; font-weight: 500; }
+
+    /* Methodology / Teaching Approach */
+    .methodology-section { background: var(--off-white); }
+    .methodology-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .method-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 36px 28px;
+      border: 1px solid var(--gray-200);
+      box-shadow: var(--shadow-sm);
+      text-align: center;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .method-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--blue-deep), var(--yellow-bright));
+      transform: scaleX(0);
+      transition: var(--transition);
+      transform-origin: left;
+    }
+    .method-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .method-card:hover::after { transform: scaleX(1); }
+
+    .method-num {
+      font-size: 4rem;
+      font-weight: 900;
+      color: var(--blue-pale);
+      line-height: 1;
+      position: absolute;
+      top: 16px; right: 20px;
+      font-family: 'Poppins', sans-serif;
+    }
+    .method-icon {
+      width: 68px; height: 68px;
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+      margin: 0 auto 24px;
+      position: relative;
+      z-index: 1;
+    }
+    .method-card h3 { font-size: 1rem; margin-bottom: 12px; }
+    .method-card p  { font-size: 0.87rem; line-height: 1.7; }
+
+    /* Subjects Grid */
+    .subjects-section { background: white; }
+    .subjects-table-wrap {
+      overflow-x: auto;
+    }
+    .subjects-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .subjects-table th {
+      background: var(--blue-deep);
+      color: white;
+      padding: 14px 20px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .subjects-table th:first-child { border-radius: 12px 0 0 0; }
+    .subjects-table th:last-child  { border-radius: 0 12px 0 0; }
+    .subjects-table td {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--gray-200);
+      color: var(--text-mid);
+    }
+    .subjects-table tr:last-child td { border-bottom: none; }
+    .subjects-table tr:nth-child(even) td { background: var(--off-white); }
+    .subjects-table tr:hover td { background: var(--blue-pale); }
+    .check-yes { color: #10b981; font-weight: 700; }
+    .check-no  { color: var(--gray-200); }
+
+    /* Co-Curricular */
+    .cocurricular-section {
+      background: var(--off-white);
+    }
+    .activities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .activity-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 28px 20px;
+      text-align: center;
+      border: 1px solid var(--gray-200);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      cursor: default;
+    }
+    .activity-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--yellow-bright);
+    }
+    .activity-icon {
+      font-size: 2.2rem;
+      margin-bottom: 14px;
+      display: block;
+    }
+    .activity-card h4 { font-size: 0.95rem; color: var(--text-dark); margin-bottom: 6px; }
+    .activity-card p  { font-size: 0.8rem; color: var(--text-muted); }
+
+    @media (max-width: 1024px) {
+      .smart-grid { grid-template-columns: 1fr; gap: 48px; }
+      .methodology-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .methodology-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Notice Banner -->
+  <div class="notice-banner" role="banner" id="noticeBanner">
+    <div class="notice-banner-inner">
+      <span>🎓</span>
+      <span><strong>Admissions Open 2026-27</strong> — Limited Seats Available!</span>
+      <a href="admissions.html">Enroll Now →</a>
+      <button class="banner-close-btn" aria-label="Dismiss banner" onclick="dismissBanner()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+  <script>
+    if (localStorage.getItem('admissionsBannerClosed') === 'true') {
+      document.getElementById('noticeBanner').style.display = 'none';
+    }
+    function dismissBanner() {
+      const banner = document.getElementById('noticeBanner');
+      banner.classList.add('hidden');
+      localStorage.setItem('admissionsBannerClosed', 'true');
+      setTimeout(() => { banner.style.display = 'none'; }, 400);
+    }
+  </script>
+
+  <!-- Navbar -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="container navbar-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.png" alt="NPS Logo" class="nav-logo-img" />
+        <div class="nav-logo-text">
+          <span class="school-name">Nirmaan Public School</span>
+          <span class="school-tagline">Learn · Grow · Succeed</span>
+        </div>
+      </a>
+      <ul class="nav-menu">
+        <li><a href="index.html"       class="nav-link">Home</a></li>
+        <li><a href="about.html"       class="nav-link">About Us</a></li>
+        <li><a href="academics.html"   class="nav-link active">Academics</a></li>
+        <li><a href="admissions.html"  class="nav-link">Admissions</a></li>
+        <li><a href="contact.html"     class="nav-link">Contact</a></li>
+        <li><a href="admissions.html"  class="nav-link nav-cta">Enroll Now</a></li>
+      </ul>
+      <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="mobileMenu">
+      <a href="index.html"      class="nav-link">🏠 Home</a>
+      <a href="about.html"      class="nav-link">ℹ️ About Us</a>
+      <a href="academics.html"  class="nav-link active">📚 Academics</a>
+      <a href="admissions.html" class="nav-link">🎓 Admissions</a>
+      <a href="contact.html"    class="nav-link">📞 Contact</a>
+      <a href="admissions.html" class="nav-cta">🎓 Enroll Now</a>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <section class="page-hero" aria-label="Academics page hero">
+    <div class="blob blob-blue-1" style="opacity:0.4;"></div>
+    <div class="blob blob-yellow-1" style="opacity:0.25;"></div>
+    <div class="container" style="position:relative;z-index:1;">
+      <span class="section-label" style="background:rgba(245,166,35,0.2);border-color:rgba(245,166,35,0.4);margin-bottom:20px;">
+        <i class="fas fa-book-open"></i> Our Academics
+      </span>
+      <h1>World-Class Education,<br/>Right Here in Sultanpur</h1>
+      <p>A holistic, National Curriculum from Playgroup to Grade 10 — blending modern pedagogy with timeless values.</p>
+      <div class="page-hero-breadcrumb">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <span>Academics</span>
+      </div>
+    </div>
+    <div style="position:absolute;bottom:-1px;left:0;right:0;height:60px;background:var(--off-white);clip-path:ellipse(60% 100% at 50% 100%);"></div>
+  </section>
+
+  <!-- ===== CURRICULUM OVERVIEW ===== -->
+  <section class="section" style="background:var(--off-white);" id="curriculum" aria-labelledby="curriculum-heading">
+    <div class="container">
+      <div class="section-center reveal">
+        <span class="section-label"><i class="fas fa-layer-group"></i> Curriculum</span>
+        <h2 id="curriculum-heading">Four Stages of Excellence</h2>
+        <p>Our National Curriculum is carefully structured across four progressive stages, ensuring every child develops at their own pace while meeting the highest academic standards.</p>
+      </div>
+
+      <div class="curriculum-grid">
+
+        <!-- Early Childhood -->
+        <div class="curriculum-card reveal" id="early">
+          <div class="curriculum-card-img">
+            <img src="images/activity-learning.png"
+                 alt="Early childhood education at NPS" />
+            <div class="curriculum-card-img-overlay"></div>
+            <span class="curriculum-badge">Early Years</span>
+          </div>
+          <div class="curriculum-card-body">
+            <h3>Early Childhood Education</h3>
+            <div class="grades-range"><i class="fas fa-child"></i> Playgroup · Nursery · KG I & II</div>
+            <p>Our early childhood program builds a joyful foundation through play, exploration, and discovery. Children develop language, numeracy, social, and emotional skills in a nurturing environment that sparks lifelong curiosity.</p>
+            <div class="curriculum-subjects">
+              <span class="subject-chip">English Language</span>
+              <span class="subject-chip">Maths</span>
+              <span class="subject-chip">Environmental Studies</span>
+              <span class="subject-chip">Hindi</span>
+              <span class="subject-chip">Art & Craft</span>
+              <span class="subject-chip">Physical Education</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Primary -->
+        <div class="curriculum-card reveal delay-100" id="primary">
+          <div class="curriculum-card-img">
+            <img src="images/smart-classroom.png"
+                 alt="Primary school students at NPS" />
+            <div class="curriculum-card-img-overlay"></div>
+            <span class="curriculum-badge">Primary</span>
+          </div>
+          <div class="curriculum-card-body">
+            <h3>Primary School</h3>
+            <div class="grades-range"><i class="fas fa-star"></i> Grades 1 — 5</div>
+            <p>Building strong academic foundations with an emphasis on literacy, numeracy, and scientific thinking. Smart classrooms bring subjects to life while activity-based learning develops problem-solving skills and creativity.</p>
+            <div class="curriculum-subjects">
+              <span class="subject-chip">English</span>
+              <span class="subject-chip">Mathematics</span>
+              <span class="subject-chip">Science</span>
+              <span class="subject-chip">Social Studies</span>
+              <span class="subject-chip">Hindi</span>
+              <span class="subject-chip">Computer</span>
+              <span class="subject-chip">GK</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Middle School -->
+        <div class="curriculum-card reveal delay-200" id="middle">
+          <div class="curriculum-card-img">
+            <img src="images/hero-students.png"
+                 alt="Middle school students at NPS" />
+            <div class="curriculum-card-img-overlay"></div>
+            <span class="curriculum-badge">Middle School</span>
+          </div>
+          <div class="curriculum-card-body">
+            <h3>Middle School</h3>
+            <div class="grades-range"><i class="fas fa-book"></i> Grades 6 — 8</div>
+            <p>Students deepen their subject knowledge while developing critical thinking, research, and leadership skills. Project-based learning and debates prepare them for the rigors of secondary education and beyond.</p>
+            <div class="curriculum-subjects">
+              <span class="subject-chip">English Literature</span>
+              <span class="subject-chip">Mathematics</span>
+              <span class="subject-chip">Physics</span>
+              <span class="subject-chip">Chemistry</span>
+              <span class="subject-chip">Biology</span>
+              <span class="subject-chip">History</span>
+              <span class="subject-chip">Geography</span>
+              <span class="subject-chip">Hindi</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Secondary -->
+        <div class="curriculum-card reveal delay-300" id="secondary">
+          <div class="curriculum-card-img">
+            <img src="images/award-ceremony.png"
+                 alt="Secondary students at NPS award ceremony" />
+            <div class="curriculum-card-img-overlay"></div>
+            <span class="curriculum-badge">Secondary</span>
+          </div>
+          <div class="curriculum-card-body">
+            <h3>Secondary School</h3>
+            <div class="grades-range"><i class="fas fa-graduation-cap"></i> Grades 9 — 10</div>
+            <p>Comprehensive preparation for board examinations with expert faculty, regular assessments, and personalized attention. We build academic confidence and exam strategy while nurturing holistic development.</p>
+            <div class="curriculum-subjects">
+              <span class="subject-chip">English</span>
+              <span class="subject-chip">Mathematics</span>
+              <span class="subject-chip">Science</span>
+              <span class="subject-chip">Social Science</span>
+              <span class="subject-chip">Hindi</span>
+              <span class="subject-chip">Computer Science</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SMART CLASSROOMS ===== -->
+  <section class="section smart-section" id="smart" aria-labelledby="smart-heading">
+    <div class="container">
+      <div class="smart-grid">
+
+        <!-- Image -->
+        <div class="smart-img-wrap reveal">
+          <div class="smart-img-main">
+            <img src="images/smart-classroom.png"
+                 alt="Smart classroom with interactive whiteboard at NPS" />
+          </div>
+          <div class="smart-float-stat animate-float">
+            <div class="big">💻</div>
+            <div class="sm">Smart<br/>Classrooms</div>
+          </div>
+        </div>
+
+        <!-- Text -->
+        <div class="smart-text reveal delay-200">
+          <span class="section-label" style="background:rgba(245,166,35,0.18);border-color:rgba(245,166,35,0.4);">
+            <i class="fas fa-desktop"></i> Smart Learning
+          </span>
+          <h2 id="smart-heading">Technology-Powered Classrooms for 21st Century Learners</h2>
+          <p>At Nirmaan Public School, every classroom is equipped with state-of-the-art smart technology, transforming traditional teaching into an immersive, interactive learning experience.</p>
+          <p>Our smart classroom ecosystem integrates digital content, multimedia presentations, and interactive tools that make even the most complex concepts visually clear and deeply engaging.</p>
+
+          <div class="smart-features">
+            <div class="smart-feature-item">
+              <div class="smart-feature-icon"><i class="fas fa-tv"></i></div>
+              <span class="smart-feature-text">LED Interactive Smart Boards in every classroom</span>
+            </div>
+            <div class="smart-feature-item">
+              <div class="smart-feature-icon"><i class="fas fa-film"></i></div>
+              <span class="smart-feature-text">Multimedia learning modules aligned with National Curriculum</span>
+            </div>
+            <div class="smart-feature-item">
+              <div class="smart-feature-icon"><i class="fas fa-wifi"></i></div>
+              <span class="smart-feature-text">Campus-wide high-speed internet connectivity</span>
+            </div>
+            <div class="smart-feature-item">
+              <div class="smart-feature-icon"><i class="fas fa-gamepad"></i></div>
+              <span class="smart-feature-text">Gamified learning apps and digital assessments</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TEACHING METHODOLOGY ===== -->
+  <section class="section methodology-section" id="methodology" aria-labelledby="method-heading">
+    <div class="container">
+      <div class="section-center reveal">
+        <span class="section-label"><i class="fas fa-lightbulb"></i> Teaching Approach</span>
+        <h2 id="method-heading">Our Learning Philosophy</h2>
+        <p>We believe every child learns differently. Our multi-faceted teaching methodology ensures no child is left behind and every learner thrives.</p>
+      </div>
+
+      <div class="methodology-grid">
+        <div class="method-card reveal">
+          <div class="method-num">01</div>
+          <div class="method-icon" style="background:#eff6ff;color:#3b82f6;">
+            <i class="fas fa-hands-helping"></i>
+          </div>
+          <h3>Activity-Based Learning</h3>
+          <p>Hands-on experiments, group projects, and real-world problem solving that transforms abstract concepts into tangible understanding and lasting memory.</p>
+        </div>
+        <div class="method-card reveal delay-100">
+          <div class="method-num">02</div>
+          <div class="method-icon" style="background:#ecfdf5;color:#10b981;">
+            <i class="fas fa-child"></i>
+          </div>
+          <h3>Child-Centered Approach</h3>
+          <p>We recognize and celebrate each child's unique learning style. Personalized attention ensures every student grows at their optimal pace without pressure.</p>
+        </div>
+        <div class="method-card reveal delay-200">
+          <div class="method-num">03</div>
+          <div class="method-icon" style="background:#fffbeb;color:#f59e0b;">
+            <i class="fas fa-comments"></i>
+          </div>
+          <h3>Communicative Learning</h3>
+          <p>English-medium instruction with emphasis on spoken fluency, comprehension, and confident expression — skills essential for the modern world.</p>
+        </div>
+        <div class="method-card reveal delay-300">
+          <div class="method-num">04</div>
+          <div class="method-icon" style="background:#f5f3ff;color:#8b5cf6;">
+            <i class="fas fa-flask"></i>
+          </div>
+          <h3>Inquiry-Based Science</h3>
+          <p>Science comes alive through laboratory experiments, observation, and the joy of discovery — nurturing the next generation of curious, analytical thinkers.</p>
+        </div>
+        <div class="method-card reveal delay-100">
+          <div class="method-num">05</div>
+          <div class="method-icon" style="background:#fdf2f8;color:#ec4899;">
+            <i class="fas fa-palette"></i>
+          </div>
+          <h3>Creative Expression</h3>
+          <p>Art, music, drama, and creative writing integrated into the curriculum to develop imagination, emotional intelligence, and self-expression skills.</p>
+        </div>
+        <div class="method-card reveal delay-200">
+          <div class="method-num">06</div>
+          <div class="method-icon" style="background:#ecfeff;color:#06b6d4;">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3>Continuous Assessment</h3>
+          <p>Regular formative assessments, quizzes, and feedback sessions help identify learning gaps early and enable timely, targeted support for every student.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CO-CURRICULAR ACTIVITIES ===== -->
+  <section class="section cocurricular-section" id="cocurricular" aria-labelledby="cocu-heading">
+    <div class="container">
+      <div class="section-center reveal">
+        <span class="section-label"><i class="fas fa-star"></i> Beyond Academics</span>
+        <h2 id="cocu-heading">Co-Curricular Activities</h2>
+        <p>Excellence beyond the classroom. Our vibrant co-curricular program ensures students develop confidence, creativity, teamwork, and life skills that no textbook can teach.</p>
+      </div>
+
+      <div class="activities-grid">
+        <div class="activity-card reveal">
+          <span class="activity-icon">⚽</span>
+          <h4>Academic Competitions</h4>
+          <p>Olympiads, quizzes, and inter-school competitions</p>
+        </div>
+        <div class="activity-card reveal delay-100">
+          <span class="activity-icon">⚽</span>
+          <h4>Sports & Athletics</h4>
+          <p>Cricket, football, badminton, athletics & more</p>
+        </div>
+        <div class="activity-card reveal delay-200">
+          <span class="activity-icon">🎨</span>
+          <h4>Art & Craft</h4>
+          <p>Painting, drawing, pottery, and creative design</p>
+        </div>
+        <div class="activity-card reveal delay-300">
+          <span class="activity-icon">🎭</span>
+          <h4>Drama & Theatre</h4>
+          <p>Plays, skits, and annual cultural performances</p>
+        </div>
+        <div class="activity-card reveal">
+          <span class="activity-icon">🎭</span>
+          <h4>Music & Dance</h4>
+          <p>Classical, folk, and contemporary music and dance</p>
+        </div>
+        <div class="activity-card reveal delay-100">
+          <span class="activity-icon">🗣️</span>
+          <h4>Public Speaking</h4>
+          <p>Debates, speeches, and elocution competitions</p>
+        </div>
+        <div class="activity-card reveal delay-200">
+          <span class="activity-icon">📚</span>
+          <h4>Book Club & Reading</h4>
+          <p>Fostering a love for literature and storytelling</p>
+        </div>
+        <div class="activity-card reveal delay-300">
+          <span class="activity-icon">🌱</span>
+          <h4>Environmental Club</h4>
+          <p>Eco-awareness, gardening, and sustainability projects</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="section" style="background:white;" aria-label="Academics CTA">
+    <div class="container">
+      <div style="background:linear-gradient(135deg, var(--blue-deep), #1e3a9f); border-radius:var(--radius-xl); padding:64px 48px; text-align:center; position:relative; overflow:hidden;" class="reveal">
+        <div class="blob blob-yellow-1" style="opacity:0.15;"></div>
+        <span class="section-label" style="background:rgba(245,166,35,0.2);border-color:rgba(245,166,35,0.4);margin-bottom:20px;">
+          <i class="fas fa-graduation-cap"></i> Start Learning
+        </span>
+        <h2 style="color:white; margin-bottom:14px;">Ready to Begin the Journey?</h2>
+        <p style="color:rgba(255,255,255,0.8); max-width:520px; margin:0 auto 32px; font-size:1.02rem;">
+          Give your child the gift of quality education. Admissions for 2026-27 are open. 
+          Seats fill fast — apply today!
+        </p>
+        <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+          <a href="admissions.html" class="btn btn-primary btn-lg" id="acad-enroll-btn">
+            <i class="fas fa-graduation-cap"></i> Apply for Admissions
+          </a>
+          <a href="contact.html" class="btn btn-outline" id="acad-contact-btn">
+            <i class="fas fa-phone"></i> Contact Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="images/logo.png" alt="NPS Logo" />
+            <div class="footer-logo-text">
+              <strong>Nirmaan Public School</strong>
+              <span>Learn · Grow · Succeed</span>
+            </div>
+          </div>
+          <p class="footer-desc">Building Bright Futures with Quality Education in Sultanpur, Uttar Pradesh.</p>
+          <div class="footer-socials">
+            <a href="https://www.facebook.com/nirmaan.public.school.aliganj/" class="social-btn" aria-label="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/nirmaan_public_school/" class="social-btn" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@nirmanpublicschoolaliganj4860/videos" class="social-btn" aria-label="YouTube" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://wa.me/919918225511" class="social-btn" aria-label="WhatsApp" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Quick Links</h5>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="academics.html">Academics</a></li>
+            <li><a href="admissions.html">Admissions 2026-27</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Programs</h5>
+          <ul class="footer-links">
+            <li><a href="#early">Early Childhood</a></li>
+            <li><a href="#primary">Primary School</a></li>
+            <li><a href="#middle">Middle School</a></li>
+            <li><a href="#secondary">Secondary School</a></li>
+            <li><a href="#smart">Smart Classrooms</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Contact Us</h5>
+          <div class="footer-contact-item">
+            <div class="footer-contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div>Aliganj Bazar, Sultanpur (U.P.) 227805</div>
+          </div>
+          <div class="footer-contact-item">
+            <div class="footer-contact-icon"><i class="fas fa-phone"></i></div>
+            <div><a href="tel:9918225511" style="color:inherit;">991-822-5511</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Nirmaan Public School. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Navbar
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 10) { navbar.classList.add('scrolled'); }
+      else { navbar.classList.remove('scrolled'); }
+    }, { passive: true });
+
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+    });
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+    }));
+
+    // Reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    reveals.forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>
+

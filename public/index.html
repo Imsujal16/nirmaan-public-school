@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Nirmaan Public School – Building Bright Futures with Quality Education. Admissions Open 2026-27 for Playgroup to Grade 10. Located at Aliganj Bazar, Sultanpur (U.P.)." />
+  <meta name="keywords" content="Nirmaan Public School, NPS, Sultanpur school, Aliganj Bazar, admissions 2026-27, English medium school" />
+  <meta property="og:title" content="Nirmaan Public School | Building Bright Futures" />
+  <meta property="og:description" content="Quality English Medium Education from Playgroup to Grade 10 in Sultanpur, U.P." />
+  <title>Nirmaan Public School | Building Bright Futures with Quality Education</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    /* ==========================================
+       HOME PAGE — SPECIFIC STYLES
+       ========================================== */
+
+    /* --- HERO SECTION --- */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #0a1745 0%, #0f1f5c 40%, #1a3080 70%, #1e3a9f 100%);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .hero-decor {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-circle-1 {
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(245,166,35,0.12) 0%, transparent 70%);
+      right: -100px; top: -100px;
+    }
+    .hero-circle-2 {
+      position: absolute;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(42,71,168,0.25) 0%, transparent 70%);
+      left: -80px; bottom: 100px;
+    }
+    .hero-dots {
+      position: absolute;
+      width: 200px; height: 200px;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.12) 1.5px, transparent 1.5px);
+      background-size: 20px 20px;
+      right: 60px; bottom: 160px;
+    }
+    .hero-dots-2 {
+      position: absolute;
+      width: 160px; height: 160px;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.08) 1.5px, transparent 1.5px);
+      background-size: 18px 18px;
+      left: 40px; top: 160px;
+    }
+
+    /* Orbital rings decoration */
+    .hero-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.06);
+      pointer-events: none;
+    }
+    .hero-ring-1 { width: 700px; height: 700px; right: -250px; top: -200px; }
+    .hero-ring-2 { width: 500px; height: 500px; right: -150px; top: -100px; }
+    .hero-ring-3 { width: 300px; height: 300px; right:  -50px; top:   0px; }
+
+    .hero-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding-top: calc(var(--nav-height) + 20px);
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-text {}
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(245,166,35,0.18);
+      border: 1px solid rgba(245,166,35,0.35);
+      color: var(--yellow-bright);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 7px 18px;
+      border-radius: var(--radius-full);
+      margin-bottom: 24px;
+      backdrop-filter: blur(8px);
+    }
+    .hero-pill .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--yellow-bright);
+      animation: pulse-ring 2s ease infinite;
+    }
+
+    .hero-h1 {
+      font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+      font-weight: 900;
+      color: white;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .hero-h1 em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--yellow-bright) 0%, #ffd966 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtext {
+      color: rgba(255,255,255,0.75);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 36px;
+      max-width: 480px;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+
+    .hero-badges {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .hero-badge-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: var(--radius-full);
+      padding: 8px 16px;
+      backdrop-filter: blur(8px);
+    }
+    .hero-badge-icon {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      background: var(--yellow-bright);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--blue-deep);
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+    .hero-badge-label { color: rgba(255,255,255,0.85); font-size: 0.82rem; font-weight: 500; }
+    .hero-badge-value { color: white; font-size: 0.88rem; font-weight: 700; }
+
+    /* Hero Visual Side */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-img-main {
+      width: 100%;
+      max-width: 480px;
+      aspect-ratio: 4/5;
+      border-radius: 32px 32px 40px 40px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+    }
+    .hero-img-main img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .hero-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,23,69,0.4) 0%, transparent 50%);
+    }
+
+    /* Floating cards over hero image */
+    .hero-float-card {
+      position: absolute;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      color: white;
+      z-index: 10;
+      animation: float 4s ease-in-out infinite;
+    }
+    .hero-float-card:nth-child(2) { animation-delay: -1s; }
+    .hero-float-card:nth-child(3) { animation-delay: -2s; }
+
+    .hero-card-admission {
+      bottom: -20px;
+      left: -30px;
+      min-width: 200px;
+    }
+    .hero-card-admission .card-inner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hero-card-icon {
+      width: 42px; height: 42px;
+      border-radius: 12px;
+      background: var(--yellow-bright);
+      color: var(--blue-deep);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .hero-card-title { font-size: 0.72rem; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.06em; }
+    .hero-card-value { font-weight: 800; font-size: 1rem; line-height: 1.2; }
+
+    .hero-card-seats {
+      top: 30px;
+      right: -24px;
+    }
+    .hero-card-seats .seats-inner { display: flex; align-items: center; gap: 10px; }
+    .seats-pulse {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #ff4757;
+      animation: pulse-ring 1.5s ease infinite;
+    }
+
+    .hero-card-grades {
+      top: 50%;
+      right: -30px;
+      transform: translateY(-50%);
+    }
+    .grades-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 8px;
+    }
+    .grade-chip {
+      background: rgba(245,166,35,0.25);
+      border: 1px solid rgba(245,166,35,0.4);
+      color: var(--yellow-bright);
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 6px;
+    }
+
+    /* Scroll indicator */
+    .hero-scroll {
+      padding: 28px 0;
+      display: flex;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+    }
+    .scroll-indicator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+    }
+    .scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0));
+      animation: scroll-line 2s ease-in-out infinite;
+    }
+    @keyframes scroll-line {
+      0%, 100% { opacity: 1; transform: scaleY(1); }
+      50%       { opacity: 0.3; transform: scaleY(0.5); }
+    }
+
+    /* ==========================================
+       WHY CHOOSE US SECTION
+       ========================================== */
+    .why-section {
+      background: var(--off-white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .why-icon-1 { color: #3b82f6; background: #eff6ff; }
+    .why-icon-2 { color: #8b5cf6; background: #f5f3ff; }
+    .why-icon-3 { color: #10b981; background: #ecfdf5; }
+    .why-icon-4 { color: #f59e0b; background: #fffbeb; }
+    .why-icon-5 { color: #ef4444; background: #fef2f2; }
+    .why-icon-6 { color: #06b6d4; background: #ecfeff; }
+    .why-icon-7 { color: #ec4899; background: #fdf2f8; }
+
+    /* ==========================================
+       ABOUT SECTION
+       ========================================== */
+    .about-section {
+      background: white;
+      overflow: hidden;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-images {
+      position: relative;
+    }
+    .about-img-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 220px 200px;
+      gap: 16px;
+    }
+    .about-img-1 { grid-column: 1; grid-row: 1 / 2; }
+    .about-img-2 { grid-column: 2; grid-row: 1 / 2; margin-top: 30px; }
+    .about-img-3 { grid-column: 1 / 3; grid-row: 2; max-width: 80%; }
+
+    .about-img-frame {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      height: 100%;
+    }
+    .about-img-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+    .about-badge-float {
+      position: absolute;
+      bottom: -20px;
+      right: 20px;
+      background: var(--blue-deep);
+      color: white;
+      border-radius: var(--radius-md);
+      padding: 16px 22px;
+      box-shadow: var(--shadow-lg);
+      z-index: 5;
+    }
+    .about-badge-float .num {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--yellow-bright);
+      line-height: 1;
+    }
+    .about-badge-float .label {
+      font-size: 0.78rem;
+      opacity: 0.8;
+      margin-top: 2px;
+    }
+
+    .about-text {}
+    .about-text h2 { margin-bottom: 20px; }
+    .about-text p  { margin-bottom: 20px; font-size: 0.95rem; line-height: 1.8; }
+
+    .about-highlights {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin: 28px 0;
+    }
+    .about-highlight-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      background: var(--off-white);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--gray-200);
+    }
+    .highlight-icon {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      background: var(--blue-deep);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .highlight-text { font-size: 0.9rem; font-weight: 600; color: var(--text-dark); }
+
+    /* ==========================================
+       GRADES SECTION
+       ========================================== */
+    .grades-section {
+      background: linear-gradient(135deg, var(--blue-deep) 0%, #1e3a9f 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .grades-section .section-label { background: rgba(245,166,35,0.2); border-color: rgba(245,166,35,0.4); }
+    .grades-section h2 { color: white; }
+    .grades-section p  { color: rgba(255,255,255,0.75); }
+
+    .grade-card { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); }
+    .grade-card:hover { background: rgba(255,255,255,0.12); border-color: var(--yellow-bright); }
+    .grade-card .grade-num { color: white; }
+    .grade-card .grade-name { color: rgba(255,255,255,0.65); }
+
+    /* Curriculum strip */
+    .curriculum-strip {
+      margin-top: 48px;
+      background: rgba(245,166,35,0.12);
+      border: 1px solid rgba(245,166,35,0.25);
+      border-radius: var(--radius-lg);
+      padding: 28px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .curriculum-strip-left { display: flex; align-items: center; gap: 16px; }
+    .curriculum-icon {
+      width: 56px; height: 56px;
+      border-radius: var(--radius-md);
+      background: var(--yellow-bright);
+      color: var(--blue-deep);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+    }
+    .curriculum-strip h4 { color: white; font-size: 1.1rem; margin-bottom: 4px; }
+    .curriculum-strip p  { color: rgba(255,255,255,0.7); font-size: 0.87rem; }
+
+    /* ==========================================
+       GALLERY TEASER
+       ========================================== */
+    .gallery-section { background: var(--off-white); overflow: hidden; }
+
+    .gallery-masonry {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 220px 180px;
+      gap: 16px;
+    }
+    .gallery-item {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition-slow); }
+    .gallery-item:hover img { transform: scale(1.06); }
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: rgba(10,23,69,0.6);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0;
+      transition: var(--transition);
+    }
+    .gallery-overlay i { color: white; font-size: 1.5rem; }
+
+    .gallery-item-1 { grid-column: 1 / 2; grid-row: 1; }
+    .gallery-item-2 { grid-column: 2 / 4; grid-row: 1; }
+    .gallery-item-3 { grid-column: 4; grid-row: 1; }
+    .gallery-item-4 { grid-column: 1 / 3; grid-row: 2; }
+    .gallery-item-5 { grid-column: 3 / 4; grid-row: 2; }
+    .gallery-item-6 { grid-column: 4; grid-row: 2; }
+
+    /* ==========================================
+       TESTIMONIALS SECTION
+       ========================================== */
+    .testimonials-section { background: white; }
+
+    /* ==========================================
+       CTA SECTION
+       ========================================== */
+    .cta-section {
+      background: linear-gradient(135deg, var(--blue-deep) 0%, #1e3a9f 100%);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding: 100px 0;
+    }
+    .cta-section h2 { color: white; margin-bottom: 16px; }
+    .cta-section p  { color: rgba(255,255,255,0.8); max-width: 580px; margin: 0 auto 36px; font-size: 1.05rem; }
+
+    .cta-card {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: var(--radius-xl);
+      padding: 56px 48px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-buttons { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+
+    .phone-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: var(--radius-full);
+      padding: 12px 24px;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: var(--transition);
+      text-decoration: none;
+    }
+    .phone-cta:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); }
+    .phone-cta i { color: var(--yellow-bright); }
+
+    /* ==========================================
+       RESPONSIVE — HOME PAGE
+       ========================================== */
+    @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+      .hero-subtext { margin: 0 auto 36px; }
+      .hero-cta-row { justify-content: center; }
+      .hero-badges { justify-content: center; }
+      .hero-img-main { max-width: 380px; margin: 0 auto; }
+      .hero-float-card { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+      .gallery-masonry { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .gallery-item { grid-column: auto !important; grid-row: auto !important; height: 200px; }
+    }
+    @media (max-width: 768px) {
+      .hero-img-main { max-width: 300px; }
+      .about-img-grid { grid-template-rows: 180px 160px; }
+    }
+    @media (max-width: 480px) {
+      .gallery-masonry { grid-template-columns: 1fr; }
+      .gallery-item { height: 200px; }
+      .cta-card { padding: 36px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NOTICE BANNER ===== -->
+  <div class="notice-banner" role="banner" id="noticeBanner">
+    <div class="notice-banner-inner">
+      <span>🎓</span>
+      <span><strong>Admissions Open 2026-27</strong> — Limited Seats Available! Playgroup to Grade 10</span>
+      <a href="admissions.html">Enroll Now →</a>
+      <button class="banner-close-btn" aria-label="Dismiss banner" onclick="dismissBanner()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+  <script>
+    if (localStorage.getItem('admissionsBannerClosed') === 'true') {
+      document.getElementById('noticeBanner').style.display = 'none';
+    }
+    function dismissBanner() {
+      const banner = document.getElementById('noticeBanner');
+      banner.classList.add('hidden');
+      localStorage.setItem('admissionsBannerClosed', 'true');
+      setTimeout(() => { banner.style.display = 'none'; }, 400);
+    }
+  </script>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar transparent" id="navbar" aria-label="Main navigation">
+    <div class="container navbar-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.png" alt="Nirmaan Public School Logo" class="nav-logo-img" />
+        <div class="nav-logo-text">
+          <span class="school-name">Nirmaan Public School</span>
+          <span class="school-tagline">Learn · Grow · Succeed</span>
+        </div>
+      </a>
+
+      <ul class="nav-menu" role="list">
+        <li><a href="index.html"       class="nav-link active" id="nav-home">Home</a></li>
+        <li><a href="about.html"       class="nav-link"        id="nav-about">About Us</a></li>
+        <li><a href="academics.html"   class="nav-link"        id="nav-academics">Academics</a></li>
+        <li><a href="admissions.html"  class="nav-link"        id="nav-admissions">Admissions</a></li>
+        <li><a href="contact.html"     class="nav-link"        id="nav-contact">Contact</a></li>
+        <li><a href="admissions.html"  class="nav-link nav-cta" id="nav-enroll">Enroll Now</a></li>
+      </ul>
+
+      <button class="nav-hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="nav-mobile" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
+      <a href="index.html"      class="nav-link active">🏠 Home</a>
+      <a href="about.html"      class="nav-link">ℹ️ About Us</a>
+      <a href="academics.html"  class="nav-link">📚 Academics</a>
+      <a href="admissions.html" class="nav-link">🎓 Admissions</a>
+      <a href="contact.html"    class="nav-link">📞 Contact</a>
+      <a href="admissions.html" class="nav-cta">🎓 Enroll Now — 2026-27</a>
+    </div>
+  </nav>
+
+  <!-- ===== HERO SECTION ===== -->
+  <section class="hero" aria-label="Hero section" id="hero">
+    <div class="hero-decor">
+      <div class="hero-circle-1"></div>
+      <div class="hero-circle-2"></div>
+      <div class="hero-dots"></div>
+      <div class="hero-dots-2"></div>
+      <div class="hero-ring hero-ring-1"></div>
+      <div class="hero-ring hero-ring-2"></div>
+      <div class="hero-ring hero-ring-3"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="container">
+        <div class="hero-grid">
+
+          <!-- Left: Text -->
+          <div class="hero-text animate-fade-left">
+            <div class="hero-pill">
+              <div class="dot"></div>
+              Admissions Open 2026-27
+            </div>
+
+            <p style="color:rgba(255,255,255,0.6);font-size:0.88rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:10px;">Nirmaan Public School</p>
+            <p style="color:var(--yellow-bright);font-size:0.82rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;margin-bottom:22px;">Learn &bull; Grow &bull; Succeed</p>
+
+            <h1 class="hero-h1">
+              Where Learning<br/>
+              <em>Builds Future</em><br/>
+              Leaders
+            </h1>
+
+            <p class="hero-subtext">
+              At Nirmaan Public School, an English Medium Institution from Playgroup to Grade 10 in Sultanpur, U.P., we focus on Building Bright Futures with Quality Education. Through our dedicated educators and values-driven environment, your student will learn, grow, and succeed.
+            </p>
+
+            <div class="hero-cta-row">
+              <a href="admissions.html" class="btn btn-primary btn-lg" id="hero-enroll-btn">
+                <i class="fas fa-graduation-cap"></i>
+                Enroll Now
+              </a>
+              <a href="academics.html" class="btn btn-outline" id="hero-learn-btn">
+                <i class="fas fa-book-open"></i>
+                Explore Academics
+              </a>
+            </div>
+
+            <div class="hero-badges">
+              <div class="hero-badge-item">
+                <div class="hero-badge-icon"><i class="fas fa-users"></i></div>
+                <div>
+                  <div class="hero-badge-label">Students</div>
+                  <div class="hero-badge-value">500+</div>
+                </div>
+              </div>
+              <div class="hero-badge-item">
+                <div class="hero-badge-icon"><i class="fas fa-trophy"></i></div>
+                <div>
+                  <div class="hero-badge-label">National</div>
+                  <div class="hero-badge-value">Curriculum</div>
+                </div>
+              </div>
+              <div class="hero-badge-item">
+                <div class="hero-badge-icon"><i class="fas fa-shield-alt"></i></div>
+                <div>
+                  <div class="hero-badge-label">Safe &amp;</div>
+                  <div class="hero-badge-value">Secure Campus</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Visual -->
+          <div class="hero-visual animate-fade-right delay-200">
+            <div class="hero-img-main">
+              <img src="images/hero-students.png"
+                   alt="Nirmaan Public School students in uniform smiling confidently" />
+              <div class="hero-img-overlay"></div>
+            </div>
+
+            <!-- Floating cards -->
+            <div class="hero-float-card hero-card-admission animate-float">
+              <div class="card-inner">
+                <div class="hero-card-icon"><i class="fas fa-door-open"></i></div>
+                <div>
+                  <div class="hero-card-title">Admissions</div>
+                  <div class="hero-card-value">Open 2026-27</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-float-card hero-card-seats animate-float delay-200">
+              <div class="seats-inner">
+                <div class="seats-pulse"></div>
+                <div>
+                  <div class="hero-card-title" style="font-size:0.68rem;opacity:0.75;text-transform:uppercase;letter-spacing:0.06em;">Availability</div>
+                  <div class="hero-card-value" style="font-weight:800;font-size:0.92rem;">Limited Seats!</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-float-card hero-card-grades animate-float delay-400" style="display:none;">
+              <div style="font-size:0.7rem;opacity:0.75;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;">Grades Offered</div>
+              <div class="grades-chips">
+                <span class="grade-chip">Play</span>
+                <span class="grade-chip">Nursery</span>
+                <span class="grade-chip">KG</span>
+                <span class="grade-chip">1–10</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="hero-scroll">
+      <a href="#why-us" class="scroll-indicator" id="scroll-down-btn">
+        <span>Scroll Down</span>
+        <div class="scroll-line"></div>
+        <i class="fas fa-chevron-down" style="color:rgba(255,255,255,0.4); font-size:0.7rem;"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== FEATURE CARDS BAR ===== -->
+  <div class="stats-bar" aria-label="Key features" style="padding:42px 0;">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+
+        <!-- Card 1: Quality Education -->
+        <div style="background:rgba(255,255,255,0.07);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:28px 24px;display:flex;align-items:center;gap:18px;transition:all 0.3s ease;" class="reveal" onmouseover="this.style.background='rgba(255,255,255,0.13)';this.style.transform='translateY(-4px)'" onmouseout="this.style.background='rgba(255,255,255,0.07)';this.style.transform='translateY(0)'">
+          <div style="width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,var(--yellow-bright),#ffd966);display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:var(--blue-deep);flex-shrink:0;">
+            <i class="fas fa-book-open"></i>
+          </div>
+          <div>
+            <div style="color:white;font-weight:700;font-size:1rem;margin-bottom:3px;">Quality Education</div>
+            <div style="color:rgba(255,255,255,0.6);font-size:0.82rem;">From Primary to High School</div>
+          </div>
+        </div>
+
+        <!-- Card 2: National Curriculum -->
+        <div style="background:rgba(255,255,255,0.07);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:28px 24px;display:flex;align-items:center;gap:18px;transition:all 0.3s ease;" class="reveal delay-100" onmouseover="this.style.background='rgba(255,255,255,0.13)';this.style.transform='translateY(-4px)'" onmouseout="this.style.background='rgba(255,255,255,0.07)';this.style.transform='translateY(0)'">
+          <div style="width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,var(--yellow-bright),#ffd966);display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:var(--blue-deep);flex-shrink:0;">
+            <i class="fas fa-globe-americas"></i>
+          </div>
+          <div>
+            <div style="color:white;font-weight:700;font-size:1rem;margin-bottom:3px;">National Curriculum</div>
+            <div style="color:rgba(255,255,255,0.6);font-size:0.82rem;">Balanced Academics, Skills, and Values</div>
+          </div>
+        </div>
+
+        <!-- Card 3: Safe & Nurturing -->
+        <div style="background:rgba(255,255,255,0.07);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:28px 24px;display:flex;align-items:center;gap:18px;transition:all 0.3s ease;" class="reveal delay-200" onmouseover="this.style.background='rgba(255,255,255,0.13)';this.style.transform='translateY(-4px)'" onmouseout="this.style.background='rgba(255,255,255,0.07)';this.style.transform='translateY(0)'">
+          <div style="width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,var(--yellow-bright),#ffd966);display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:var(--blue-deep);flex-shrink:0;">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <div>
+            <div style="color:white;font-weight:700;font-size:1rem;margin-bottom:3px;">Safe &amp; Nurturing Environment</div>
+            <div style="color:rgba(255,255,255,0.6);font-size:0.82rem;">Secure Campus &amp; Character Building</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== WHY CHOOSE US ===== -->
+  <section class="section why-section" id="why-us" aria-labelledby="why-heading">
+    <div class="container">
+      <div class="section-center reveal">
+        <span class="section-label"><i class="fas fa-star"></i> Why Choose NPS</span>
+        <h2 id="why-heading">An Education That Goes<br/>Beyond the Classroom</h2>
+        <p>We combine academic excellence with holistic development to nurture every child's unique potential. Here's what makes Nirmaan Public School special.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card reveal">
+          <div class="feature-icon why-icon-1"><i class="fas fa-desktop"></i></div>
+          <h4>Smart Classes</h4>
+          <p>Modern interactive digital classrooms with LED smart boards, multimedia content, and technology-driven learning experiences that make education engaging and effective.</p>
+        </div>
+        <div class="feature-card reveal delay-100">
+          <div class="feature-icon why-icon-2"><i class="fas fa-chalkboard-teacher"></i></div>
+          <h4>Experienced &amp; Caring Teachers</h4>
+          <p>Our dedicated educators are not just teachers — they are mentors who inspire, guide, and nurture every student with patience and genuine care.</p>
+        </div>
+        <div class="feature-card reveal delay-200">
+          <div class="feature-icon why-icon-3"><i class="fas fa-lightbulb"></i></div>
+          <h4>Activity-Based Learning</h4>
+          <p>Hands-on projects, experiments, and creative tasks that make learning deeply engaging, improving retention and building critical thinking skills.</p>
+        </div>
+        <div class="feature-card reveal delay-300">
+          <div class="feature-icon why-icon-4"><i class="fas fa-shield-alt"></i></div>
+          <h4>Safe &amp; Secure Campus</h4>
+          <p>CCTV surveillance, trained security personnel, and child-safe infrastructure ensure your child's safety is our top priority every single day.</p>
+        </div>
+        <div class="feature-card reveal delay-100">
+          <div class="feature-icon why-icon-5"><i class="fas fa-language"></i></div>
+          <h4>English Medium Education</h4>
+          <p>Full English-medium instruction from the very beginning, building language proficiency and global readiness alongside strong academic foundations.</p>
+        </div>
+        <div class="feature-card reveal delay-200">
+          <div class="feature-icon why-icon-6"><i class="fas fa-music"></i></div>
+          <h4>Co-Curricular Activities</h4>
+          <p>Sports, arts, music, dance, debates, and cultural programs that build confidence, teamwork, creativity, and leadership in every child.</p>
+        </div>
+        <div class="feature-card reveal delay-300">
+          <div class="feature-icon why-icon-7"><i class="fas fa-users"></i></div>
+          <h4>All Round Development</h4>
+          <p>Academic excellence combined with character building, emotional intelligence, and life skills — preparing students to thrive in every sphere of life.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT SECTION ===== -->
+  <section class="section about-section" id="about" aria-labelledby="about-heading">
+    <div class="container">
+      <div class="about-grid">
+
+        <!-- Images -->
+        <div class="about-images reveal">
+          <div class="about-img-grid">
+            <div class="about-img-1 about-img-frame">
+              <img src="images/smart-classroom.png"
+                   alt="Smart classroom at Nirmaan Public School" />
+            </div>
+            <div class="about-img-2 about-img-frame">
+              <img src="images/activity-learning.png"
+                   alt="Activity-based learning at NPS" />
+            </div>
+            <div class="about-img-3 about-img-frame">
+              <img src="images/award-ceremony.png"
+                   alt="Award ceremony at Nirmaan Public School" />
+            </div>
+          </div>
+          <div class="about-badge-float">
+            <div class="num">10+</div>
+            <div class="label">Years of Excellence</div>
+          </div>
+        </div>
+
+        <!-- Text -->
+        <div class="about-text reveal delay-200">
+          <span class="section-label"><i class="fas fa-info-circle"></i> About Us</span>
+          <h2 id="about-heading">Shaping Tomorrow's Leaders Since Day One</h2>
+          <p>Nirmaan Public School is a premier English-medium institution located at Aliganj Bazar, Sultanpur, Uttar Pradesh. We follow the National Curriculum, offering comprehensive education from Playgroup all the way to Grade 10.</p>
+          <p>Our motto — <em>"à¤µà¤¿à¤¦à¥à¤¯à¤¾ à¤¦à¤¦à¤¾à¤¤à¤¿ à¤µà¤¿à¤¨à¤¯à¤®à¥"</em> (Education gives humility) — reflects our belief that true education shapes character, not just careers. We create a safe, nurturing environment where every child is seen, heard, and celebrated.</p>
+
+          <div class="about-highlights">
+            <div class="about-highlight-item">
+              <div class="highlight-icon"><i class="fas fa-map-marker-alt"></i></div>
+              <span class="highlight-text">Aliganj Bazar, Sultanpur (U.P.) 227805</span>
+            </div>
+            <div class="about-highlight-item">
+              <div class="highlight-icon"><i class="fas fa-book"></i></div>
+              <span class="highlight-text">National Curriculum — Playgroup to Grade 10</span>
+            </div>
+            <div class="about-highlight-item">
+              <div class="highlight-icon"><i class="fas fa-phone"></i></div>
+              <span class="highlight-text">991-822-5511</span>
+            </div>
+          </div>
+
+          <a href="admissions.html" class="btn btn-blue" id="about-enroll-btn">
+            <i class="fas fa-arrow-right"></i> Start Your Journey
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GRADES SECTION ===== -->
+  <section class="section grades-section" id="grades" aria-labelledby="grades-heading">
+    <div class="container">
+      <div class="section-center reveal">
+        <span class="section-label"><i class="fas fa-layer-group"></i> Grades Offered</span>
+        <h2 id="grades-heading">From Little Learners<br/>to Future Leaders</h2>
+        <p>We offer a comprehensive, structured National Curriculum spanning every key stage of a child's educational journey.</p>
+      </div>
+
+      <div class="grades-grid reveal">
+        <div class="grade-card">
+          <div class="grade-num">🎓</div>
+          <div class="grade-name">Play Group</div>
+        </div>
+        <div class="grade-card">
+          <div class="grade-num">🌸</div>
+          <div class="grade-name">Nursery</div>
+        </div>
+        <div class="grade-card">
+          <div class="grade-num">🌻</div>
+          <div class="grade-name">KG — I</div>
+        </div>
+        <div class="grade-card">
+          <div class="grade-num">🌼</div>
+          <div class="grade-name">KG — II</div>
+        </div>
+
+        <div class="grade-card">
+          <div class="grade-num">1</div>
+          <div class="grade-name">Grade 1</div>
+        </div>
+        <div class="grade-card">
+          <div class="grade-num">2</div>
+          <div class="grade-name">Grade 2</div>
+        </div>
+        <div class="grade-card">
+          <div class="grade-num">3</div>
+          <div class="grade-name">Grade 3</div>
+        </div>
+        <div class="grade-card">
+          <div class="grade-num">4</div>
+          <div class="grade-name">Grade 4</div>
+        </div>
+        <div class="grade-card">
+          <div class="grade-num">5</div>
+          <div class="grade-name">Grade 5</div>
+        </div>
+        <div class="grade-card">
+          <div class="grade-num">6</div>
+          <div class="grade-name">Grade 6</div>
+        </div>
+        <div class="grade-card">
+          <div class="grade-num">7</div>
+          <div class="grade-name">Grade 7</div>
+        </div>
+        <div class="grade-card">
+          <div class="grade-num">8</div>
+          <div class="grade-name">Grade 8</div>
+        </div>
+        <div class="grade-card">
+          <div class="grade-num">9</div>
+          <div class="grade-name">Grade 9</div>
+        </div>
+        <div class="grade-card">
+          <div class="grade-num">10</div>
+          <div class="grade-name">Grade 10</div>
+        </div>
+      </div>
+
+      <div class="curriculum-strip reveal">
+        <div class="curriculum-strip-left">
+          <div class="curriculum-icon"><i class="fas fa-graduation-cap"></i></div>
+          <div>
+            <h4>National Curriculum</h4>
+            <p>Comprehensive, balanced curriculum aligned with national education standards — designed for all-round excellence.</p>
+          </div>
+        </div>
+        <a href="academics.html" class="btn btn-primary" id="curriculum-btn">
+          Learn More <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GALLERY TEASER ===== -->
+  <section class="section gallery-section" id="gallery" aria-label="School photo gallery">
+    <div class="container">
+      <div class="section-center reveal">
+        <span class="section-label"><i class="fas fa-images"></i> Our School Life</span>
+        <h2>A Glimpse of Life at NPS</h2>
+        <p>From smart classrooms to exciting co-curricular activities — every day at Nirmaan Public School is a new adventure.</p>
+      </div>
+
+      <div class="gallery-masonry reveal">
+        <div class="gallery-item gallery-item-1">
+          <img src="images/hero-students.png"
+               alt="NPS students in uniform" />
+          <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+        </div>
+        <div class="gallery-item gallery-item-2">
+          <img src="images/smart-classroom.png"
+               alt="Smart classroom at NPS" />
+          <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+        </div>
+        <div class="gallery-item gallery-item-3">
+          <img src="images/activity-learning.png"
+               alt="Activity-based learning" />
+          <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+        </div>
+        <div class="gallery-item gallery-item-4">
+          <img src="images/award-ceremony.png"
+               alt="Award ceremony at NPS" />
+          <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+        </div>
+        <div class="gallery-item gallery-item-5">
+          <img src="images/students-group.jpg"
+               alt="Nirmaan Public School students" />
+          <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+        </div>
+        <div class="gallery-item gallery-item-6">
+          <img src="images/admission-info.jpg"
+               alt="NPS admission flyer" />
+          <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TESTIMONIALS ===== -->
+  <section class="section testimonials-section" id="testimonials" aria-labelledby="testimonials-heading">
+    <div class="container">
+      <div class="section-center reveal">
+        <span class="section-label"><i class="fas fa-heart"></i> Parent Voices</span>
+        <h2 id="testimonials-heading">What Our Parents Say</h2>
+        <p>The trust of hundreds of families is our greatest achievement. Here's what parents and students say about NPS.</p>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card reveal">
+          <div class="star-row">★★★★★</div>
+          <p class="testimonial-text">"My daughter has blossomed since joining NPS. The teachers are incredibly caring, and the smart classroom environment makes her excited to learn every day. Best decision we ever made!"</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">P</div>
+            <div>
+              <div class="testimonial-name">Priya Sharma</div>
+              <div class="testimonial-role">Parent of Grade 4 student</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal delay-100">
+          <div class="star-row">★★★★★</div>
+          <p class="testimonial-text">"The activity-based learning approach is exceptional. My son used to dread studying, but now he comes home full of enthusiasm. NPS has truly transformed his relationship with education."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">R</div>
+            <div>
+              <div class="testimonial-name">Rakesh Verma</div>
+              <div class="testimonial-role">Parent of Grade 7 student</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal delay-200">
+          <div class="star-row">★★★★★</div>
+          <p class="testimonial-text">"The co-curricular activities program is outstanding. My child won 1st rank and the entire school celebrated with so much warmth. The faculty genuinely cares about each child's success."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">S</div>
+            <div>
+              <div class="testimonial-name">Sunita Gupta</div>
+              <div class="testimonial-role">Parent of Grade 6 student</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA SECTION ===== -->
+  <section class="cta-section" id="cta" aria-label="Call to action">
+    <div class="blob blob-blue-1"></div>
+    <div class="blob blob-yellow-1"></div>
+    <div class="container">
+      <div class="cta-card reveal">
+        <span class="section-label" style="margin-bottom:20px;"><i class="fas fa-star"></i> Limited Seats Available</span>
+        <h2>Secure Your Child's Bright Future Today</h2>
+        <p>Join the Nirmaan Public School family. Admissions for 2026-27 are now open — don't miss this opportunity to give your child the best possible start in life.</p>
+        <div class="cta-buttons">
+          <a href="admissions.html" class="btn btn-primary btn-lg" id="cta-enroll-btn">
+            <i class="fas fa-graduation-cap"></i>
+            Enroll Now — 2026-27
+          </a>
+          <a href="tel:9918225511" class="phone-cta" id="cta-call-btn">
+            <i class="fas fa-phone-alt"></i>
+            Call: 991-822-5511
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Brand -->
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="images/logo.png" alt="NPS Logo" />
+            <div class="footer-logo-text">
+              <strong>Nirmaan Public School</strong>
+              <span>Learn · Grow · Succeed</span>
+            </div>
+          </div>
+          <p class="footer-desc">
+            Building Bright Futures with Quality Education in Sultanpur, Uttar Pradesh. 
+            English Medium schooling from Playgroup to Grade 10 under the National Curriculum.
+          </p>
+          <div class="footer-socials">
+            <a href="https://www.facebook.com/nirmaan.public.school.aliganj/" class="social-btn" aria-label="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/nirmaan_public_school/" class="social-btn" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@nirmanpublicschoolaliganj4860/videos" class="social-btn" aria-label="YouTube" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://wa.me/919918225511" class="social-btn" aria-label="WhatsApp" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-col">
+          <h5>Quick Links</h5>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="academics.html">Academics</a></li>
+            <li><a href="admissions.html">Admissions 2026-27</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="#why-us">Why Choose NPS</a></li>
+            <li><a href="#grades">Grades Offered</a></li>
+          </ul>
+        </div>
+
+        <!-- Programs -->
+        <div class="footer-col">
+          <h5>Our Programs</h5>
+          <ul class="footer-links">
+            <li><a href="academics.html#early">Early Childhood (Playgroup–KG)</a></li>
+            <li><a href="academics.html#primary">Primary (Grades 1–5)</a></li>
+            <li><a href="academics.html#middle">Middle School (Grades 6–8)</a></li>
+            <li><a href="academics.html#secondary">Secondary (Grades 9–10)</a></li>
+            <li><a href="academics.html#smart">Smart Classrooms</a></li>
+            <li><a href="academics.html#cocurricular">Co-Curricular</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-col">
+          <h5>Contact Us</h5>
+          <div class="footer-contact-item">
+            <div class="footer-contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div>Aliganj Bazar, Sultanpur (U.P.) 227805</div>
+          </div>
+          <div class="footer-contact-item">
+            <div class="footer-contact-icon"><i class="fas fa-phone"></i></div>
+            <div><a href="tel:9918225511" style="color:inherit;">991-822-5511</a></div>
+          </div>
+          <div class="footer-contact-item">
+            <div class="footer-contact-icon"><i class="fas fa-envelope"></i></div>
+            <div>info@nirmaanpublicschool.in</div>
+          </div>
+          <div class="footer-contact-item">
+            <div class="footer-contact-icon"><i class="fas fa-clock"></i></div>
+            <div>Mon–Sat: 8:00 AM – 3:00 PM</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <p>&copy; 2026 Nirmaan Public School. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    // ---- Navbar scroll effect ----
+    const navbar = document.getElementById('navbar');
+    const noticeH = document.querySelector('.notice-banner')?.offsetHeight || 0;
+
+    function updateNavbar() {
+      if (window.scrollY > 60) {
+        navbar.classList.remove('transparent');
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.add('transparent');
+        navbar.classList.remove('scrolled');
+      }
+    }
+    window.addEventListener('scroll', updateNavbar, { passive: true });
+    updateNavbar();
+
+    // ---- Mobile hamburger ----
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+    });
+
+    // Close on link click
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', false);
+      });
+    });
+
+    // ---- Intersection Observer for reveal animations ----
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+    reveals.forEach(el => observer.observe(el));
+
+    // ---- Counter animation for stats ----
+    function animateCounter(el, target, duration = 1500) {
+      let start = null;
+      const isDecimal = target.toString().includes('.');
+      const numTarget = parseFloat(target);
+      function step(timestamp) {
+        if (!start) start = timestamp;
+        const progress = Math.min((timestamp - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = eased * numTarget;
+        el.textContent = isDecimal
+          ? current.toFixed(1)
+          : Math.floor(current).toLocaleString();
+        if (progress < 1) requestAnimationFrame(step);
+        else el.textContent = target;
+      }
+      requestAnimationFrame(step);
+    }
+
+    // Observe stat numbers
+    document.querySelectorAll('.stat-number').forEach(el => {
+      const text = el.textContent.trim();
+      const match = text.match(/[\d.]+/);
+      if (!match) return;
+      const num = match[0];
+      const prefix = text.split(num)[0];
+      const suffix = text.split(num)[1] || '';
+      el.dataset.target = num;
+      el.dataset.prefix = prefix;
+      el.dataset.suffix = suffix;
+
+      const statObs = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          const duration = 1800;
+          let start = null;
+          const isDecimal = num.includes('.');
+          const numTarget = parseFloat(num);
+          function step(ts) {
+            if (!start) start = ts;
+            const p = Math.min((ts - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - p, 3);
+            const cur = eased * numTarget;
+            el.textContent = prefix + (isDecimal ? cur.toFixed(1) : Math.floor(cur)) + suffix;
+            if (p < 1) requestAnimationFrame(step);
+            else el.textContent = prefix + num + suffix;
+          }
+          requestAnimationFrame(step);
+          statObs.unobserve(el);
+        }
+      }, { threshold: 0.5 });
+      statObs.observe(el);
+    });
+
+    // ---- Smooth scroll for anchor links ----
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', e => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          const offset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height')) || 76;
+          window.scrollTo({ top: target.offsetTop - offset - 10, behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+

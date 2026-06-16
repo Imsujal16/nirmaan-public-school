@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Admissions Open 2026-27 at Nirmaan Public School, Sultanpur. Apply now for Playgroup to Grade 10. Limited seats available. Contact: 991-822-5511." />
+  <title>Admissions 2026-27 | Nirmaan Public School</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    /* ==========================================
+       ADMISSIONS PAGE STYLES
+       ========================================== */
+
+    /* Hero badge — urgent admission bar */
+    .admission-hero-box {
+      position: relative;
+      z-index: 1;
+    }
+    .admission-urgency {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 71, 87, 0.15);
+      border: 1px solid rgba(255, 71, 87, 0.4);
+      color: #ff6b7a;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 8px 20px;
+      border-radius: var(--radius-full);
+      margin-bottom: 12px;
+      backdrop-filter: blur(8px);
+    }
+    .urgency-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #ff4757;
+      animation: pulse-ring 1.5s ease infinite;
+    }
+
+    /* ===== APPLICATION FORM SECTION ===== */
+    .admission-main {
+      background: var(--off-white);
+    }
+    .admission-layout {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 40px;
+      align-items: start;
+    }
+
+    /* Form Card */
+    .form-card {
+      background: white;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--gray-200);
+      overflow: hidden;
+    }
+    .form-card-header {
+      background: linear-gradient(135deg, var(--blue-deep) 0%, #1e3a9f 100%);
+      padding: 32px 36px;
+      position: relative;
+      overflow: hidden;
+    }
+    .form-card-header::before {
+      content: '';
+      position: absolute;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: rgba(245,166,35,0.08);
+      right: -60px; top: -60px;
+    }
+    .form-card-header h3 { color: white; font-size: 1.3rem; margin-bottom: 6px; position: relative; z-index: 1; }
+    .form-card-header p  { color: rgba(255,255,255,0.75); font-size: 0.88rem; position: relative; z-index: 1; }
+    .form-card-header .badge-yellow { position: absolute; top: 20px; right: 20px; z-index: 1; }
+
+    .form-card-body { padding: 36px; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-select {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236b7aaa'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-size: 20px;
+      cursor: pointer;
+    }
+
+    .form-submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--blue-deep), var(--blue-light));
+      color: white;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: var(--radius-md);
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .form-submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(15,31,92,0.3);
+    }
+
+    .form-note {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 14px;
+    }
+
+    /* Sidebar */
+    .admission-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .sidebar-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-200);
+    }
+    .sidebar-card h4 {
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sidebar-card h4 i { color: var(--blue-mid); }
+
+    /* Seats widget */
+    .seats-widget {
+      background: linear-gradient(135deg, #ff4757 0%, #ff6b7a 100%);
+      color: white;
+    }
+    .seats-widget h4 { color: white; }
+    .seats-num {
+      font-size: 3rem;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 4px;
+      animation: bounceIn 0.8s ease;
+    }
+    .seats-label { font-size: 0.85rem; opacity: 0.85; margin-bottom: 20px; }
+    .seats-bar-wrap { background: rgba(255,255,255,0.2); border-radius: 8px; height: 10px; overflow: hidden; }
+    .seats-bar {
+      height: 100%;
+      background: white;
+      border-radius: 8px;
+      width: 75%;
+      transition: width 1.5s ease;
+    }
+    .seats-bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      opacity: 0.8;
+      margin-top: 6px;
+    }
+
+    /* Contact quick-dial */
+    .quick-dial {
+      background: var(--blue-deep);
+      color: white;
+    }
+    .quick-dial h4 { color: white; }
+    .dial-num {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--yellow-bright);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      text-decoration: none;
+    }
+    .dial-num:hover { opacity: 0.9; }
+    .quick-dial p { font-size: 0.82rem; color: rgba(255,255,255,0.7); }
+
+    /* Grade eligibility list */
+    .grade-eligibility { display: flex; flex-direction: column; gap: 8px; }
+    .grade-elig-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: var(--off-white);
+      border-radius: 10px;
+      font-size: 0.85rem;
+    }
+    .grade-elig-name { font-weight: 600; color: var(--text-dark); }
+    .grade-elig-age  { color: var(--text-muted); font-size: 0.78rem; }
+
+    /* ===== PROCESS STEPS ===== */
+    .process-section { background: white; }
+
+    /* ===== ELIGIBILITY TABLE ===== */
+    .eligibility-section { background: var(--off-white); }
+    .elig-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .elig-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-200);
+    }
+    .elig-card h3 { margin-bottom: 20px; font-size: 1.1rem; }
+    .elig-list { display: flex; flex-direction: column; gap: 12px; }
+    .elig-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: var(--text-mid);
+      line-height: 1.5;
+    }
+    .elig-check {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: #ecfdf5;
+      color: #10b981;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+    .elig-cross {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: #fef2f2;
+      color: #ef4444;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    /* Documents list */
+    .doc-list { display: flex; flex-direction: column; gap: 10px; }
+    .doc-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--off-white);
+      border-radius: 10px;
+      font-size: 0.88rem;
+      color: var(--text-mid);
+      border: 1px solid var(--gray-200);
+    }
+    .doc-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: var(--blue-pale);
+      color: var(--blue-mid);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    /* Fee note */
+    .fee-note {
+      background: var(--yellow-pale);
+      border: 1px solid rgba(245,166,35,0.35);
+      border-radius: var(--radius-md);
+      padding: 18px 22px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-top: 24px;
+    }
+    .fee-note i { color: var(--yellow-bright); font-size: 1.2rem; margin-top: 2px; flex-shrink: 0; }
+    .fee-note p { font-size: 0.88rem; color: var(--text-mid); }
+
+    @media (max-width: 1024px) {
+      .admission-layout { grid-template-columns: 1fr; }
+      .admission-sidebar { order: -1; flex-direction: row; flex-wrap: wrap; }
+      .sidebar-card { flex: 1; min-width: 240px; }
+      .elig-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .admission-sidebar { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Notice Banner -->
+  <div class="notice-banner" role="banner" id="noticeBanner">
+    <div class="notice-banner-inner">
+      <span>🎓</span>
+      <span><strong>Hurry!</strong> Seats for 2026-27 are filling fast — Enroll today!</span>
+      <a href="#apply-form">Apply Now →</a>
+      <button class="banner-close-btn" aria-label="Dismiss banner" onclick="dismissBanner()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+  <script>
+    if (localStorage.getItem('admissionsBannerClosed') === 'true') {
+      document.getElementById('noticeBanner').style.display = 'none';
+    }
+    function dismissBanner() {
+      const banner = document.getElementById('noticeBanner');
+      banner.classList.add('hidden');
+      localStorage.setItem('admissionsBannerClosed', 'true');
+      setTimeout(() => { banner.style.display = 'none'; }, 400);
+    }
+  </script>
+
+  <!-- Navbar -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="container navbar-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.png" alt="NPS Logo" class="nav-logo-img" />
+        <div class="nav-logo-text">
+          <span class="school-name">Nirmaan Public School</span>
+          <span class="school-tagline">Learn · Grow · Succeed</span>
+        </div>
+      </a>
+      <ul class="nav-menu">
+        <li><a href="index.html"       class="nav-link">Home</a></li>
+        <li><a href="about.html"       class="nav-link">About Us</a></li>
+        <li><a href="academics.html"   class="nav-link">Academics</a></li>
+        <li><a href="admissions.html"  class="nav-link active">Admissions</a></li>
+        <li><a href="contact.html"     class="nav-link">Contact</a></li>
+        <li><a href="#apply-form"      class="nav-link nav-cta">Apply Now</a></li>
+      </ul>
+      <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="mobileMenu">
+      <a href="index.html"      class="nav-link">🏠 Home</a>
+      <a href="about.html"      class="nav-link">ℹ️ About Us</a>
+      <a href="academics.html"  class="nav-link">📚 Academics</a>
+      <a href="admissions.html" class="nav-link active">🎓 Admissions</a>
+      <a href="contact.html"    class="nav-link">📞 Contact</a>
+      <a href="#apply-form"     class="nav-cta">📝 Apply Now</a>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <section class="page-hero" aria-label="Admissions hero">
+    <div class="blob blob-blue-1" style="opacity:0.3;"></div>
+    <div class="blob blob-yellow-1" style="opacity:0.2;"></div>
+    <div class="container admission-hero-box">
+      <div class="admission-urgency">
+        <div class="urgency-dot"></div>
+        Limited Seats Available — Act Fast
+      </div>
+      <span class="section-label" style="background:rgba(245,166,35,0.2);border-color:rgba(245,166,35,0.4);margin-bottom:20px;">
+        <i class="fas fa-door-open"></i> Admissions Open
+      </span>
+      <h1>Admission Open<br/>2026 – 2027</h1>
+      <p>Begin your child's journey at Nirmaan Public School. Quality English-medium education from Playgroup to Grade 10. Secure your child's future — enroll today.</p>
+      <div class="page-hero-breadcrumb">
+        <a href="index.html">Home</a><span>/</span><span>Admissions</span>
+      </div>
+    </div>
+    <div style="position:absolute;bottom:-1px;left:0;right:0;height:60px;background:var(--off-white);clip-path:ellipse(60% 100% at 50% 100%);"></div>
+  </section>
+
+  <!-- ===== PROCESS STEPS ===== -->
+  <section class="section process-section" id="process" aria-labelledby="process-heading">
+    <div class="container">
+      <div class="section-center reveal">
+        <span class="section-label"><i class="fas fa-route"></i> How to Apply</span>
+        <h2 id="process-heading">Simple 4-Step Admission Process</h2>
+        <p>Getting your child admitted to NPS is quick and straightforward. Follow these four simple steps and we'll take care of the rest.</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card reveal">
+          <div class="step-num">1</div>
+          <h4>Fill the Enquiry Form</h4>
+          <p>Complete the online enquiry form below or visit our school office in person. Provide basic details about your child and the grade you're applying for.</p>
+        </div>
+        <div class="step-card reveal delay-100">
+          <div class="step-num">2</div>
+          <h4>Submit Documents</h4>
+          <p>Bring the required documents to our admission office — birth certificate, previous school report card, and two passport-size photos.</p>
+        </div>
+        <div class="step-card reveal delay-200">
+          <div class="step-num">3</div>
+          <h4>Interaction Session</h4>
+          <p>A brief, friendly interaction with our academic team helps us understand your child's interests and learning style. No entrance test for early grades.</p>
+        </div>
+        <div class="step-card reveal delay-300">
+          <div class="step-num">4</div>
+          <h4>Confirm Admission</h4>
+          <p>Receive your admission confirmation, pay the applicable fees, and your child officially becomes a proud member of the NPS family!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MAIN ADMISSION FORM & SIDEBAR ===== -->
+  <section class="section admission-main" id="apply-form" aria-labelledby="form-heading">
+    <div class="container">
+      <div class="admission-layout">
+
+        <!-- Form -->
+        <div class="form-card reveal">
+          <div class="form-card-header">
+            <span class="badge badge-yellow">2026-27 Session</span>
+            <h3 id="form-heading">Admission Enquiry Form</h3>
+            <p>Fill in your details and our team will reach out within 24 hours.</p>
+          </div>
+          <div class="form-card-body">
+            <form id="admissionForm" novalidate>
+              <!-- Student Info -->
+              <div style="margin-bottom:24px;">
+                <div style="font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--blue-mid);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--gray-200);">
+                  <i class="fas fa-user-graduate"></i> &nbsp;Student Information
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="student-first-name">First Name *</label>
+                    <input type="text" id="student-first-name" class="form-control" placeholder="Child's first name" required />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="student-last-name">Last Name *</label>
+                    <input type="text" id="student-last-name" class="form-control" placeholder="Child's last name" required />
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="student-dob">Date of Birth *</label>
+                    <input type="date" id="student-dob" class="form-control" required />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="student-gender">Gender *</label>
+                    <select id="student-gender" class="form-control form-select" required>
+                      <option value="">Select gender</option>
+                      <option>Male</option>
+                      <option>Female</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="apply-grade">Applying for Grade *</label>
+                  <select id="apply-grade" class="form-control form-select" required>
+                    <option value="">Select grade</option>
+                    <option>Playgroup</option>
+                    <option>Nursery</option>
+                    <option>KG I</option>
+                    <option>KG II</option>
+                    <option>Grade 1</option>
+                    <option>Grade 2</option>
+                    <option>Grade 3</option>
+                    <option>Grade 4</option>
+                    <option>Grade 5</option>
+                    <option>Grade 6</option>
+                    <option>Grade 7</option>
+                    <option>Grade 8</option>
+                    <option>Grade 9</option>
+                    <option>Grade 10</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="prev-school">Previous School (if any)</label>
+                  <input type="text" id="prev-school" class="form-control" placeholder="Name of previous school" />
+                </div>
+              </div>
+
+              <!-- Parent Info -->
+              <div style="margin-bottom:24px;">
+                <div style="font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--blue-mid);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--gray-200);">
+                  <i class="fas fa-users"></i> &nbsp;Parent / Guardian Information
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="parent-name">Parent / Guardian Name *</label>
+                    <input type="text" id="parent-name" class="form-control" placeholder="Full name" required />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="relation">Relation *</label>
+                    <select id="relation" class="form-control form-select" required>
+                      <option value="">Select</option>
+                      <option>Father</option>
+                      <option>Mother</option>
+                      <option>Guardian</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="phone">Phone Number *</label>
+                  <input type="tel" id="phone" class="form-control" placeholder="10-digit mobile number" maxlength="10" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="email">Email Address *</label>
+                  <input type="email" id="email" class="form-control" placeholder="your@email.com" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="address">Residential Address *</label>
+                  <textarea id="address" class="form-control" placeholder="Full address" rows="2" required></textarea>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="message">Any Message / Query</label>
+                  <textarea id="message" class="form-control" placeholder="Write any specific query or requirement..." rows="3"></textarea>
+                </div>
+              </div>
+
+              <button type="submit" class="form-submit-btn" id="submit-admission-btn">
+                <i class="fas fa-paper-plane"></i>
+                Submit Admission Enquiry
+              </button>
+              <p class="form-note">
+                <i class="fas fa-lock"></i> Your information is safe with us. We'll contact you within 24 hours.
+              </p>
+            </form>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="admission-sidebar">
+
+          <!-- Seats Urgency -->
+          <div class="sidebar-card seats-widget reveal">
+            <h4><i class="fas fa-fire"></i> Seat Availability 2026-27</h4>
+            <div class="seats-num" id="seats-num">75%</div>
+            <div class="seats-label">Seats already filled — Don't wait!</div>
+            <div class="seats-bar-wrap">
+              <div class="seats-bar" id="seats-bar" style="width:0%;"></div>
+            </div>
+            <div class="seats-bar-label">
+              <span>0%</span><span>Full</span>
+            </div>
+          </div>
+
+          <!-- Quick Dial -->
+          <div class="sidebar-card quick-dial reveal delay-100">
+            <h4><i class="fas fa-headset"></i> Need Help? Call Us</h4>
+            <a href="tel:9918225511" class="dial-num">
+              <i class="fas fa-phone"></i> 991-822-5511
+            </a>
+            <p>Available Mon–Sat, 8:00 AM – 3:00 PM. Our admission team is always happy to help!</p>
+          </div>
+
+          <!-- Grade-wise age criteria -->
+          <div class="sidebar-card reveal delay-200">
+            <h4><i class="fas fa-child"></i> Age Criteria (As of April 1, 2026)</h4>
+            <div class="grade-eligibility">
+              <div class="grade-elig-item">
+                <span class="grade-elig-name">Playgroup</span>
+                <span class="grade-elig-age">2.5 – 3.5 years</span>
+              </div>
+              <div class="grade-elig-item">
+                <span class="grade-elig-name">Nursery</span>
+                <span class="grade-elig-age">3.5 – 4.5 years</span>
+              </div>
+              <div class="grade-elig-item">
+                <span class="grade-elig-name">KG I</span>
+                <span class="grade-elig-age">4.5 – 5.5 years</span>
+              </div>
+              <div class="grade-elig-item">
+                <span class="grade-elig-name">KG II</span>
+                <span class="grade-elig-age">5.5 – 6.5 years</span>
+              </div>
+              <div class="grade-elig-item">
+                <span class="grade-elig-name">Grade 1</span>
+                <span class="grade-elig-age">6.5 – 7.5 years</span>
+              </div>
+              <div class="grade-elig-item">
+                <span class="grade-elig-name">Grade 2–10</span>
+                <span class="grade-elig-age">Age + previous grade</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Map / Location -->
+          <div class="sidebar-card reveal delay-300">
+            <h4><i class="fas fa-map-marker-alt"></i> Visit Us</h4>
+            <p style="font-size:0.87rem;color:var(--text-muted);margin-bottom:14px;">
+              Aliganj Bazar, Sultanpur<br/>Uttar Pradesh — 227805
+            </p>
+            <a href="contact.html" class="btn btn-blue" style="width:100%;justify-content:center;" id="sidebar-directions-btn">
+              <i class="fas fa-directions"></i> Get Directions
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ELIGIBILITY & DOCUMENTS ===== -->
+  <section class="section eligibility-section" id="eligibility" aria-labelledby="elig-heading">
+    <div class="container">
+      <div class="section-center reveal">
+        <span class="section-label"><i class="fas fa-clipboard-check"></i> Requirements</span>
+        <h2 id="elig-heading">Eligibility &amp; Documents Required</h2>
+        <p>Here's everything you need to know about admission eligibility and the documents to bring on your visit.</p>
+      </div>
+
+      <div class="elig-grid">
+        <!-- Eligibility -->
+        <div class="elig-card reveal">
+          <h3><i class="fas fa-check-circle" style="color:#10b981;margin-right:10px;"></i>Eligibility Criteria</h3>
+          <div class="elig-list">
+            <div class="elig-item">
+              <div class="elig-check"><i class="fas fa-check"></i></div>
+              <span>Child must meet the minimum age requirement for the applied grade (as of April 1, 2026)</span>
+            </div>
+            <div class="elig-item">
+              <div class="elig-check"><i class="fas fa-check"></i></div>
+              <span>Students applying for Grade 2 and above must produce the previous year's report card</span>
+            </div>
+            <div class="elig-item">
+              <div class="elig-check"><i class="fas fa-check"></i></div>
+              <span>No formal entrance exam for Playgroup to Grade 5 — just a friendly interaction</span>
+            </div>
+            <div class="elig-item">
+              <div class="elig-check"><i class="fas fa-check"></i></div>
+              <span>Grades 6–10 may require a basic subject assessment to ensure proper grade placement</span>
+            </div>
+            <div class="elig-item">
+              <div class="elig-check"><i class="fas fa-check"></i></div>
+              <span>Parents must attend a brief orientation session before final confirmation of admission</span>
+            </div>
+          </div>
+
+          <div class="fee-note">
+            <i class="fas fa-info-circle"></i>
+            <p>For detailed fee structure and scholarship information, please visit the school office or call us at <strong>991-822-5511</strong>. We believe quality education should be accessible to all.</p>
+          </div>
+        </div>
+
+        <!-- Documents -->
+        <div class="elig-card reveal delay-200">
+          <h3><i class="fas fa-folder-open" style="color:var(--yellow-bright);margin-right:10px;"></i>Documents to Submit</h3>
+          <div class="doc-list">
+            <div class="doc-item">
+              <div class="doc-icon"><i class="fas fa-birthday-cake"></i></div>
+              <span>Birth Certificate of the child (Original + 1 Photocopy)</span>
+            </div>
+            <div class="doc-item">
+              <div class="doc-icon"><i class="fas fa-image"></i></div>
+              <span>4 Recent Passport-Size Photographs of the child</span>
+            </div>
+            <div class="doc-item">
+              <div class="doc-icon"><i class="fas fa-file-alt"></i></div>
+              <span>Previous School Report Card / Transfer Certificate (for Grade 2+)</span>
+            </div>
+            <div class="doc-item">
+              <div class="doc-icon"><i class="fas fa-id-card"></i></div>
+              <span>Parent / Guardian Aadhar Card (Photocopy)</span>
+            </div>
+            <div class="doc-item">
+              <div class="doc-icon"><i class="fas fa-home"></i></div>
+              <span>Address Proof (Aadhar / Voter ID / Utility Bill)</span>
+            </div>
+            <div class="doc-item">
+              <div class="doc-icon"><i class="fas fa-notes-medical"></i></div>
+              <span>Medical / Vaccination Record (optional, encouraged)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" style="background:white;" aria-label="Admission CTA">
+    <div class="container">
+      <div style="background:linear-gradient(135deg, var(--yellow-bright) 0%, #ffd96a 100%); border-radius:var(--radius-xl); padding:64px 48px; text-align:center;" class="reveal">
+        <div style="font-size:3rem;margin-bottom:16px;">🎓</div>
+        <h2 style="color:var(--blue-deep);margin-bottom:14px;">Don't Miss Out — Limited Seats!</h2>
+        <p style="color:var(--blue-mid);max-width:520px;margin:0 auto 32px;font-size:1.02rem;">
+          Join the growing family of Nirmaan Public School. Give your child the head start they deserve with quality education in a safe, nurturing environment.
+        </p>
+        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+          <a href="#apply-form" class="btn btn-blue btn-lg" id="cta-apply-btn">
+            <i class="fas fa-paper-plane"></i> Apply Online Now
+          </a>
+          <a href="tel:9918225511" class="btn" style="background:var(--blue-deep);color:white;padding:18px 36px;border-radius:var(--radius-full);font-size:1.05rem;font-weight:700;" id="cta-call-adm-btn">
+            <i class="fas fa-phone"></i> 991-822-5511
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="images/logo.png" alt="NPS Logo" />
+            <div class="footer-logo-text">
+              <strong>Nirmaan Public School</strong>
+              <span>Learn · Grow · Succeed</span>
+            </div>
+          </div>
+          <p class="footer-desc">Building Bright Futures with Quality Education in Sultanpur, Uttar Pradesh.</p>
+          <div class="footer-socials">
+            <a href="https://www.facebook.com/nirmaan.public.school.aliganj/" class="social-btn" aria-label="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/nirmaan_public_school/" class="social-btn" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@nirmanpublicschoolaliganj4860/videos" class="social-btn" aria-label="YouTube" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://wa.me/919918225511" class="social-btn" aria-label="WhatsApp" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Quick Links</h5>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="academics.html">Academics</a></li>
+            <li><a href="admissions.html">Admissions 2026-27</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Admission Info</h5>
+          <ul class="footer-links">
+            <li><a href="#process">How to Apply</a></li>
+            <li><a href="#eligibility">Eligibility</a></li>
+            <li><a href="#apply-form">Application Form</a></li>
+            <li><a href="contact.html">Contact Admissions</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Contact Us</h5>
+          <div class="footer-contact-item">
+            <div class="footer-contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div>Aliganj Bazar, Sultanpur (U.P.) 227805</div>
+          </div>
+          <div class="footer-contact-item">
+            <div class="footer-contact-icon"><i class="fas fa-phone"></i></div>
+            <div><a href="tel:9918225511" style="color:inherit;">991-822-5511</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Nirmaan Public School. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Navbar
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      const o = mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', o);
+      hamburger.setAttribute('aria-expanded', o);
+    });
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+    }));
+
+    // Reveal
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // Seats bar animation
+    const seatsBar = document.getElementById('seats-bar');
+    const seatsObs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        setTimeout(() => { seatsBar.style.width = '75%'; }, 300);
+        seatsObs.disconnect();
+      }
+    }, { threshold: 0.5 });
+    seatsObs.observe(seatsBar);
+
+    function showAdmissionToast(message, type) {
+      const toast = document.createElement('div');
+      const isError = type === 'error';
+      toast.style.cssText = `
+        position:fixed;bottom:24px;right:24px;background:${isError ? '#dc2626' : '#10b981'};color:white;
+        padding:16px 24px;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,0.15);
+        z-index:9999;font-weight:600;font-size:0.95rem;
+        animation:fadeInUp 0.3s ease;
+        max-width:360px;line-height:1.5;
+      `;
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 6000);
+    }
+
+    // Form submission
+    document.getElementById('admissionForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      if (!this.checkValidity()) {
+        this.reportValidity();
+        return;
+      }
+
+      const btn = document.getElementById('submit-admission-btn');
+      const originalHtml = '<i class="fas fa-paper-plane"></i> Submit Admission Enquiry';
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+      btn.disabled = true;
+
+      const payload = {
+        firstName: document.getElementById('student-first-name').value,
+        lastName: document.getElementById('student-last-name').value,
+        dateOfBirth: document.getElementById('student-dob').value,
+        gender: document.getElementById('student-gender').value,
+        applyingForGrade: document.getElementById('apply-grade').value,
+        previousSchool: document.getElementById('prev-school').value,
+        parentGuardianName: document.getElementById('parent-name').value,
+        relation: document.getElementById('relation').value,
+        phoneNumber: document.getElementById('phone').value,
+        emailAddress: document.getElementById('email').value,
+        residentialAddress: document.getElementById('address').value,
+        messageQuery: document.getElementById('message').value
+      };
+
+      try {
+        const response = await fetch('/api/admission-enquiries', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const result = await response.json().catch(() => ({}));
+
+        if (!response.ok || !result.success) {
+          throw new Error(result.message || 'Unable to submit the admission enquiry right now.');
+        }
+
+        btn.innerHTML = '<i class="fas fa-check-circle"></i> Enquiry Submitted';
+        btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+        this.reset();
+        showAdmissionToast('Thank you! Your admission enquiry has been received. Our admissions office will contact you soon.', 'success');
+      } catch (error) {
+        btn.innerHTML = originalHtml;
+        btn.style.background = '';
+        btn.disabled = false;
+        showAdmissionToast(error.message || 'Submission failed. Please try again.', 'error');
+      }
+      return;
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', e => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          window.scrollTo({ top: target.offsetTop - 90, behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+

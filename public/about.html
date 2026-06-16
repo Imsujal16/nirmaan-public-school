@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="About Nirmaan Public School — Our mission, history, experienced faculty, and values. Building Bright Futures with Quality Education in Sultanpur, U.P. since inception." />
+  <meta name="keywords" content="Nirmaan Public School, About NPS, Sultanpur school, mission, faculty, values" />
+  <title>About Us | Nirmaan Public School — Sultanpur</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    /* ==========================================
+       ABOUT PAGE — SPECIFIC STYLES
+       ========================================== */
+
+    /* Mission Section */
+    .mission-section { background: var(--off-white); overflow: hidden; }
+    .mission-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .mission-visual { position: relative; }
+    .mission-img-main {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.12);
+    }
+    .mission-img-main img { width: 100%; height: 380px; object-fit: cover; }
+
+    .mission-badge {
+      position: absolute;
+      bottom: -18px; right: -10px;
+      background: var(--yellow-bright);
+      color: var(--blue-deep);
+      border-radius: var(--radius-md);
+      padding: 18px 24px;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+      z-index: 5;
+    }
+    .mission-badge .num { font-size: 2rem; font-weight: 900; line-height: 1; }
+    .mission-badge .lbl { font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px; }
+
+    .mission-text {}
+    .mission-text h2 { margin-bottom: 20px; }
+    .mission-text p  { margin-bottom: 18px; font-size: 0.95rem; line-height: 1.8; }
+
+    .motto-block {
+      background: linear-gradient(135deg, var(--blue-deep), #1e3a9f);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      margin: 28px 0;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .motto-icon {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: rgba(245,166,35,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+      flex-shrink: 0;
+    }
+    .motto-sanskrit { color: var(--yellow-bright); font-size: 1.15rem; font-weight: 700; font-style: italic; }
+    .motto-meaning  { color: rgba(255,255,255,0.75); font-size: 0.85rem; margin-top: 4px; }
+
+    /* Story / History Section */
+    .story-section { background: white; overflow: hidden; }
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .story-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .story-img-frame {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      height: 240px;
+    }
+    .story-img-frame img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition-slow); }
+    .story-img-frame:hover img { transform: scale(1.05); }
+    .story-img-tall { grid-row: 1 / 3; }
+
+    .story-text h2 { margin-bottom: 20px; }
+    .story-text p  { margin-bottom: 18px; font-size: 0.95rem; line-height: 1.8; }
+
+    .story-highlights {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 24px 0;
+    }
+    .story-highlight-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      background: var(--off-white);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--gray-200);
+    }
+    .story-h-icon {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      background: var(--blue-deep);
+      color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .story-h-text { font-size: 0.9rem; font-weight: 600; color: var(--text-dark); }
+
+    /* Faculty Section */
+    .faculty-section {
+      background: linear-gradient(135deg, var(--blue-deep) 0%, #1e3a9f 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .faculty-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .faculty-text h2 { color: white; margin-bottom: 16px; }
+    .faculty-text p  { color: rgba(255,255,255,0.78); font-size: 0.95rem; line-height: 1.8; margin-bottom: 18px; }
+    .faculty-features {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin: 24px 0;
+    }
+    .faculty-feature-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-md);
+      transition: var(--transition);
+    }
+    .faculty-feature-item:hover {
+      background: rgba(255,255,255,0.14);
+      border-color: rgba(245,166,35,0.4);
+    }
+    .faculty-f-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: rgba(245,166,35,0.2);
+      color: var(--yellow-bright);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .faculty-f-text { color: rgba(255,255,255,0.88); font-size: 0.9rem; font-weight: 500; }
+
+    .faculty-img-wrap { position: relative; }
+    .faculty-img-main {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+    }
+    .faculty-img-main img { width: 100%; height: 380px; object-fit: cover; }
+    .faculty-float-stat {
+      position: absolute;
+      bottom: -20px; left: -10px;
+      background: var(--yellow-bright);
+      color: var(--blue-deep);
+      border-radius: var(--radius-md);
+      padding: 18px 24px;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+    }
+    .faculty-float-stat .big { font-size: 2rem; font-weight: 900; line-height: 1; }
+    .faculty-float-stat .sm  { font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px; }
+
+    /* Values Section */
+    .values-section { background: var(--off-white); }
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .value-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 36px 24px;
+      text-align: center;
+      border: 1px solid var(--gray-200);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .value-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--blue-deep), var(--yellow-bright));
+      transform: scaleX(0);
+      transition: var(--transition);
+      transform-origin: left;
+    }
+    .value-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .value-card:hover::after { transform: scaleX(1); }
+    .value-icon {
+      width: 72px; height: 72px;
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 20px;
+    }
+    .value-card h4 { font-size: 1rem; margin-bottom: 10px; color: var(--text-dark); }
+    .value-card p  { font-size: 0.85rem; line-height: 1.7; }
+
+    .vi-1 { background: #eff6ff; color: #3b82f6; }
+    .vi-2 { background: #ecfdf5; color: #10b981; }
+    .vi-3 { background: #fffbeb; color: #f59e0b; }
+    .vi-4 { background: #f5f3ff; color: #8b5cf6; }
+
+    /* Stats Section */
+    .about-stats { background: white; }
+    .about-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      text-align: center;
+    }
+    .about-stat-card {
+      padding: 36px 20px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--gray-200);
+      transition: var(--transition);
+    }
+    .about-stat-card:hover { border-color: var(--blue-light); transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .about-stat-icon {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 1.3rem;
+    }
+    .about-stat-number {
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: var(--blue-deep);
+      font-family: 'Poppins', sans-serif;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .about-stat-label { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+
+    .si-1 { background: #eff6ff; color: #3b82f6; }
+    .si-2 { background: #ecfdf5; color: #10b981; }
+    .si-3 { background: #fffbeb; color: #f59e0b; }
+    .si-4 { background: #f5f3ff; color: #8b5cf6; }
+
+    @media (max-width: 1024px) {
+      .mission-grid, .story-grid, .faculty-grid { grid-template-columns: 1fr; gap: 48px; }
+      .values-grid, .about-stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .values-grid, .about-stats-grid { grid-template-columns: 1fr; }
+      .story-images { grid-template-columns: 1fr; }
+      .story-img-tall { grid-row: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Notice Banner -->
+  <div class="notice-banner" role="banner">
+    <div class="notice-banner-inner">
+      <span>🎓</span>
+      <span><strong>Admissions Open 2026-27</strong> — Limited Seats Available! Playgroup to Grade 10</span>
+      <a href="admissions.html">Enroll Now →</a>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar scrolled" id="navbar" aria-label="Main navigation">
+    <div class="container navbar-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.png" alt="Nirmaan Public School Logo" class="nav-logo-img" />
+        <div class="nav-logo-text">
+          <span class="school-name">Nirmaan Public School</span>
+          <span class="school-tagline">Learn · Grow · Succeed</span>
+        </div>
+      </a>
+      <ul class="nav-menu" role="list">
+        <li><a href="index.html"       class="nav-link"        id="nav-home">Home</a></li>
+        <li><a href="about.html"       class="nav-link active" id="nav-about">About Us</a></li>
+        <li><a href="academics.html"   class="nav-link"        id="nav-academics">Academics</a></li>
+        <li><a href="admissions.html"  class="nav-link"        id="nav-admissions">Admissions</a></li>
+        <li><a href="contact.html"     class="nav-link"        id="nav-contact">Contact</a></li>
+        <li><a href="admissions.html"  class="nav-link nav-cta" id="nav-enroll">Enroll Now</a></li>
+      </ul>
+      <button class="nav-hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
+      <a href="index.html"      class="nav-link">🏠 Home</a>
+      <a href="about.html"      class="nav-link active">ℹ️ About Us</a>
+      <a href="academics.html"  class="nav-link">📚 Academics</a>
+      <a href="admissions.html" class="nav-link">📝 Admissions</a>
+      <a href="contact.html"    class="nav-link">📞 Contact</a>
+      <a href="admissions.html" class="nav-cta">🎓 Enroll Now — 2026-27</a>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <section class="page-hero" aria-label="About page hero">
+    <div class="blob blob-blue-1" style="opacity:0.4;"></div>
+    <div class="blob blob-yellow-1" style="opacity:0.25;"></div>
+    <div class="container" style="position:relative;z-index:1;">
+      <span class="section-label" style="background:rgba(245,166,35,0.2);border-color:rgba(245,166,35,0.4);margin-bottom:20px;">
+        <i class="fas fa-school"></i> About Our School
+      </span>
+      <h1>About Nirmaan<br/>Public School</h1>
+      <p>Discover our mission, our values, and the passionate team dedicated to Building Bright Futures with Quality Education in Sultanpur.</p>
+      <div class="page-hero-breadcrumb">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <span>About Us</span>
+      </div>
+    </div>
+    <div style="position:absolute;bottom:-1px;left:0;right:0;height:60px;background:var(--off-white);clip-path:ellipse(60% 100% at 50% 100%);"></div>
+  </section>
+
+  <!-- ===== MISSION SECTION ===== -->
+  <section class="section mission-section" id="mission" aria-labelledby="mission-heading">
+    <div class="container">
+      <div class="mission-grid">
+
+        <!-- Visual -->
+        <div class="mission-visual reveal">
+          <div class="mission-img-main">
+            <img src="images/smart-classroom.png"
+                 alt="Smart classroom at Nirmaan Public School" />
+          </div>
+          <div class="mission-badge">
+            <div class="num">10+</div>
+            <div class="lbl">Years of Excellence</div>
+          </div>
+        </div>
+
+        <!-- Text -->
+        <div class="mission-text reveal delay-200">
+          <span class="section-label"><i class="fas fa-bullseye"></i> Our Mission</span>
+          <h2 id="mission-heading">Building Bright Futures<br/>with Quality Education</h2>
+          <p>At Nirmaan Public School, our mission is clear: to provide every child with a world-class education that shapes not just brilliant minds, but strong, compassionate characters ready to lead tomorrow's world.</p>
+          <p>We believe in a structured curriculum that balances academics, skills, and values. Through dedicated educators, modern pedagogy, and a values-driven environment, we empower students to learn, grow, and succeed — in the classroom and beyond.</p>
+
+          <div class="motto-block">
+            <div class="motto-icon">🕉️</div>
+            <div>
+              <div class="motto-sanskrit">विद्या ददाति विनयम्</div>
+              <div class="motto-meaning">Education gives humility — Our guiding philosophy that true education shapes character, not just careers.</div>
+            </div>
+          </div>
+
+          <a href="academics.html" class="btn btn-blue" id="mission-academics-btn">
+            <i class="fas fa-book-open"></i> Explore Academics
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== OUR STORY SECTION ===== -->
+  <section class="section story-section" id="story" aria-labelledby="story-heading">
+    <div class="container">
+      <div class="story-grid">
+
+        <!-- Text -->
+        <div class="story-text reveal">
+          <span class="section-label"><i class="fas fa-landmark"></i> Our Story</span>
+          <h2 id="story-heading">A Legacy of Learning<br/>in the Heart of Sultanpur</h2>
+          <p>Nirmaan Public School was founded with a singular vision — to bring quality, English-medium education to the families of Sultanpur and surrounding communities. Located at <strong>Aliganj Bazar, Sultanpur (U.P.) 227805</strong>, our campus has grown from a small school into a thriving institution serving hundreds of students.</p>
+          <p>We follow the <strong>National Curriculum</strong>, offering comprehensive education from <strong>Playgroup through Grade 10</strong>. Our modern campus features smart classrooms, dedicated activity spaces, and a safe, nurturing environment where every child can flourish.</p>
+
+          <div class="story-highlights">
+            <div class="story-highlight-item">
+              <div class="story-h-icon"><i class="fas fa-map-marker-alt"></i></div>
+              <span class="story-h-text">Aliganj Bazar, Sultanpur (U.P.) 227805</span>
+            </div>
+            <div class="story-highlight-item">
+              <div class="story-h-icon"><i class="fas fa-book"></i></div>
+              <span class="story-h-text">National Curriculum — Playgroup to Grade 10</span>
+            </div>
+            <div class="story-highlight-item">
+              <div class="story-h-icon"><i class="fas fa-language"></i></div>
+              <span class="story-h-text">English Medium — Full Instruction from Day One</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Images -->
+        <div class="story-images reveal delay-200">
+          <div class="story-img-frame story-img-tall">
+            <img src="images/award-ceremony.png" alt="Award ceremony at Nirmaan Public School" />
+          </div>
+          <div class="story-img-frame">
+            <img src="images/hero-students.png" alt="NPS students in uniform" />
+          </div>
+          <div class="story-img-frame">
+            <img src="images/students-group.jpg" alt="Nirmaan Public School students" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EXPERIENCED FACULTY ===== -->
+  <section class="section faculty-section" id="faculty" aria-labelledby="faculty-heading">
+    <div class="blob blob-yellow-1" style="opacity:0.08;"></div>
+    <div class="container" style="position:relative;z-index:1;">
+      <div class="faculty-grid">
+
+        <!-- Text -->
+        <div class="faculty-text reveal">
+          <span class="section-label" style="background:rgba(245,166,35,0.2);border-color:rgba(245,166,35,0.4);">
+            <i class="fas fa-chalkboard-teacher"></i> Our Faculty
+          </span>
+          <h2 id="faculty-heading">Experienced &amp; Caring<br/>Teachers Who Inspire</h2>
+          <p>Our educators are not just teachers — they are mentors, role models, and lifelong learners themselves. Handpicked for their expertise and their genuine love for children, our faculty is the backbone of the NPS experience.</p>
+          <p>Every teacher at Nirmaan Public School is trained in modern pedagogical methods, including activity-based learning, digital instruction, and differentiated teaching strategies that cater to each child's unique learning style.</p>
+
+          <div class="faculty-features">
+            <div class="faculty-feature-item">
+              <div class="faculty-f-icon"><i class="fas fa-award"></i></div>
+              <span class="faculty-f-text">Qualified, certified educators with years of teaching experience</span>
+            </div>
+            <div class="faculty-feature-item">
+              <div class="faculty-f-icon"><i class="fas fa-heart"></i></div>
+              <span class="faculty-f-text">Caring mentors who nurture each student's emotional and intellectual growth</span>
+            </div>
+            <div class="faculty-feature-item">
+              <div class="faculty-f-icon"><i class="fas fa-laptop"></i></div>
+              <span class="faculty-f-text">Trained in smart classroom technology and digital-age pedagogy</span>
+            </div>
+            <div class="faculty-feature-item">
+              <div class="faculty-f-icon"><i class="fas fa-sync-alt"></i></div>
+              <span class="faculty-f-text">Continuous professional development and regular training workshops</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Image -->
+        <div class="faculty-img-wrap reveal delay-200">
+          <div class="faculty-img-main">
+            <img src="images/activity-learning.png" alt="Activity-based learning at Nirmaan Public School" />
+          </div>
+          <div class="faculty-float-stat">
+            <div class="big">25+</div>
+            <div class="sm">Expert Teachers</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== OUR VALUES ===== -->
+  <section class="section values-section" id="values" aria-labelledby="values-heading">
+    <div class="container">
+      <div class="section-center reveal">
+        <span class="section-label"><i class="fas fa-gem"></i> Our Core Values</span>
+        <h2 id="values-heading">The Pillars That Define Us</h2>
+        <p>Everything we do at Nirmaan Public School is guided by four core values that shape our culture, our classrooms, and our community.</p>
+      </div>
+
+      <div class="values-grid">
+        <div class="value-card reveal">
+          <div class="value-icon vi-1"><i class="fas fa-user-shield"></i></div>
+          <h4>Character Building</h4>
+          <p>We instill integrity, discipline, empathy, and moral values that shape students into responsible citizens and compassionate human beings.</p>
+        </div>
+        <div class="value-card reveal delay-100">
+          <div class="value-icon vi-2"><i class="fas fa-users"></i></div>
+          <h4>Holistic Development</h4>
+          <p>Academic excellence meets creative expression, physical fitness, and social skills — ensuring every child grows in mind, body, and spirit.</p>
+        </div>
+        <div class="value-card reveal delay-200">
+          <div class="value-icon vi-3"><i class="fas fa-shield-alt"></i></div>
+          <h4>Safe &amp; Nurturing Environment</h4>
+          <p>CCTV surveillance, trained security, and a child-safe campus ensure your child is protected while learning in a warm, welcoming atmosphere.</p>
+        </div>
+        <div class="value-card reveal delay-300">
+          <div class="value-icon vi-4"><i class="fas fa-trophy"></i></div>
+          <h4>Academic Excellence</h4>
+          <p>A rigorous National Curriculum, smart classrooms, and activity-based learning drive exceptional results and a lifelong love for knowledge.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STATS SECTION ===== -->
+  <section class="section about-stats" id="stats" aria-label="School statistics">
+    <div class="container">
+      <div class="section-center reveal">
+        <span class="section-label"><i class="fas fa-chart-bar"></i> By the Numbers</span>
+        <h2>NPS at a Glance</h2>
+        <p>Numbers that reflect our commitment to quality education and holistic student development.</p>
+      </div>
+
+      <div class="about-stats-grid">
+        <div class="about-stat-card reveal">
+          <div class="about-stat-icon si-1"><i class="fas fa-users"></i></div>
+          <div class="about-stat-number" data-count="500">500+</div>
+          <div class="about-stat-label">Happy Students</div>
+        </div>
+        <div class="about-stat-card reveal delay-100">
+          <div class="about-stat-icon si-2"><i class="fas fa-chalkboard-teacher"></i></div>
+          <div class="about-stat-number" data-count="25">25+</div>
+          <div class="about-stat-label">Expert Teachers</div>
+        </div>
+        <div class="about-stat-card reveal delay-200">
+          <div class="about-stat-icon si-3"><i class="fas fa-layer-group"></i></div>
+          <div class="about-stat-number" data-count="11">11</div>
+          <div class="about-stat-label">Grade Levels</div>
+        </div>
+        <div class="about-stat-card reveal delay-300">
+          <div class="about-stat-icon si-4"><i class="fas fa-globe"></i></div>
+          <div class="about-stat-number">100%</div>
+          <div class="about-stat-label">English Medium</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA SECTION ===== -->
+  <section class="section" style="background:var(--off-white);" aria-label="Admission CTA">
+    <div class="container">
+      <div style="background:linear-gradient(135deg, var(--blue-deep), #1e3a9f); border-radius:var(--radius-xl); padding:64px 48px; text-align:center; position:relative; overflow:hidden;" class="reveal">
+        <div class="blob blob-yellow-1" style="opacity:0.08;"></div>
+        <div style="font-size:3rem;margin-bottom:16px;position:relative;z-index:1;">🎓</div>
+        <h2 style="color:white;margin-bottom:14px;position:relative;z-index:1;">Join the Nirmaan Family Today</h2>
+        <p style="color:rgba(255,255,255,0.8);max-width:560px;margin:0 auto 32px;font-size:1.02rem;position:relative;z-index:1;">
+          Give your child the gift of quality education in a safe, nurturing environment. Admissions for 2026-27 are now open — limited seats available.
+        </p>
+        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1;">
+          <a href="admissions.html" class="btn btn-primary btn-lg" id="cta-enroll-btn">
+            <i class="fas fa-graduation-cap"></i> Enroll Now — 2026-27
+          </a>
+          <a href="tel:9918225511" class="btn btn-outline" id="cta-call-btn">
+            <i class="fas fa-phone-alt"></i> Call: 991-822-5511
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Brand -->
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="images/logo.png" alt="NPS Logo" />
+            <div class="footer-logo-text">
+              <strong>Nirmaan Public School</strong>
+              <span>Learn · Grow · Succeed</span>
+            </div>
+          </div>
+          <p class="footer-desc">
+            Building Bright Futures with Quality Education in Sultanpur, Uttar Pradesh. 
+            English Medium schooling from Playgroup to Grade 10 under the National Curriculum.
+          </p>
+          <div class="footer-socials">
+            <a href="https://www.facebook.com/nirmaan.public.school.aliganj/" class="social-btn" aria-label="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/nirmaan_public_school/" class="social-btn" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@nirmanpublicschoolaliganj4860/videos" class="social-btn" aria-label="YouTube" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://wa.me/919918225511" class="social-btn" aria-label="WhatsApp" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-col">
+          <h5>Quick Links</h5>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="academics.html">Academics</a></li>
+            <li><a href="admissions.html">Admissions 2026-27</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <!-- Programs -->
+        <div class="footer-col">
+          <h5>Our Programs</h5>
+          <ul class="footer-links">
+            <li><a href="academics.html#early">Early Childhood (Playgroup–KG)</a></li>
+            <li><a href="academics.html#primary">Primary (Grades 1–5)</a></li>
+            <li><a href="academics.html#middle">Middle School (Grades 6–8)</a></li>
+            <li><a href="academics.html#secondary">Secondary (Grades 9–10)</a></li>
+            <li><a href="academics.html#smart">Smart Classrooms</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-col">
+          <h5>Contact Us</h5>
+          <div class="footer-contact-item">
+            <div class="footer-contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div>Aliganj Bazar, Sultanpur (U.P.) 227805</div>
+          </div>
+          <div class="footer-contact-item">
+            <div class="footer-contact-icon"><i class="fas fa-phone"></i></div>
+            <div><a href="tel:9918225511" style="color:inherit;">991-822-5511</a></div>
+          </div>
+          <div class="footer-contact-item">
+            <div class="footer-contact-icon"><i class="fas fa-envelope"></i></div>
+            <div>info@nirmaanpublicschool.in</div>
+          </div>
+          <div class="footer-contact-item">
+            <div class="footer-contact-icon"><i class="fas fa-clock"></i></div>
+            <div>Mon–Sat: 8:00 AM – 3:00 PM</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <p>&copy; 2026 Nirmaan Public School. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    // ---- Navbar scroll effect ----
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    // ---- Mobile hamburger ----
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', false);
+      });
+    });
+
+    // ---- Reveal on scroll ----
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+    reveals.forEach(el => observer.observe(el));
+
+    // ---- Counter animation for stats ----
+    document.querySelectorAll('.about-stat-number').forEach(el => {
+      const text = el.textContent.trim();
+      const match = text.match(/[\d.]+/);
+      if (!match) return;
+      const num = match[0];
+      const prefix = text.split(num)[0];
+      const suffix = text.split(num)[1] || '';
+      el.dataset.target = num;
+
+      const statObs = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          const duration = 1800;
+          let start = null;
+          const isDecimal = num.includes('.');
+          const numTarget = parseFloat(num);
+          function step(ts) {
+            if (!start) start = ts;
+            const p = Math.min((ts - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - p, 3);
+            const cur = eased * numTarget;
+            el.textContent = prefix + (isDecimal ? cur.toFixed(1) : Math.floor(cur)) + suffix;
+            if (p < 1) requestAnimationFrame(step);
+            else el.textContent = prefix + num + suffix;
+          }
+          requestAnimationFrame(step);
+          statObs.unobserve(el);
+        }
+      }, { threshold: 0.5 });
+      statObs.observe(el);
+    });
+
+    // ---- Smooth scroll ----
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', e => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          window.scrollTo({ top: target.offsetTop - 90, behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
