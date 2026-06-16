@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 const fs = require('fs/promises');
 const path = require('path');
 
@@ -111,56 +111,30 @@ function validateAdmissionEnquiry(body) {
   return { enquiry, errors };
 }
 
-async function getTransporter() {
-  // Support both EMAIL_USER/EMAIL_PASS (Render) and SMTP_USER/SMTP_PASS naming conventions
-  const smtpUser = process.env.SMTP_USER || process.env.EMAIL_USER;
-  // Strip spaces from app password — Gmail shows it as "xxxx xxxx xxxx xxxx" but SMTP needs no spaces
-  const smtpPass = (process.env.SMTP_PASS || process.env.EMAIL_PASS || '').replace(/\s+/g, '');
+// Send email via Resend API (HTTPS-based — works on Render, Vercel, Railway, etc.)
+async function sendViaResend({ to, subject, html, text, replyTo }) {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) throw new Error('RESEND_API_KEY is not set.');
 
-  if (!smtpUser || !smtpPass) {
-    console.warn('Missing email credentials (EMAIL_USER / EMAIL_PASS). Using Ethereal test account...');
-    const testAccount = await nodemailer.createTestAccount();
-    return nodemailer.createTransport({
-      host: "smtp.ethereal.email",
-      port: 587,
-      secure: false,
-      auth: {
-        user: testAccount.user,
-        pass: testAccount.pass,
-      },
-    });
-  }
+  const resend = new Resend(apiKey);
+  const fromAddress = process.env.RESEND_FROM || 'Nirmaan Public School <onboarding@resend.dev>';
 
-  // Default to Gmail SMTP if no host is explicitly set
-  const smtpHost = process.env.SMTP_HOST || 'smtp.gmail.com';
-  const smtpPort = Number(process.env.SMTP_PORT) || 587;
-  const smtpSecure = String(process.env.SMTP_SECURE).toLowerCase() === 'true';
-
-  console.log(`[SMTP] Connecting to ${smtpHost}:${smtpPort} (secure=${smtpSecure}) as ${smtpUser}`);
-
-  const transporter = nodemailer.createTransport({
-    host: smtpHost,
-    port: smtpPort,
-    secure: smtpSecure,
-    auth: {
-      user: smtpUser,
-      pass: smtpPass
-    },
-    tls: {
-      rejectUnauthorized: false  // Required on some cloud platforms (Render, Railway, etc.)
-    }
+  const { data, error } = await resend.emails.send({
+    from: fromAddress,
+    to: Array.isArray(to) ? to : [to],
+    replyTo,
+    subject,
+    html,
+    text
   });
 
-  // Verify connection so we fail fast with a clear error
-  try {
-    await transporter.verify();
-    console.log('[SMTP] Connection verified successfully.');
-  } catch (verifyErr) {
-    console.error('[SMTP] Connection FAILED:', verifyErr.message);
-    throw verifyErr;  // Bubble up so the route returns a 500 with detail
+  if (error) {
+    console.error('[Resend] Send failed:', error);
+    throw new Error(error.message || 'Resend API error');
   }
 
-  return transporter;
+  console.log('[Resend] Email sent, id:', data?.id);
+  return data;
 }
 
 function renderFieldRows(enquiry) {
@@ -323,61 +297,37 @@ app.post('/api/admission-enquiries', async (req, res) => {
     console.warn('Admission enquiry file save skipped (non-fatal):', error.message);
   }
 
-  let transporter;
-  try {
-    transporter = await getTransporter();
-  } catch (error) {
-    console.error('SMTP configuration error:', error);
-    return res.status(500).json({
-      success: false,
-      message: 'Email service is not configured. Please contact the school office.'
-    });
-  }
-
-  const from = process.env.SMTP_FROM || `"Nirmaan Public School" <${process.env.SMTP_USER || process.env.EMAIL_USER || 'no-reply@nirmaan.school'}>`;
   const studentName = `${enquiry.firstName} ${enquiry.lastName}`;
-  const adminMail = {
-    from,
-    to: ADMISSIONS_EMAIL,
-    replyTo: enquiry.emailAddress,
-    subject: `New Admission Enquiry - ${studentName}`,
-    text: buildPlainText(enquiry),
-    html: adminEmailHtml(enquiry)
-  };
-  const parentMail = {
-    from,
-    to: enquiry.emailAddress,
-    replyTo: ADMISSIONS_EMAIL,
-    subject: 'Admission Enquiry Received',
-    text: buildPlainText(enquiry, true),
-    html: parentEmailHtml(enquiry)
-  };
 
   const [adminResult, parentResult] = await Promise.allSettled([
-    transporter.sendMail(adminMail),
-    transporter.sendMail(parentMail)
+    sendViaResend({
+      to: ADMISSIONS_EMAIL,
+      replyTo: enquiry.emailAddress,
+      subject: `New Admission Enquiry - ${studentName}`,
+      html: adminEmailHtml(enquiry),
+      text: buildPlainText(enquiry)
+    }),
+    sendViaResend({
+      to: enquiry.emailAddress,
+      replyTo: ADMISSIONS_EMAIL,
+      subject: 'Admission Enquiry Received — Nirmaan Public School',
+      html: parentEmailHtml(enquiry),
+      text: buildPlainText(enquiry, true)
+    })
   ]);
 
+  // Admin email MUST succeed — school needs to know about the enquiry
   if (adminResult.status === 'rejected') {
-    console.error('Admin admission enquiry email failed:', adminResult.reason);
-  }
-
-  if (parentResult.status === 'rejected') {
-    console.error('Parent admission confirmation email failed:', parentResult.reason);
-  }
-
-  // If admin email failed (school didn't get notified), that's a real problem
-  if (adminResult.status === 'rejected') {
-    console.error('CRITICAL: Admin notification email failed:', adminResult.reason);
+    console.error('[Email] CRITICAL: Admin notification failed:', adminResult.reason?.message);
     return res.status(502).json({
       success: false,
-      message: 'Your enquiry could not be delivered. Please call us at 991-822-5511.'
+      message: 'Your enquiry could not be delivered right now. Please call us at 991-822-5511.'
     });
   }
 
-  // Parent confirmation email failing is non-critical — submission still succeeded
+  // Parent confirmation is best-effort
   if (parentResult.status === 'rejected') {
-    console.warn('Parent confirmation email failed (non-fatal):', parentResult.reason);
+    console.warn('[Email] Parent confirmation failed (non-fatal):', parentResult.reason?.message);
   }
 
   return res.status(200).json({
