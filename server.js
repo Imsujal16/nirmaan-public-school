@@ -13,7 +13,9 @@ const ADMISSIONS_EMAIL = process.env.SCHOOL_ADMISSIONS_EMAIL || 'imsujal16@gmail
 const DATA_DIR = path.join(__dirname, 'data');
 const ENQUIRIES_FILE = path.join(DATA_DIR, 'admission-enquiries.jsonl');
 
+app.set('trust proxy', 1); // Required on Render/Heroku/Railway — sits behind a reverse proxy
 app.disable('x-powered-by');
+
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(express.json({ limit: '25kb' }));
 app.use(express.urlencoded({ extended: false, limit: '25kb' }));
