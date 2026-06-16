@@ -109,11 +109,12 @@ function validateAdmissionEnquiry(body) {
 }
 
 async function getTransporter() {
-  const required = ['SMTP_HOST', 'SMTP_PORT', 'SMTP_USER', 'SMTP_PASS'];
-  const missing = required.filter((key) => !process.env[key]);
+  // Support both EMAIL_USER/EMAIL_PASS (Render) and SMTP_USER/SMTP_PASS naming conventions
+  const smtpUser = process.env.SMTP_USER || process.env.EMAIL_USER;
+  const smtpPass = process.env.SMTP_PASS || process.env.EMAIL_PASS;
 
-  if (missing.length) {
-    console.warn(`Missing SMTP environment variable(s): ${missing.join(', ')}. Using Ethereal test account...`);
+  if (!smtpUser || !smtpPass) {
+    console.warn('Missing email credentials (EMAIL_USER / EMAIL_PASS). Using Ethereal test account...');
     const testAccount = await nodemailer.createTestAccount();
     return nodemailer.createTransport({
       host: "smtp.ethereal.email",
@@ -126,13 +127,20 @@ async function getTransporter() {
     });
   }
 
+  // Default to Gmail SMTP if no host is explicitly set
+  const smtpHost = process.env.SMTP_HOST || 'smtp.gmail.com';
+  const smtpPort = Number(process.env.SMTP_PORT) || 587;
+  const smtpSecure = String(process.env.SMTP_SECURE).toLowerCase() === 'true' || false;
+
+  console.log(`Using SMTP: ${smtpHost}:${smtpPort} for user ${smtpUser}`);
+
   return nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT),
-    secure: String(process.env.SMTP_SECURE).toLowerCase() === 'true',
+    host: smtpHost,
+    port: smtpPort,
+    secure: smtpSecure,
     auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS
+      user: smtpUser,
+      pass: smtpPass
     }
   });
 }
@@ -308,7 +316,7 @@ app.post('/api/admission-enquiries', async (req, res) => {
     });
   }
 
-  const from = process.env.SMTP_FROM || process.env.SMTP_USER || '"Nirmaan Public School" <no-reply@ethereal.email>';
+  const from = process.env.SMTP_FROM || `"Nirmaan Public School" <${process.env.SMTP_USER || process.env.EMAIL_USER || 'no-reply@nirmaan.school'}>`;
   const studentName = `${enquiry.firstName} ${enquiry.lastName}`;
   const adminMail = {
     from,
