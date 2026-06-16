@@ -2,3 +2,17 @@
 node_modules/
 data/
 *.log
+
+# Temporary helper/fix scripts
+clean.js
+dynamic_fix.js
+fix.js
+fix_unicode.js
+update_links.js
+update_links_2.js
+tools.json
+
+# Junk image files in public root
+public/WhatsApp*
+public/design*
+public/images.jpeg
