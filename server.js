@@ -20,10 +20,11 @@ app.use(express.urlencoded({ extended: false, limit: '25kb' }));
 
 app.use('/api/', rateLimit({
   windowMs: 15 * 60 * 1000,
-  limit: 25,
-  standardHeaders: true,
+  max: 25,
+  standardHeaders: 'draft-7',
   legacyHeaders: false
 }));
+
 
 function clean(value) {
   return String(value || '').trim().replace(/\s+/g, ' ');

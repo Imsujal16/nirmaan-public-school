@@ -846,11 +846,26 @@
       };
 
       try {
-        const response = await fetch('/api/admission-enquiries', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
+
+        let response;
+        try {
+          response = await fetch('/api/admission-enquiries', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+            signal: controller.signal
+          });
+        } catch (fetchErr) {
+          clearTimeout(timeoutId);
+          if (fetchErr.name === 'AbortError') {
+            throw new Error('Request timed out. Please check your internet connection and try again.');
+          }
+          throw new Error('Network error. Please check your connection and try again.');
+        }
+        clearTimeout(timeoutId);
+
         const result = await response.json().catch(() => ({}));
 
         if (!response.ok || !result.success) {
