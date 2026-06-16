@@ -112,7 +112,8 @@ function validateAdmissionEnquiry(body) {
 async function getTransporter() {
   // Support both EMAIL_USER/EMAIL_PASS (Render) and SMTP_USER/SMTP_PASS naming conventions
   const smtpUser = process.env.SMTP_USER || process.env.EMAIL_USER;
-  const smtpPass = process.env.SMTP_PASS || process.env.EMAIL_PASS;
+  // Strip spaces from app password — Gmail shows it as "xxxx xxxx xxxx xxxx" but SMTP needs no spaces
+  const smtpPass = (process.env.SMTP_PASS || process.env.EMAIL_PASS || '').replace(/\s+/g, '');
 
   if (!smtpUser || !smtpPass) {
     console.warn('Missing email credentials (EMAIL_USER / EMAIL_PASS). Using Ethereal test account...');
@@ -131,19 +132,33 @@ async function getTransporter() {
   // Default to Gmail SMTP if no host is explicitly set
   const smtpHost = process.env.SMTP_HOST || 'smtp.gmail.com';
   const smtpPort = Number(process.env.SMTP_PORT) || 587;
-  const smtpSecure = String(process.env.SMTP_SECURE).toLowerCase() === 'true' || false;
+  const smtpSecure = String(process.env.SMTP_SECURE).toLowerCase() === 'true';
 
-  console.log(`Using SMTP: ${smtpHost}:${smtpPort} for user ${smtpUser}`);
+  console.log(`[SMTP] Connecting to ${smtpHost}:${smtpPort} (secure=${smtpSecure}) as ${smtpUser}`);
 
-  return nodemailer.createTransport({
+  const transporter = nodemailer.createTransport({
     host: smtpHost,
     port: smtpPort,
     secure: smtpSecure,
     auth: {
       user: smtpUser,
       pass: smtpPass
+    },
+    tls: {
+      rejectUnauthorized: false  // Required on some cloud platforms (Render, Railway, etc.)
     }
   });
+
+  // Verify connection so we fail fast with a clear error
+  try {
+    await transporter.verify();
+    console.log('[SMTP] Connection verified successfully.');
+  } catch (verifyErr) {
+    console.error('[SMTP] Connection FAILED:', verifyErr.message);
+    throw verifyErr;  // Bubble up so the route returns a 500 with detail
+  }
+
+  return transporter;
 }
 
 function renderFieldRows(enquiry) {
