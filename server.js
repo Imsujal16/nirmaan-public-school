@@ -290,14 +290,11 @@ app.post('/api/admission-enquiries', async (req, res) => {
     });
   }
 
+  // Best-effort file save — failure does NOT block the response
   try {
     await saveEnquiry(enquiry);
   } catch (error) {
-    console.error('Admission enquiry persistence failed:', error);
-    return res.status(500).json({
-      success: false,
-      message: 'We could not process the enquiry right now. Please try again.'
-    });
+    console.warn('Admission enquiry file save skipped (non-fatal):', error.message);
   }
 
   let transporter;
@@ -343,11 +340,18 @@ app.post('/api/admission-enquiries', async (req, res) => {
     console.error('Parent admission confirmation email failed:', parentResult.reason);
   }
 
-  if (adminResult.status === 'rejected' || parentResult.status === 'rejected') {
+  // If admin email failed (school didn't get notified), that's a real problem
+  if (adminResult.status === 'rejected') {
+    console.error('CRITICAL: Admin notification email failed:', adminResult.reason);
     return res.status(502).json({
       success: false,
-      message: 'Your enquiry was received, but one or more notification emails could not be sent. Please call the school office to confirm.'
+      message: 'Your enquiry could not be delivered. Please call us at 991-822-5511.'
     });
+  }
+
+  // Parent confirmation email failing is non-critical — submission still succeeded
+  if (parentResult.status === 'rejected') {
+    console.warn('Parent confirmation email failed (non-fatal):', parentResult.reason);
   }
 
   return res.status(200).json({
