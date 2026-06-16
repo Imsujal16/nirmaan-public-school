@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
-const { Resend } = require('resend');
+const nodemailer = require('nodemailer');
 const fs = require('fs/promises');
 const path = require('path');
 
@@ -13,9 +13,8 @@ const ADMISSIONS_EMAIL = process.env.SCHOOL_ADMISSIONS_EMAIL || 'imsujal16@gmail
 const DATA_DIR = path.join(__dirname, 'data');
 const ENQUIRIES_FILE = path.join(DATA_DIR, 'admission-enquiries.jsonl');
 
-app.set('trust proxy', 1); // Required on Render/Heroku/Railway — sits behind a reverse proxy
+app.set('trust proxy', 1);
 app.disable('x-powered-by');
-
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(express.json({ limit: '25kb' }));
 app.use(express.urlencoded({ extended: false, limit: '25kb' }));
@@ -26,7 +25,6 @@ app.use('/api/', rateLimit({
   standardHeaders: 'draft-7',
   legacyHeaders: false
 }));
-
 
 function clean(value) {
   return String(value || '').trim().replace(/\s+/g, ' ');
@@ -111,30 +109,33 @@ function validateAdmissionEnquiry(body) {
   return { enquiry, errors };
 }
 
-// Send email via Resend API (HTTPS-based — works on Render, Vercel, Railway, etc.)
-async function sendViaResend({ to, subject, html, text, replyTo }) {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) throw new Error('RESEND_API_KEY is not set.');
+async function getTransporter() {
+  const required = ['SMTP_HOST', 'SMTP_PORT', 'SMTP_USER', 'SMTP_PASS'];
+  const missing = required.filter((key) => !process.env[key]);
 
-  const resend = new Resend(apiKey);
-  const fromAddress = process.env.RESEND_FROM || 'Nirmaan Public School <onboarding@resend.dev>';
-
-  const { data, error } = await resend.emails.send({
-    from: fromAddress,
-    to: Array.isArray(to) ? to : [to],
-    replyTo,
-    subject,
-    html,
-    text
-  });
-
-  if (error) {
-    console.error('[Resend] Send failed:', error);
-    throw new Error(error.message || 'Resend API error');
+  if (missing.length) {
+    console.warn(`Missing SMTP environment variable(s): ${missing.join(', ')}. Using Ethereal test account...`);
+    const testAccount = await nodemailer.createTestAccount();
+    return nodemailer.createTransport({
+      host: "smtp.ethereal.email",
+      port: 587,
+      secure: false,
+      auth: {
+        user: testAccount.user,
+        pass: testAccount.pass,
+      },
+    });
   }
 
-  console.log('[Resend] Email sent, id:', data?.id);
-  return data;
+  return nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: Number(process.env.SMTP_PORT),
+    secure: String(process.env.SMTP_SECURE).toLowerCase() === 'true',
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS
+    }
+  });
 }
 
 function renderFieldRows(enquiry) {
@@ -290,44 +291,64 @@ app.post('/api/admission-enquiries', async (req, res) => {
     });
   }
 
-  // Best-effort file save — failure does NOT block the response
   try {
     await saveEnquiry(enquiry);
   } catch (error) {
-    console.warn('Admission enquiry file save skipped (non-fatal):', error.message);
-  }
-
-  const studentName = `${enquiry.firstName} ${enquiry.lastName}`;
-
-  const [adminResult, parentResult] = await Promise.allSettled([
-    sendViaResend({
-      to: ADMISSIONS_EMAIL,
-      replyTo: enquiry.emailAddress,
-      subject: `New Admission Enquiry - ${studentName}`,
-      html: adminEmailHtml(enquiry),
-      text: buildPlainText(enquiry)
-    }),
-    sendViaResend({
-      to: enquiry.emailAddress,
-      replyTo: ADMISSIONS_EMAIL,
-      subject: 'Admission Enquiry Received — Nirmaan Public School',
-      html: parentEmailHtml(enquiry),
-      text: buildPlainText(enquiry, true)
-    })
-  ]);
-
-  // Admin email MUST succeed — school needs to know about the enquiry
-  if (adminResult.status === 'rejected') {
-    console.error('[Email] CRITICAL: Admin notification failed:', adminResult.reason?.message);
-    return res.status(502).json({
+    console.error('Admission enquiry persistence failed:', error);
+    return res.status(500).json({
       success: false,
-      message: 'Your enquiry could not be delivered right now. Please call us at 991-822-5511.'
+      message: 'We could not process the enquiry right now. Please try again.'
     });
   }
 
-  // Parent confirmation is best-effort
+  let transporter;
+  try {
+    transporter = await getTransporter();
+  } catch (error) {
+    console.error('SMTP configuration error:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Email service is not configured. Please contact the school office.'
+    });
+  }
+
+  const from = process.env.SMTP_FROM || process.env.SMTP_USER || '"Nirmaan Public School" <no-reply@ethereal.email>';
+  const studentName = `${enquiry.firstName} ${enquiry.lastName}`;
+  const adminMail = {
+    from,
+    to: ADMISSIONS_EMAIL,
+    replyTo: enquiry.emailAddress,
+    subject: `New Admission Enquiry - ${studentName}`,
+    text: buildPlainText(enquiry),
+    html: adminEmailHtml(enquiry)
+  };
+  const parentMail = {
+    from,
+    to: enquiry.emailAddress,
+    replyTo: ADMISSIONS_EMAIL,
+    subject: 'Admission Enquiry Received',
+    text: buildPlainText(enquiry, true),
+    html: parentEmailHtml(enquiry)
+  };
+
+  const [adminResult, parentResult] = await Promise.allSettled([
+    transporter.sendMail(adminMail),
+    transporter.sendMail(parentMail)
+  ]);
+
+  if (adminResult.status === 'rejected') {
+    console.error('Admin admission enquiry email failed:', adminResult.reason);
+  }
+
   if (parentResult.status === 'rejected') {
-    console.warn('[Email] Parent confirmation failed (non-fatal):', parentResult.reason?.message);
+    console.error('Parent admission confirmation email failed:', parentResult.reason);
+  }
+
+  if (adminResult.status === 'rejected' || parentResult.status === 'rejected') {
+    return res.status(502).json({
+      success: false,
+      message: 'Your enquiry was received, but one or more notification emails could not be sent. Please call the school office to confirm.'
+    });
   }
 
   return res.status(200).json({
