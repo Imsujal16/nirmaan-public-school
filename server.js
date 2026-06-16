@@ -4,6 +4,7 @@ const express = require('express');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 const fs = require('fs/promises');
 const path = require('path');
 
@@ -134,8 +135,54 @@ async function getTransporter() {
     auth: {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS
-    }
+    },
+    connectionTimeout: 8000,
+    greetingTimeout: 8000,
+    socketTimeout: 10000
   });
+}
+
+// Resend fallback for cloud platforms that block SMTP
+async function sendViaResend({ from, to, replyTo, subject, text, html }) {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) throw new Error('RESEND_API_KEY not set — cannot fallback to Resend.');
+
+  const resend = new Resend(apiKey);
+  const fromAddr = process.env.RESEND_FROM || 'Nirmaan Public School <onboarding@resend.dev>';
+
+  const { data, error } = await resend.emails.send({
+    from: fromAddr,
+    to: Array.isArray(to) ? to : [to],
+    replyTo,
+    subject,
+    html,
+    text
+  });
+
+  if (error) throw new Error(error.message || 'Resend API error');
+  console.log('[Resend] Email sent, id:', data?.id);
+  return data;
+}
+
+// Smart send: tries SMTP first, falls back to Resend if SMTP fails
+async function sendEmail(mailOptions) {
+  // Try SMTP first (works on local / VPS)
+  try {
+    const transporter = await getTransporter();
+    const result = await transporter.sendMail(mailOptions);
+    console.log('[SMTP] Email sent to:', mailOptions.to);
+    return result;
+  } catch (smtpErr) {
+    console.warn('[SMTP] Failed:', smtpErr.message);
+  }
+
+  // Fallback to Resend (works on Vercel / Render / Railway)
+  if (process.env.RESEND_API_KEY) {
+    console.log('[Fallback] Trying Resend API...');
+    return sendViaResend(mailOptions);
+  }
+
+  throw new Error('Both SMTP and Resend failed. No email could be sent.');
 }
 
 function renderFieldRows(enquiry) {
@@ -301,17 +348,6 @@ app.post('/api/admission-enquiries', async (req, res) => {
     });
   }
 
-  let transporter;
-  try {
-    transporter = await getTransporter();
-  } catch (error) {
-    console.error('SMTP configuration error:', error);
-    return res.status(500).json({
-      success: false,
-      message: 'Email service is not configured. Please contact the school office.'
-    });
-  }
-
   const from = process.env.SMTP_FROM || process.env.SMTP_USER || '"Nirmaan Public School" <no-reply@ethereal.email>';
   const studentName = `${enquiry.firstName} ${enquiry.lastName}`;
   const adminMail = {
@@ -332,23 +368,20 @@ app.post('/api/admission-enquiries', async (req, res) => {
   };
 
   const [adminResult, parentResult] = await Promise.allSettled([
-    transporter.sendMail(adminMail),
-    transporter.sendMail(parentMail)
+    sendEmail(adminMail),
+    sendEmail(parentMail)
   ]);
 
   if (adminResult.status === 'rejected') {
-    console.error('Admin admission enquiry email failed:', adminResult.reason);
+    console.error('[Email] Admin email failed:', adminResult.reason?.message);
+    return res.status(502).json({
+      success: false,
+      message: 'Your enquiry could not be delivered right now. Please call us at 991-822-5511.'
+    });
   }
 
   if (parentResult.status === 'rejected') {
-    console.error('Parent admission confirmation email failed:', parentResult.reason);
-  }
-
-  if (adminResult.status === 'rejected' || parentResult.status === 'rejected') {
-    return res.status(502).json({
-      success: false,
-      message: 'Your enquiry was received, but one or more notification emails could not be sent. Please call the school office to confirm.'
-    });
+    console.warn('[Email] Parent confirmation failed (non-fatal):', parentResult.reason?.message);
   }
 
   return res.status(200).json({
