@@ -366,6 +366,11 @@ app.use((req, res) => {
   res.status(404).json({ success: false, message: 'Not found.' });
 });
 
-app.listen(PORT, () => {
-  console.log(`Nirmaan Public School website running at http://localhost:${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Nirmaan Public School website running at http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;
+
