@@ -12,7 +12,7 @@ const path = require('path');
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
 const ADMISSIONS_EMAIL = process.env.SCHOOL_ADMISSIONS_EMAIL || 'imsujal16@gmail.com';
-const DATA_DIR = path.join(__dirname, 'data');
+const DATA_DIR = process.env.VERCEL ? '/tmp' : path.join(__dirname, 'data');
 const ENQUIRIES_FILE = path.join(DATA_DIR, 'admission-enquiries.jsonl');
 
 app.set('trust proxy', 1);
