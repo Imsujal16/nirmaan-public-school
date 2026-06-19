@@ -4,6 +4,7 @@
     "dev": "node server.js"
   },
   "dependencies": {
+    "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "express-rate-limit": "^8.5.2",
@@ -11,5 +12,9 @@
     "iconv-lite": "^0.7.2",
     "nodemailer": "^9.0.0",
     "resend": "^6.12.4"
+  },
+  "devDependencies": {
+    "heic-convert": "^2.1.0",
+    "sharp": "^0.35.1"
   }
 }

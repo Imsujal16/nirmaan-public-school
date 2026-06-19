@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
+const cors = require('cors');
 const nodemailer = require('nodemailer');
 const { Resend } = require('resend');
 const fs = require('fs/promises');
@@ -17,6 +18,7 @@ const ENQUIRIES_FILE = path.join(DATA_DIR, 'admission-enquiries.jsonl');
 app.set('trust proxy', 1);
 app.disable('x-powered-by');
 app.use(helmet({ contentSecurityPolicy: false }));
+app.use(cors({ origin: '*' })); // Allow cross-origin requests from Vercel frontend
 app.use(express.json({ limit: '25kb' }));
 app.use(express.urlencoded({ extended: false, limit: '25kb' }));
 
