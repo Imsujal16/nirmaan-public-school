@@ -2,7 +2,7 @@
   "version": 2,
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/index.js" },
+    { "source": "/api/(.*)", "destination": "https://nirmaan-backend-087c.onrender.com/api/$1" },
     { "source": "/(.*)", "destination": "/public/$1" }
   ]
 }
