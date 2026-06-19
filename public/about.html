@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -8,8 +8,6 @@
   <title>About Us | Nirmaan Public School — Sultanpur</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <!-- heic2any: client-side HEIC→JPEG converter -->
-  <script src="https://cdn.jsdelivr.net/npm/heic2any/dist/heic2any.min.js"></script>
   <style>
     /* ==========================================
        ABOUT PAGE — SPECIFIC STYLES
@@ -306,9 +304,9 @@
     .leader-card:hover { transform: translateY(-10px); box-shadow: 0 24px 56px rgba(10,37,100,0.13); border-color: rgba(10,37,100,0.15); }
     .leader-card:hover::before { opacity: 1; }
 
-    /* FIX 1: CSS crop — hides yellow banner bg, shows face only */
+    /* FIX 1: CSS crop — clean portrait, no unwanted borders */
     .leader-photo-ring {
-      width: 120px; height: 120px;
+      width: 130px; height: 130px;
       border-radius: 50%;
       overflow: hidden;
       margin: 0 auto 20px;
@@ -321,28 +319,16 @@
     .leader-photo-ring img {
       width: 100%; height: 100%;
       object-fit: cover;
-      object-position: center top;
-      transform: scale(1.3);
-      transition: transform 0.4s ease;
+      object-position: center 15%;
       display: block;
+      transition: transform 0.4s ease;
     }
-    .leader-card:hover .leader-photo-ring img { transform: scale(1.4); }
-    /* Per-card fine-tuning */
-    .leader-card[data-role="founder"]   .leader-photo-ring img { object-position: center 22%; transform: scale(1.35); }
-    .leader-card[data-role="director"]  .leader-photo-ring img { object-position: center 18%; transform: scale(1.3);  }
-    .leader-card[data-role="manager"]   .leader-photo-ring img { object-position: center 20%; transform: scale(1.35); }
-    .leader-card[data-role="principal"] .leader-photo-ring img { object-position: center 22%; transform: scale(1.3);  }
-
-    /* Loading state for HEIC images */
-    .leader-photo-ring img.heic-loading {
-      opacity: 0.4;
-      filter: blur(4px);
-      transition: opacity 0.4s, filter 0.4s;
-    }
-    .leader-photo-ring img.heic-ready {
-      opacity: 1;
-      filter: none;
-    }
+    .leader-card:hover .leader-photo-ring img { transform: scale(1.07); }
+    /* Per-card fine positioning */
+    .leader-card[data-role="founder"]   .leader-photo-ring img { object-position: center 12%; }
+    .leader-card[data-role="director"]  .leader-photo-ring img { object-position: center 18%; }
+    .leader-card[data-role="manager"]   .leader-photo-ring img { object-position: center 8%; }
+    .leader-card[data-role="principal"] .leader-photo-ring img { object-position: center 15%; }
 
     .leader-title-badge {
       display: inline-flex;
@@ -726,9 +712,7 @@
         <!-- Founder -->
         <div class="leader-card reveal" data-role="founder">
           <div class="leader-photo-ring">
-            <img class="heic-loading" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Crect width='120' height='120' rx='60' fill='%23cbd5e1'/%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' dominant-baseline='middle' font-size='36' fill='%2394a3b8'%3E👤%3C/text%3E%3C/svg%3E"
-                 data-src="./images%20for%20about%20us%20section/Founder_2.heic"
-                 data-role="founder"
+            <img src="./images for about us section/founder-portrait.jpg"
                  alt="Mr. Rajesh Dubey - Founder, Nirmaan Public School" />
           </div>
           <div class="leader-title-badge"><i class="fas fa-star"></i> Founder</div>
@@ -745,9 +729,7 @@
         <!-- Director -->
         <div class="leader-card reveal delay-100" data-role="director">
           <div class="leader-photo-ring">
-            <img class="heic-loading" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Crect width='120' height='120' rx='60' fill='%23cbd5e1'/%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' dominant-baseline='middle' font-size='36' fill='%2394a3b8'%3E👤%3C/text%3E%3C/svg%3E"
-                 data-src="./images%20for%20about%20us%20section/Director_2.heic"
-                 data-role="director"
+            <img src="./images for about us section/director-portrait.jpg"
                  alt="Mr. Ajay Kumar Dubey - Director, Nirmaan Public School" />
           </div>
           <div class="leader-title-badge"><i class="fas fa-briefcase"></i> Director</div>
@@ -764,9 +746,7 @@
         <!-- Manager -->
         <div class="leader-card reveal delay-200" data-role="manager">
           <div class="leader-photo-ring">
-            <img class="heic-loading" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Crect width='120' height='120' rx='60' fill='%23cbd5e1'/%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' dominant-baseline='middle' font-size='36' fill='%2394a3b8'%3E👤%3C/text%3E%3C/svg%3E"
-                 data-src="./images%20for%20about%20us%20section/Manager_2.heic"
-                 data-role="manager"
+            <img src="./images for about us section/manager-portrait.jpg"
                  alt="Mr. Satyendra Panday - Manager, Nirmaan Public School" />
           </div>
           <div class="leader-title-badge"><i class="fas fa-cog"></i> Manager</div>
@@ -783,9 +763,7 @@
         <!-- Principal -->
         <div class="leader-card reveal delay-300" data-role="principal">
           <div class="leader-photo-ring">
-            <img class="heic-loading" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Crect width='120' height='120' rx='60' fill='%23cbd5e1'/%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' dominant-baseline='middle' font-size='36' fill='%2394a3b8'%3E👤%3C/text%3E%3C/svg%3E"
-                 data-src="./images%20for%20about%20us%20section/Principal_2.heic"
-                 data-role="principal"
+            <img src="./images for about us section/principal-portrait.jpg"
                  alt="Mr. Faizan Ahmad Ansari - Principal, Nirmaan Public School" />
           </div>
           <div class="leader-title-badge"><i class="fas fa-school"></i> Principal</div>
@@ -1008,71 +986,40 @@
     // ---- Leader Data ----
     const leaderData = {
       founder: {
+        img: './images for about us section/founder-portrait.jpg',
         title: 'Founder, Nirmaan Public School',
         name: 'Mr. Rajesh Dubey \u201cNirmaan\u201d (Advocate)',
         quals: 'M.A., L.L.B.',
-        convertedSrc: null,
         message: 'Nowadays every parent wants to provide their child with the best education\u2014an education through which the child can build their life, move ahead, and adapt to changing times and ideas. For this reason, parents make every possible effort to give their children a good education. They enroll them in reputed educational institutions and spend substantial fees. This is necessary. However, our responsibility does not end there. Today we often see that parents do not have enough time for their children. Most parents only talk to their children and do not try to understand their problems. Today, we must change this traditional way of thinking and fully cooperate with our children. We need to make them aware of what is right and wrong in life. It is just as important to teach children what they should not do as it is to teach them what they should do. We save money for our children, but I request you not to leave only wealth for them. Instead, make them capable and educated. Friends, some decisions in life give immediate results, while some decisions bear fruit later. Therefore, I request you to support me in building a better future for your children. Friends, a single step has taught us that one step can take us further. Come, let us work together to educate our children and make their future bright.'
       },
       director: {
+        img: './images for about us section/director-portrait.jpg',
         title: 'Director, Nirmaan Public School',
         name: 'Mr. Ajay Kumar Dubey',
         quals: 'M.Sc. (Chemistry), B.Ed. (Lucknow University), L.L.B. (Awadh University)',
-        convertedSrc: null,
         message: 'Time is extremely important in the field of education for providing children with a better future. Primary education is especially important because it forms the foundation of a child\u2019s future. However, most parents focus more on their children\u2019s higher education and often overlook the importance of primary education. Today, many parents pay attention to higher studies, but they underestimate the significance of primary education. Just think about it: how can a strong building be constructed on a weak foundation? A tree can bear good fruit only when its roots are strong. If the roots are weak, the tree may be destroyed by storms. Similarly, if a child\u2019s primary education is not strong, how can we expect them to have a bright future? How will they be prepared to face competition? How will they establish themselves in society? And how will they become an inspiration for future generations? Therefore, I humbly request you to pay special attention to your children\u2019s primary education. Come, let us move forward together. Let us take one step forward. Take a step toward building a bright future for your children.'
       },
       manager: {
+        img: './images for about us section/manager-portrait.jpg',
         title: 'Manager, Nirmaan Public School',
         name: 'Mr. Satyendra Panday',
         quals: 'Language Expert',
-        convertedSrc: null,
         message: 'Today, education is no longer limited to books alone. In this era of globalization, competition has increased tremendously, and the role of technology has become extremely important. The intellectual development of children now requires the support of technology. God has gifted every child with a unique talent. It is our responsibility to identify that talent and help children progress in their chosen fields. Our goal should be to use modern technological tools such as Smart Classrooms and Computer Labs to prepare children for the future. These technologies provide a strong foundation for their intellectual growth and learning. Understanding this responsibility, it has become essential to provide children with education that is meaningful and aligned with their abilities and talents.'
       },
       principal: {
+        img: './images for about us section/principal-portrait.jpg',
         title: 'Principal, Nirmaan Public School',
         name: 'Mr. Faizan Ahmad Ansari',
         quals: 'M.A. B.Ed. (Awadh University)',
-        convertedSrc: null,
         message: 'Education is extremely important for modern society. It is the foundation of a successful life and plays a vital role in the mental development of children, helping them become responsible and capable citizens. Education builds a better society. It makes children cultured, aware, and self-reliant. Through education, children are empowered from an early age and are given opportunities to achieve their goals. Education also helps develop good values, discipline, and positive habits in children. Children are the future of the world. Therefore, education is of great importance to them. Their knowledge and abilities will keep the world alive and prosperous. For this reason, please ensure that your children receive a proper education. \u201cNo Knowledge Without College.\u201d'
       }
     };
-
-    // ---- HEIC -> JPEG async converter ----
-    async function convertHeicImages() {
-      const imgs = document.querySelectorAll('img[data-src]');
-      for (const img of imgs) {
-        const heicUrl = img.dataset.src;
-        const role    = img.dataset.role;
-        try {
-          const resp = await fetch(heicUrl);
-          if (!resp.ok) throw new Error('Fetch failed: ' + resp.status);
-          const blob = await resp.blob();
-          const jpegBlob = await heic2any({ blob, toType: 'image/jpeg', quality: 0.88 });
-          const objectUrl = URL.createObjectURL(jpegBlob);
-          img.src = objectUrl;
-          img.classList.remove('heic-loading');
-          img.classList.add('heic-ready');
-          if (role && leaderData[role]) { leaderData[role].convertedSrc = objectUrl; }
-        } catch (err) {
-          console.warn('HEIC conversion failed for', heicUrl, err);
-          img.classList.remove('heic-loading');
-          img.classList.add('heic-ready');
-        }
-      }
-    }
-    if (typeof heic2any !== 'undefined') {
-      convertHeicImages();
-    } else {
-      window.addEventListener('load', convertHeicImages);
-    }
 
     // ---- Modal open/close ----
     function openLeaderModal(role) {
       const d = leaderData[role];
       if (!d) return;
-      const cardImg = document.querySelector('.leader-card[data-role="' + role + '"] .leader-photo-ring img');
-      const imgSrc  = d.convertedSrc || (cardImg ? cardImg.src : '');
-      document.getElementById('modalLeaderImg').src             = imgSrc;
+      document.getElementById('modalLeaderImg').src             = d.img;
       document.getElementById('modalLeaderImg').alt             = d.name;
       document.getElementById('modalLeaderTitle').textContent   = d.title;
       document.getElementById('modalLeaderName').textContent    = d.name;
