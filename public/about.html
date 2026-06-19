@@ -266,17 +266,157 @@
     .si-3 { background: #fffbeb; color: #f59e0b; }
     .si-4 { background: #f5f3ff; color: #8b5cf6; }
 
+    /* ==========================================
+       LEADERSHIP SECTION
+       ========================================== */
+    .leadership-section { background: white; }
+
+    .leadership-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px;
+      margin-top: 52px;
+    }
+
+    .leader-card {
+      background: #f8fafc;
+      border: 1px solid var(--gray-200);
+      border-radius: 24px;
+      padding: 36px 24px 28px;
+      text-align: center;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .leader-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(10,37,100,0.04), rgba(245,166,35,0.06));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .leader-card:hover { transform: translateY(-10px); box-shadow: 0 24px 56px rgba(10,37,100,0.13); border-color: rgba(10,37,100,0.15); }
+    .leader-card:hover::before { opacity: 1; }
+
+    .leader-photo-ring {
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 20px;
+      border: 4px solid white;
+      box-shadow: 0 0 0 3px var(--blue-deep), 0 8px 24px rgba(10,37,100,0.18);
+      position: relative;
+    }
+    .leader-photo-ring img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 18%;
+      transform: scale(1.55);
+      transition: transform 0.4s ease;
+      display: block;
+    }
+    .leader-card:hover .leader-photo-ring img { transform: scale(1.65); }
+    .leader-card[data-role="founder"] .leader-photo-ring img   { object-position: center 15%; transform: scale(1.5); }
+    .leader-card[data-role="director"] .leader-photo-ring img  { object-position: center 12%; transform: scale(1.6); }
+    .leader-card[data-role="manager"] .leader-photo-ring img   { object-position: center 14%; transform: scale(1.55); }
+    .leader-card[data-role="principal"] .leader-photo-ring img { object-position: center 16%; transform: scale(1.5); }
+
+    .leader-title-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, var(--blue-deep), #1e3a9f);
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+    .leader-name { font-size: 1.05rem; font-weight: 800; color: var(--text-dark); margin-bottom: 4px; line-height: 1.3; }
+    .leader-quals { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 16px; font-style: italic; }
+    .leader-quote {
+      font-size: 0.85rem; line-height: 1.7; color: var(--text-body); font-style: italic;
+      border-left: 3px solid var(--yellow-bright); padding-left: 12px;
+      text-align: left; margin-bottom: 20px;
+    }
+    .leader-read-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; border: 2px solid var(--blue-deep);
+      color: var(--blue-deep); font-size: 0.82rem; font-weight: 700;
+      padding: 9px 20px; border-radius: 50px; cursor: pointer;
+      transition: all 0.25s ease; font-family: inherit;
+    }
+    .leader-read-btn:hover { background: var(--blue-deep); color: white; transform: scale(1.04); }
+
+    /* Modal */
+    .leader-modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.6); backdrop-filter: blur(6px);
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .leader-modal-overlay.active { display: flex; animation: lmFadeIn 0.2s ease; }
+    @keyframes lmFadeIn { from { opacity:0; } to { opacity:1; } }
+
+    .leader-modal {
+      background: white; border-radius: 24px;
+      max-width: 640px; width: 100%; max-height: 85vh; overflow-y: auto;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.3);
+      animation: lmSlideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @keyframes lmSlideUp { from { transform: translateY(40px) scale(0.97); opacity:0; } to { transform: translateY(0) scale(1); opacity:1; } }
+
+    .leader-modal-header {
+      background: linear-gradient(135deg, var(--blue-deep), #1e3a9f);
+      padding: 32px 32px 28px; border-radius: 24px 24px 0 0;
+      display: flex; align-items: center; gap: 20px; position: relative;
+    }
+    .leader-modal-photo {
+      width: 80px; height: 80px; border-radius: 50%; overflow: hidden;
+      border: 3px solid rgba(255,255,255,0.4); flex-shrink: 0;
+    }
+    .leader-modal-photo img {
+      width: 100%; height: 100%; object-fit: cover;
+      object-position: center 18%; transform: scale(1.55); display: block;
+    }
+    .leader-modal-meta { flex: 1; }
+    .leader-modal-meta .m-badge {
+      display: inline-block; background: rgba(245,166,35,0.25);
+      color: var(--yellow-bright); font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 3px 12px; border-radius: 20px; margin-bottom: 8px;
+    }
+    .leader-modal-meta .m-name { color: white; font-size: 1.1rem; font-weight: 800; margin-bottom: 3px; }
+    .leader-modal-meta .m-quals { color: rgba(255,255,255,0.65); font-size: 0.8rem; font-style: italic; }
+    .leader-modal-close {
+      position: absolute; top: 16px; right: 16px;
+      background: rgba(255,255,255,0.15); border: none; color: white;
+      width: 36px; height: 36px; border-radius: 50%; font-size: 1.1rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .leader-modal-close:hover { background: rgba(255,255,255,0.28); }
+    .leader-modal-body { padding: 32px; }
+    .leader-modal-body p { font-size: 0.93rem; line-height: 1.85; color: var(--text-body); }
+    .leader-modal-body .salutation { font-weight: 700; color: var(--text-dark); font-size: 1rem; margin-bottom: 16px; }
+
     @media (max-width: 1024px) {
+      .leadership-grid { grid-template-columns: 1fr 1fr; }
       .mission-grid, .story-grid, .faculty-grid { grid-template-columns: 1fr; gap: 48px; }
       .values-grid, .about-stats-grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 640px) {
+      .leadership-grid { grid-template-columns: 1fr; }
       .values-grid, .about-stats-grid { grid-template-columns: 1fr; }
       .story-images { grid-template-columns: 1fr; }
       .story-img-tall { grid-row: auto; }
     }
   </style>
 </head>
+
 <body>
 
   <!-- Notice Banner -->
@@ -543,7 +683,103 @@
     </div>
   </section>
 
+  <!-- ===== LEADERSHIP & VISION ===== -->
+  <section class="section leadership-section" id="leadership" aria-labelledby="leadership-heading">
+    <div class="container">
+
+      <div class="section-center reveal">
+        <span class="section-label"><i class="fas fa-crown"></i> Leadership &amp; Vision</span>
+        <h2 id="leadership-heading">The Visionaries Behind<br/>Nirmaan Public School</h2>
+        <p>Meet the dedicated leaders whose passion, expertise, and unwavering commitment drive our mission of building bright futures for every child.</p>
+      </div>
+
+      <div class="leadership-grid">
+
+        <!-- Founder -->
+        <div class="leader-card reveal" data-role="founder">
+          <div class="leader-photo-ring">
+            <img src="../Founder_2.jpg" alt="Mr. Rajesh Dubey - Founder, Nirmaan Public School" />
+          </div>
+          <div class="leader-title-badge"><i class="fas fa-star"></i> Founder</div>
+          <div class="leader-name">Mr. Rajesh Dubey &ldquo;Nirmaan&rdquo;<br/><small style="font-weight:600;font-size:0.82rem;">(Advocate)</small></div>
+          <div class="leader-quals">M.A., L.L.B.</div>
+          <div class="leader-quote">&ldquo;I request you to support me in building a better future for your children. Come, let us work together...&rdquo;</div>
+          <button class="leader-read-btn" onclick="openLeaderModal('founder')" id="btn-leader-founder" aria-label="Read full message from Mr. Rajesh Dubey">
+            <i class="fas fa-envelope-open-text"></i> Read Full Message
+          </button>
+        </div>
+
+        <!-- Director -->
+        <div class="leader-card reveal delay-100" data-role="director">
+          <div class="leader-photo-ring">
+            <img src="../Director_2.jpg" alt="Mr. Ajay Kumar Dubey - Director, Nirmaan Public School" />
+          </div>
+          <div class="leader-title-badge"><i class="fas fa-briefcase"></i> Director</div>
+          <div class="leader-name">Mr. Ajay Kumar Dubey</div>
+          <div class="leader-quals">M.Sc. (Chemistry), B.Ed., L.L.B.</div>
+          <div class="leader-quote">&ldquo;Primary education is especially important because it forms the foundation of a child&rsquo;s future.&rdquo;</div>
+          <button class="leader-read-btn" onclick="openLeaderModal('director')" id="btn-leader-director" aria-label="Read full message from Mr. Ajay Kumar Dubey">
+            <i class="fas fa-envelope-open-text"></i> Read Full Message
+          </button>
+        </div>
+
+        <!-- Manager -->
+        <div class="leader-card reveal delay-200" data-role="manager">
+          <div class="leader-photo-ring">
+            <img src="../Manager_2.jpg" alt="Mr. Satyendra Panday - Manager, Nirmaan Public School" />
+          </div>
+          <div class="leader-title-badge"><i class="fas fa-cog"></i> Manager</div>
+          <div class="leader-name">Mr. Satyendra Panday</div>
+          <div class="leader-quals">Language Expert</div>
+          <div class="leader-quote">&ldquo;Our goal should be to use modern technological tools such as Smart Classrooms to prepare children for the future.&rdquo;</div>
+          <button class="leader-read-btn" onclick="openLeaderModal('manager')" id="btn-leader-manager" aria-label="Read full message from Mr. Satyendra Panday">
+            <i class="fas fa-envelope-open-text"></i> Read Full Message
+          </button>
+        </div>
+
+        <!-- Principal -->
+        <div class="leader-card reveal delay-300" data-role="principal">
+          <div class="leader-photo-ring">
+            <img src="../Principal_2.jpg" alt="Mr. Faizan Ahmad Ansari - Principal, Nirmaan Public School" />
+          </div>
+          <div class="leader-title-badge"><i class="fas fa-school"></i> Principal</div>
+          <div class="leader-name">Mr. Faizan Ahmad Ansari</div>
+          <div class="leader-quals">M.A. B.Ed. (Awadh University)</div>
+          <div class="leader-quote">&ldquo;Education builds a better society. It makes children cultured, aware, and self-reliant. &lsquo;No Knowledge Without College.&rsquo;&rdquo;</div>
+          <button class="leader-read-btn" onclick="openLeaderModal('principal')" id="btn-leader-principal" aria-label="Read full message from Mr. Faizan Ahmad Ansari">
+            <i class="fas fa-envelope-open-text"></i> Read Full Message
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Leader Modal Overlay -->
+  <div class="leader-modal-overlay" id="leaderModalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalLeaderName" onclick="closeLeaderModal(event)">
+    <div class="leader-modal" id="leaderModalBox">
+      <div class="leader-modal-header">
+        <div class="leader-modal-photo">
+          <img id="modalLeaderImg" src="" alt="" />
+        </div>
+        <div class="leader-modal-meta">
+          <div class="m-badge" id="modalLeaderTitle"></div>
+          <div class="m-name" id="modalLeaderName"></div>
+          <div class="m-quals" id="modalLeaderQuals"></div>
+        </div>
+        <button class="leader-modal-close" onclick="closeLeaderModal()" aria-label="Close message">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="leader-modal-body">
+        <p class="salutation">Dear Parents,</p>
+        <p id="modalLeaderMessage"></p>
+      </div>
+    </div>
+  </div>
+
   <!-- ===== CTA SECTION ===== -->
+
   <section class="section" style="background:var(--off-white);" aria-label="Admission CTA">
     <div class="container">
       <div style="background:linear-gradient(135deg, var(--blue-deep), #1e3a9f); border-radius:var(--radius-xl); padding:64px 48px; text-align:center; position:relative; overflow:hidden;" class="reveal">
@@ -721,7 +957,67 @@
       statObs.observe(el);
     });
 
+    // ---- Leader Modal ----
+    const leaderData = {
+      founder: {
+        img: '../Founder_2.jpg',
+        title: 'Founder, Nirmaan Public School',
+        name: 'Mr. Rajesh Dubey “Nirmaan” (Advocate)',
+        quals: 'M.A., L.L.B.',
+        message: 'Nowadays every parent wants to provide their child with the best education—an education through which the child can build their life, move ahead, and adapt to changing times and ideas. For this reason, parents make every possible effort to give their children a good education. They enroll them in reputed educational institutions and spend substantial fees. This is necessary. However, our responsibility does not end there. Today we often see that parents do not have enough time for their children. Most parents only talk to their children and do not try to understand their problems. Today, we must change this traditional way of thinking and fully cooperate with our children. We need to make them aware of what is right and wrong in life. It is just as important to teach children what they should not do as it is to teach them what they should do. We save money for our children, but I request you not to leave only wealth for them. Instead, make them capable and educated. Friends, some decisions in life give immediate results, while some decisions bear fruit later. Therefore, I request you to support me in building a better future for your children. Friends, a single step has taught us that one step can take us further. Come, let us work together to educate our children and make their future bright.'
+      },
+      director: {
+        img: '../Director_2.jpg',
+        title: 'Director, Nirmaan Public School',
+        name: 'Mr. Ajay Kumar Dubey',
+        quals: 'M.Sc. (Chemistry), B.Ed. (Lucknow University), L.L.B. (Awadh University)',
+        message: 'Time is extremely important in the field of education for providing children with a better future. Primary education is especially important because it forms the foundation of a child’s future. However, most parents focus more on their children’s higher education and often overlook the importance of primary education. Today, many parents pay attention to higher studies, but they underestimate the significance of primary education. Just think about it: how can a strong building be constructed on a weak foundation? A tree can bear good fruit only when its roots are strong. If the roots are weak, the tree may be destroyed by storms. Similarly, if a child’s primary education is not strong, how can we expect them to have a bright future? How will they be prepared to face competition? How will they establish themselves in society? And how will they become an inspiration for future generations? Therefore, I humbly request you to pay special attention to your children’s primary education. Come, let us move forward together. Let us take one step forward. Take a step toward building a bright future for your children.'
+      },
+      manager: {
+        img: '../Manager_2.jpg',
+        title: 'Manager, Nirmaan Public School',
+        name: 'Mr. Satyendra Panday',
+        quals: 'Language Expert',
+        message: 'Today, education is no longer limited to books alone. In this era of globalization, competition has increased tremendously, and the role of technology has become extremely important. The intellectual development of children now requires the support of technology. God has gifted every child with a unique talent. It is our responsibility to identify that talent and help children progress in their chosen fields. Our goal should be to use modern technological tools such as Smart Classrooms and Computer Labs to prepare children for the future. These technologies provide a strong foundation for their intellectual growth and learning. Understanding this responsibility, it has become essential to provide children with education that is meaningful and aligned with their abilities and talents.'
+      },
+      principal: {
+        img: '../Principal_2.jpg',
+        title: 'Principal, Nirmaan Public School',
+        name: 'Mr. Faizan Ahmad Ansari',
+        quals: 'M.A. B.Ed. (Awadh University)',
+        message: 'Education is extremely important for modern society. It is the foundation of a successful life and plays a vital role in the mental development of children, helping them become responsible and capable citizens. Education builds a better society. It makes children cultured, aware, and self-reliant. Through education, children are empowered from an early age and are given opportunities to achieve their goals. Education also helps develop good values, discipline, and positive habits in children. Children are the future of the world. Therefore, education is of great importance to them. Their knowledge and abilities will keep the world alive and prosperous. For this reason, please ensure that your children receive a proper education. “No Knowledge Without College.”'
+      }
+    };
+
+    function openLeaderModal(role) {
+      const d = leaderData[role];
+      if (!d) return;
+      document.getElementById('modalLeaderImg').src   = d.img;
+      document.getElementById('modalLeaderImg').alt   = d.name;
+      document.getElementById('modalLeaderTitle').textContent   = d.title;
+      document.getElementById('modalLeaderName').textContent    = d.name;
+      document.getElementById('modalLeaderQuals').textContent   = d.quals;
+      document.getElementById('modalLeaderMessage').textContent = d.message;
+      const overlay = document.getElementById('leaderModalOverlay');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLeaderModal(event) {
+      if (event && event.target !== document.getElementById('leaderModalOverlay')) return;
+      document.getElementById('leaderModalOverlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.getElementById('leaderModalOverlay').classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+
     // ---- Smooth scroll ----
+
     document.querySelectorAll('a[href^="#"]').forEach(link => {
       link.addEventListener('click', e => {
         const target = document.querySelector(link.getAttribute('href'));
