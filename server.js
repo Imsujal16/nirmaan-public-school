@@ -392,6 +392,177 @@ app.post('/api/admission-enquiries', async (req, res) => {
   });
 });
 
+/* ============================================================
+   POST /api/contact — Contact Page "Send Us a Message" Form
+   ============================================================ */
+const CONTACT_EMAIL = process.env.SCHOOL_CONTACT_EMAIL || ADMISSIONS_EMAIL;
+
+function validateContactForm(body) {
+  const msg = {
+    name:    clean(body.name),
+    phone:   clean(body.phone),
+    email:   clean(body.email).toLowerCase(),
+    subject: clean(body.subject),
+    message: cleanMultiline(body.message)
+  };
+
+  const errors = [];
+  if (!msg.name)    errors.push('Your Name is required.');
+  if (!msg.phone)   errors.push('Phone Number is required.');
+  if (!msg.subject) errors.push('Subject is required.');
+  if (!msg.message) errors.push('Message is required.');
+
+  if (msg.email && !isEmail(msg.email)) {
+    errors.push('Email Address must be valid.');
+  }
+
+  const digitsOnly = msg.phone.replace(/\D/g, '');
+  if (msg.phone && digitsOnly.length < 10) {
+    errors.push('Phone Number must contain at least 10 digits.');
+  }
+
+  msg.phone = digitsOnly || msg.phone;
+  msg.submissionTimestamp = new Date().toISOString();
+
+  return { msg, errors };
+}
+
+function contactAdminEmailHtml(msg) {
+  return `<!doctype html>
+<html>
+  <body style="margin:0;padding:0;background:#f1f5f9;font-family:Arial,Helvetica,sans-serif;color:#0f172a;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f1f5f9;padding:28px 12px;">
+      <tr><td align="center">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:680px;background:#ffffff;border:1px solid #dbe3ef;border-radius:12px;overflow:hidden;">
+          <tr>
+            <td style="background:#0f1f5c;color:#ffffff;padding:26px 30px;">
+              <div style="font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#f5a623;font-weight:700;">Website Contact Form</div>
+              <h1 style="margin:8px 0 0;font-size:22px;line-height:1.3;">New Message — ${escapeHtml(msg.subject)}</h1>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:28px 30px;">
+              <p style="margin:0 0 18px;font-size:15px;color:#334155;">Someone contacted you via the website contact form. Details below.</p>
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #e5e7eb;border-radius:8px;border-collapse:separate;border-spacing:0;overflow:hidden;">
+                ${[
+                  ['Name',       escapeHtml(msg.name)],
+                  ['Phone',      escapeHtml(msg.phone)],
+                  ['Email',      escapeHtml(msg.email || 'Not provided')],
+                  ['Subject',    escapeHtml(msg.subject)],
+                  ['Submitted',  escapeHtml(msg.submissionTimestamp)]
+                ].map(([l,v]) => `<tr>
+                  <td style="padding:12px 16px;border-bottom:1px solid #e5e7eb;background:#f8fafc;font-weight:700;color:#334155;width:160px;">${l}</td>
+                  <td style="padding:12px 16px;border-bottom:1px solid #e5e7eb;color:#0f172a;">${v}</td>
+                </tr>`).join('')}
+                <tr>
+                  <td style="padding:12px 16px;background:#f8fafc;font-weight:700;color:#334155;vertical-align:top;">Message</td>
+                  <td style="padding:12px 16px;color:#0f172a;white-space:pre-line;">${escapeHtml(msg.message)}</td>
+                </tr>
+              </table>
+              ${msg.email ? `<p style="margin:20px 0 0;font-size:14px;color:#64748b;">Reply directly to this email to respond to <strong>${escapeHtml(msg.name)}</strong>.</p>` : ''}
+            </td>
+          </tr>
+        </table>
+      </td></tr>
+    </table>
+  </body>
+</html>`;
+}
+
+function contactConfirmEmailHtml(msg) {
+  return `<!doctype html>
+<html>
+  <body style="margin:0;padding:0;background:#f1f5f9;font-family:Arial,Helvetica,sans-serif;color:#0f172a;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f1f5f9;padding:28px 12px;">
+      <tr><td align="center">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:600px;background:#ffffff;border:1px solid #dbe3ef;border-radius:12px;overflow:hidden;">
+          <tr>
+            <td style="background:#0f1f5c;color:#ffffff;padding:28px 30px;">
+              <div style="font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#f5a623;font-weight:700;">Nirmaan Public School</div>
+              <h1 style="margin:8px 0 0;font-size:22px;line-height:1.3;">We've Received Your Message!</h1>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:30px;">
+              <p style="margin:0 0 16px;font-size:16px;line-height:1.6;">Dear <strong>${escapeHtml(msg.name)}</strong>,</p>
+              <p style="margin:0 0 16px;font-size:16px;line-height:1.6;">Thank you for reaching out to us. We have received your message regarding <strong>"${escapeHtml(msg.subject)}"</strong> and will get back to you as soon as possible — usually within the same business day.</p>
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin:22px 0;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;">
+                <tr>
+                  <td style="padding:14px 16px;background:#f8fafc;font-weight:700;color:#334155;width:140px;">Subject</td>
+                  <td style="padding:14px 16px;color:#0f172a;">${escapeHtml(msg.subject)}</td>
+                </tr>
+                <tr>
+                  <td style="padding:14px 16px;background:#f8fafc;font-weight:700;color:#334155;border-top:1px solid #e5e7eb;">Phone</td>
+                  <td style="padding:14px 16px;color:#0f172a;border-top:1px solid #e5e7eb;">${escapeHtml(msg.phone)}</td>
+                </tr>
+              </table>
+              <p style="margin:0 0 8px;font-size:15px;color:#334155;">Need an immediate response? Call us directly:</p>
+              <p style="margin:0 0 24px;font-size:18px;font-weight:700;color:#0f1f5c;">📞 991-822-5511</p>
+              <p style="margin:0;font-size:16px;line-height:1.6;">Warm regards,<br><strong>Nirmaan Public School</strong><br><span style="color:#64748b;font-size:14px;">Aliganj Bazar, Sultanpur, U.P. 227805</span></p>
+            </td>
+          </tr>
+        </table>
+      </td></tr>
+    </table>
+  </body>
+</html>`;
+}
+
+app.post('/api/contact', async (req, res) => {
+  const { msg, errors } = validateContactForm(req.body || {});
+
+  if (errors.length) {
+    return res.status(400).json({ success: false, message: errors[0], errors });
+  }
+
+  const from = process.env.SMTP_FROM || process.env.SMTP_USER || '"Nirmaan Public School" <no-reply@ethereal.email>';
+
+  const adminMail = {
+    from,
+    to: CONTACT_EMAIL,
+    replyTo: msg.email || undefined,
+    subject: `[Contact Form] ${msg.subject} — ${msg.name}`,
+    text: [
+      `Name: ${msg.name}`,
+      `Phone: ${msg.phone}`,
+      `Email: ${msg.email || 'Not provided'}`,
+      `Subject: ${msg.subject}`,
+      `Message:\n${msg.message}`,
+      `Submitted: ${msg.submissionTimestamp}`
+    ].join('\n'),
+    html: contactAdminEmailHtml(msg)
+  };
+
+  const [adminResult] = await Promise.allSettled([sendEmail(adminMail)]);
+
+  if (adminResult.status === 'rejected') {
+    console.error('[Contact] Admin email failed:', adminResult.reason?.message);
+    return res.status(502).json({
+      success: false,
+      message: 'Your message could not be delivered right now. Please call us at 991-822-5511.'
+    });
+  }
+
+  // Send confirmation to user only if they provided an email
+  if (msg.email) {
+    const confirmMail = {
+      from,
+      to: msg.email,
+      replyTo: CONTACT_EMAIL,
+      subject: 'We received your message — Nirmaan Public School',
+      text: `Dear ${msg.name},\n\nThank you for contacting Nirmaan Public School. We received your message about "${msg.subject}" and will reply shortly.\n\nFor urgent matters call: 991-822-5511\n\nRegards,\nNirmaan Public School\nAliganj Bazar, Sultanpur, U.P. 227805`,
+      html: contactConfirmEmailHtml(msg)
+    };
+    Promise.allSettled([sendEmail(confirmMail)]).catch(() => {}); // fire-and-forget, non-blocking
+  }
+
+  return res.status(200).json({
+    success: true,
+    message: 'Your message has been sent! We\'ll get back to you soon.'
+  });
+});
+
+
 app.use(express.static(path.join(__dirname, 'public'), {
   extensions: ['html'],
   index: 'index.html'
