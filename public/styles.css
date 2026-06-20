@@ -656,7 +656,7 @@ p  { color: var(--text-mid); }
    ========================================== */
 .grades-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-columns: repeat(7, 1fr);
   gap: 16px;
 }
 .grade-card {
