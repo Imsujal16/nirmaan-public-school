@@ -831,96 +831,81 @@
       });
     });
 
-    // Contact form — real API integration
-    const contactForm = document.getElementById('contactForm');
-    const submitBtn   = document.getElementById('contact-submit-btn');
-
-    // Helper: show inline error banner inside the form
-    function showFormError(msg) {
-      let banner = contactForm.querySelector('.cf-error-banner');
-      if (!banner) {
-        banner = document.createElement('div');
-        banner.className = 'cf-error-banner';
-        banner.style.cssText = `
-          background:#fef2f2;border:1px solid #fca5a5;color:#b91c1c;
-          border-radius:10px;padding:12px 16px;font-size:0.9rem;
-          font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:8px;
-        `;
-        contactForm.insertBefore(banner, contactForm.firstChild);
-      }
-      banner.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${msg}`;
-      banner.style.display = 'flex';
-    }
-
-    function clearFormError() {
-      const banner = contactForm.querySelector('.cf-error-banner');
-      if (banner) banner.style.display = 'none';
-    }
-
-    function showToast(message, isError = false) {
+    // Contact form — same pattern as admissions form
+    function showContactToast(message, type) {
       const toast = document.createElement('div');
+      const isError = type === 'error';
       toast.style.cssText = `
-        position:fixed;bottom:24px;right:24px;
-        background:${isError ? '#ef4444' : '#10b981'};color:white;
-        padding:16px 22px;border-radius:16px;
-        box-shadow:0 8px 24px rgba(0,0,0,0.15);
-        z-index:9999;font-weight:600;font-size:0.92rem;
-        max-width:340px;line-height:1.5;display:flex;align-items:center;gap:10px;
+        position:fixed;bottom:24px;right:24px;background:${isError ? '#dc2626' : '#10b981'};color:white;
+        padding:16px 24px;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,0.15);
+        z-index:9999;font-weight:600;font-size:0.95rem;
         animation:fadeInUp 0.3s ease;
+        max-width:360px;line-height:1.5;
       `;
-      toast.innerHTML = `<i class="fas fa-${isError ? 'times-circle' : 'check-circle'}"></i> ${message}`;
+      toast.textContent = message;
       document.body.appendChild(toast);
       setTimeout(() => toast.remove(), 6000);
     }
 
-    contactForm.addEventListener('submit', async function(e) {
+    document.getElementById('contactForm').addEventListener('submit', async function(e) {
       e.preventDefault();
-      clearFormError();
 
-      const name    = document.getElementById('contact-name').value.trim();
-      const phone   = document.getElementById('contact-phone').value.trim();
-      const email   = document.getElementById('contact-email').value.trim();
-      const subject = document.getElementById('contact-subject').value.trim();
-      const message = document.getElementById('contact-message').value.trim();
+      if (!this.checkValidity()) {
+        this.reportValidity();
+        return;
+      }
 
-      // Client-side validation
-      if (!name)    { showFormError('Please enter your name.'); return; }
-      if (!phone)   { showFormError('Please enter your phone number.'); return; }
-      if (!subject) { showFormError('Please select an enquiry type.'); return; }
-      if (!message) { showFormError('Please write your message.'); return; }
+      const btn = document.getElementById('contact-submit-btn');
+      const originalHtml = '<i class="fas fa-paper-plane"></i> Send Message';
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+      btn.disabled = true;
 
-      // Loading state
-      const originalHTML = submitBtn.innerHTML;
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Sending...';
+      const payload = {
+        name:    document.getElementById('contact-name').value,
+        phone:   document.getElementById('contact-phone').value,
+        email:   document.getElementById('contact-email').value,
+        subject: document.getElementById('contact-subject').value,
+        message: document.getElementById('contact-message').value
+      };
 
       try {
-        const res = await fetch('/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, phone, email, subject, message })
-        });
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 15000);
 
-        const data = await res.json();
-
-        if (res.ok && data.success) {
-          // Success state
-          submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> Message Sent!';
-          submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-          contactForm.reset();
-          showToast('✅ Thank you! We\'ll get back to you within 24 hours.' + (email ? ' A confirmation was sent to your email.' : ''));
-        } else {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = originalHTML;
-          showFormError(data.message || 'Something went wrong. Please try again.');
-          showToast(data.message || 'Could not send message. Please try again.', true);
+        let response;
+        try {
+          response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+            signal: controller.signal
+          });
+        } catch (fetchErr) {
+          clearTimeout(timeoutId);
+          if (fetchErr.name === 'AbortError') {
+            throw new Error('Request timed out. Please check your internet connection and try again.');
+          }
+          throw new Error('Network error. Please check your connection and try again.');
         }
-      } catch (err) {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalHTML;
-        showFormError('Network error. Please check your connection and try again.');
-        showToast('Network error — please call us at 991-822-5511.', true);
+        clearTimeout(timeoutId);
+
+        const result = await response.json().catch(() => ({}));
+
+        if (!response.ok || !result.success) {
+          throw new Error(result.message || 'Unable to send your message right now.');
+        }
+
+        btn.innerHTML = '<i class="fas fa-check-circle"></i> Message Sent!';
+        btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+        this.reset();
+        showContactToast('Thank you! Your message has been received. We\'ll get back to you soon.', 'success');
+      } catch (error) {
+        btn.innerHTML = originalHtml;
+        btn.style.background = '';
+        btn.disabled = false;
+        showContactToast(error.message || 'Submission failed. Please try again.', 'error');
       }
+      return;
     });
 
     // Smooth scroll
