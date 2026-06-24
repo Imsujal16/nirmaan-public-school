@@ -997,6 +997,93 @@ textarea.form-control { resize: vertical; min-height: 130px; }
 
 /* ==========================================
    RESPONSIVE BREAKPOINTS
+/* ==========================================
+   CTA SECTION - GLASSMORPHISM
+   ========================================== */
+.cta-glass-section {
+  position: relative;
+  background: var(--off-white);
+  overflow: hidden;
+  padding: 100px 0;
+}
+.cta-glass-section.bg-dark {
+  background: var(--blue-deep);
+}
+.cta-glow-orb-1 {
+  position: absolute;
+  top: -20%; left: 10%;
+  width: 400px; height: 400px;
+  background: rgba(30, 58, 159, 0.25);
+  filter: blur(80px);
+  border-radius: 50%;
+  z-index: 0;
+  animation: floatOrb 10s infinite alternate ease-in-out;
+}
+.cta-glow-orb-2 {
+  position: absolute;
+  bottom: -20%; right: 10%;
+  width: 350px; height: 350px;
+  background: rgba(245, 166, 35, 0.2);
+  filter: blur(80px);
+  border-radius: 50%;
+  z-index: 0;
+  animation: floatOrb 12s infinite alternate-reverse ease-in-out;
+}
+@keyframes floatOrb {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(40px, 40px) scale(1.1); }
+}
+
+.cta-glass-container {
+  background: linear-gradient(135deg, rgba(15, 31, 92, 0.7), rgba(30, 58, 159, 0.45));
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+  border-left: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 25px 50px rgba(15, 31, 92, 0.2), inset 0 1px 0 rgba(255,255,255,0.15);
+  border-radius: var(--radius-xl);
+  padding: 64px 48px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  animation: idleFloat 6s ease-in-out infinite;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.cta-glass-container:hover {
+  transform: scale(1.02) !important;
+  box-shadow: 0 35px 60px rgba(15, 31, 92, 0.3), inset 0 1px 0 rgba(255,255,255,0.25);
+}
+@keyframes idleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.cta-btn-primary {
+  box-shadow: 0 8px 20px rgba(245, 166, 35, 0.35);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.cta-btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 25px rgba(245, 166, 35, 0.5);
+}
+.cta-btn-glass {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.5);
+  color: white;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  backdrop-filter: blur(10px);
+}
+.cta-btn-glass:hover {
+  background: rgba(255,255,255,0.25);
+  color: white;
+  transform: scale(1.05);
+  border-color: white;
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN
    ========================================== */
 @media (max-width: 1024px) {
   :root { --section-pad: 80px; }
@@ -1013,6 +1100,7 @@ textarea.form-control { resize: vertical; min-height: 130px; }
   .features-grid { grid-template-columns: 1fr; }
   .grades-grid { grid-template-columns: repeat(3, 1fr); }
   .steps-grid { grid-template-columns: 1fr 1fr; }
+  .cta-glass-container { padding: 40px 24px; }
 }
 
 @media (max-width: 480px) {
@@ -1021,4 +1109,5 @@ textarea.form-control { resize: vertical; min-height: 130px; }
   .grades-grid { grid-template-columns: repeat(2, 1fr); }
   .steps-grid { grid-template-columns: 1fr; }
   .stats-grid { flex-direction: column; gap: 24px; }
+  .cta-btn-glass { padding: 0 24px !important; }
 }
