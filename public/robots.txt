@@ -1,6 +1,6 @@
-# robots.txt — Nirmaan Public School
+﻿# robots.txt — Nirmaan Public School
 # Updated: June 2026
-# https://nirmaan-public-school.vercel.app
+# https://www.nirmaanpublicschool.in
 
 User-agent: *
 Allow: /
@@ -11,7 +11,7 @@ Disallow: /.env
 Disallow: /node_modules/
 
 # Sitemap location
-Sitemap: https://nirmaan-public-school.vercel.app/sitemap.xml
+Sitemap: https://www.nirmaanpublicschool.in/sitemap.xml
 
 # Crawl-delay for polite crawling
 Crawl-delay: 1
