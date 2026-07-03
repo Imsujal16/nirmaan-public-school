@@ -644,61 +644,20 @@
     }
     .curriculum-strip h4 { color: white; font-size: 1.1rem; margin-bottom: 4px; }
     .curriculum-strip p  { color: rgba(255,255,255,0.7); font-size: 0.87rem; }
+
+    /* ==========================================
+       GALLERY TEASER
+       ========================================== */
     .gallery-section { background: var(--off-white); overflow: hidden; }
 
-    /* Inline header: text left, button right */
-    .gallery-header-row {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 24px;
-      margin-bottom: 40px;
-    }
-    .gallery-header-text { flex: 1; }
-    .gallery-header-text .section-label { display: inline-flex; }
-    .gallery-header-text h2 { margin-bottom: 8px; }
-    .gallery-header-text p  { margin: 0; max-width: 520px; }
-
-    .btn-gallery-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 28px;
-      background: var(--blue-deep);
-      color: white;
-      font-weight: 600;
-      font-size: 0.95rem;
-      border-radius: 50px;
-      text-decoration: none;
-      white-space: nowrap;
-      box-shadow: 0 4px 16px rgba(27,43,91,0.25);
-      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-      flex-shrink: 0;
-    }
-    .btn-gallery-cta i { font-size: 0.85rem; transition: transform 0.3s ease; }
-    .btn-gallery-cta:hover {
-      background: #1e3a9f;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 24px rgba(27,43,91,0.35);
-    }
-    .btn-gallery-cta:hover i { transform: translateX(4px); }
-
-    /* Dense 4-column grid with defined rows */
     .gallery-masonry {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       grid-auto-rows: 200px;
-      gap: 16px;
-      grid-auto-flow: dense;
+      gap: 20px;
     }
-
-    /* Placement: creates a balanced 2-row layout */
-    .gi-1 { grid-column: 1 / 2; grid-row: 1 / 3; }  /* tall left */
-    .gi-2 { grid-column: 2 / 4; grid-row: 1 / 2; }  /* wide top-center */
-    .gi-3 { grid-column: 4 / 5; grid-row: 1 / 2; }  /* small top-right */
-    .gi-4 { grid-column: 2 / 3; grid-row: 2 / 3; }  /* small bottom-center-left */
-    .gi-5 { grid-column: 3 / 5; grid-row: 2 / 3; }  /* wide bottom-right */
-    .gi-6 { grid-column: 4 / 5; grid-row: 1 / 3; display: none; } /* hidden — only 5 shown in 2 rows */
+    .masonry-item-tall { grid-row: span 2; }
+    .masonry-item-wide { grid-column: span 2; }
 
     .gallery-item {
       border-radius: 24px;
@@ -706,23 +665,14 @@
       position: relative;
       cursor: pointer;
       box-shadow: var(--shadow-md);
-      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     .gallery-item:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
     }
-    .gallery-item img,
-    .gallery-video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-      border-radius: 24px;
-      display: block;
-    }
-    .gallery-item:hover img,
-    .gallery-item:hover .gallery-video { transform: scale(1.05); }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .gallery-item:hover img { transform: scale(1.05); }
 
     .play-btn-overlay {
       position: absolute;
@@ -747,35 +697,6 @@
     .play-btn-overlay:hover {
       background: rgba(255, 255, 255, 0.4);
       transform: translate(-50%, -50%) scale(1.1);
-    }
-    .play-btn-overlay.hidden {
-      opacity: 0;
-      pointer-events: none;
-      transform: translate(-50%, -50%) scale(0.9);
-    }
-    .mute-btn {
-      position: absolute;
-      bottom: 16px;
-      right: 16px;
-      z-index: 20;
-      width: 40px;
-      height: 40px;
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .mute-btn:hover {
-      background: rgba(255, 255, 255, 0.4);
-      transform: scale(1.1);
     }
 
     /* ==========================================
@@ -842,13 +763,7 @@
       .hero-img-main { max-width: 380px; margin: 0 auto; }
       .hero-float-card { display: none; }
       .about-grid { grid-template-columns: 1fr; }
-      .gallery-masonry { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; }
-      .gi-1 { grid-column: 1 / 2; grid-row: 1 / 3; }
-      .gi-2 { grid-column: 2 / 3; grid-row: 1 / 2; }
-      .gi-3 { grid-column: 1 / 2; grid-row: 3 / 4; }
-      .gi-4 { grid-column: 2 / 3; grid-row: 2 / 3; }
-      .gi-5 { grid-column: 1 / 3; grid-row: 4 / 5; }
-      .gallery-header-row { flex-direction: column; align-items: flex-start; }
+      .masonry-item-wide { grid-column: span 1; }
     }
     @media (max-width: 768px) {
       .hero-img-main { max-width: 300px; }
@@ -856,8 +771,7 @@
       .features-grid-3 { grid-template-columns: 1fr; }
     }
     @media (max-width: 480px) {
-      .gallery-masonry { grid-template-columns: 1fr; grid-auto-rows: 220px; }
-      .gi-1,.gi-2,.gi-3,.gi-4,.gi-5 { grid-column: 1; grid-row: auto; }
+      .gallery-masonry { grid-template-columns: 1fr; }
       .cta-card { padding: 36px 24px; }
     }
   </style>
@@ -1278,68 +1192,32 @@
   <!-- ===== GALLERY TEASER ===== -->
   <section class="section gallery-section" id="gallery" aria-label="School photo gallery">
     <div class="container">
-
-      <!-- Inline header: text left, button right -->
-      <div class="gallery-header-row reveal">
-        <div class="gallery-header-text">
-          <span class="section-label"><i class="fas fa-images"></i> Our School Life</span>
-          <h2>A Glimpse of Life at NPS</h2>
-          <p>From smart classrooms to exciting co-curricular activities — every day at Nirmaan Public School is a new adventure.</p>
-        </div>
-        <a href="gallery.html" class="btn-gallery-cta" id="view-gallery-btn">
-          View Full Gallery <i class="fas fa-arrow-right"></i>
-        </a>
+      <div class="section-center reveal">
+        <span class="section-label"><i class="fas fa-images"></i> Our School Life</span>
+        <h2>A Glimpse of Life at NPS</h2>
+        <p>From smart classrooms to exciting co-curricular activities — every day at Nirmaan Public School is a new adventure.</p>
       </div>
 
-      <!-- Balanced 5-item dense grid -->
       <div class="gallery-masonry reveal">
-        <div class="gallery-item gi-1 video-wrapper">
-          <video
-            src="/videos/sports.mp4"
-            autoplay
-            loop
-            muted
-            playsinline
-            class="gallery-video custom-video"
-          ></video>
-          <div class="play-btn-overlay custom-play-btn"><i class="fas fa-play"></i></div>
-          <button class="mute-btn custom-mute-btn" aria-label="Toggle Mute">
-            <i class="fas fa-volume-mute"></i>
-          </button>
+        <div class="gallery-item masonry-item-tall">
+          <img src="/nirmaan image.jpeg" alt="Campus Highlight" />
+          <div class="play-btn-overlay"><i class="fas fa-play"></i></div>
         </div>
-        <div class="gallery-item gi-2 video-wrapper">
-          <video
-            src="/videos/sports2.mp4"
-            autoplay
-            loop
-            muted
-            playsinline
-            class="gallery-video custom-video"
-          ></video>
-          <div class="play-btn-overlay custom-play-btn"><i class="fas fa-play"></i></div>
-          <button class="mute-btn custom-mute-btn" aria-label="Toggle Mute">
-            <i class="fas fa-volume-mute"></i>
-          </button>
-        </div>
-        <div class="gallery-item gi-3">
+        <div class="gallery-item">
           <img src="/smart-classroom.jpg" alt="Smart Classroom" />
         </div>
-        <div class="gallery-item gi-4">
+        <div class="gallery-item masonry-item-wide">
+          <img src="/award-ceremony.jpg" alt="Award Ceremony" />
+        </div>
+        <div class="gallery-item masonry-item-tall">
           <img src="/our-storyedit.jpeg" alt="Student Life" />
         </div>
-        <div class="gallery-item gi-5 video-wrapper">
-          <video
-            src="/videos/Introcampus.mp4"
-            autoplay
-            loop
-            muted
-            playsinline
-            class="gallery-video custom-video"
-          ></video>
-          <div class="play-btn-overlay custom-play-btn"><i class="fas fa-play"></i></div>
-          <button class="mute-btn custom-mute-btn" aria-label="Toggle Mute">
-            <i class="fas fa-volume-mute"></i>
-          </button>
+        <div class="gallery-item">
+          <img src="/smart-classroom.jpg" alt="Smart Classroom" />
+          <div class="play-btn-overlay"><i class="fas fa-play"></i></div>
+        </div>
+        <div class="gallery-item">
+          <img src="/nirmaan image.jpeg" alt="Morning Assembly" />
         </div>
       </div>
     </div>
@@ -1521,24 +1399,21 @@
     window.addEventListener('scroll', updateNavbar, { passive: true });
     updateNavbar();
 
-    // ── Mobile menu toggle ──
+    // ---- Mobile hamburger ----
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobileMenu');
 
-    if(hamburger && mobileMenu) {
-      hamburger.addEventListener('click', () => {
-        const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
-        hamburger.setAttribute('aria-expanded', !isExpanded);
-        hamburger.classList.toggle('active');
-        mobileMenu.classList.toggle('open');
-      });
-    }
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+    });
 
     // Close on link click
     mobileMenu.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         mobileMenu.classList.remove('open');
-        hamburger.classList.remove('active');
+        hamburger.classList.remove('open');
         hamburger.setAttribute('aria-expanded', false);
       });
     });
@@ -1617,53 +1492,6 @@
           e.preventDefault();
           const offset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height')) || 76;
           window.scrollTo({ top: target.offsetTop - offset - 10, behavior: 'smooth' });
-        }
-      });
-    });
-    // ── Custom Video UI Logic ──
-    document.addEventListener('DOMContentLoaded', () => {
-      const videoWrappers = document.querySelectorAll('.video-wrapper');
-      
-      videoWrappers.forEach(wrapper => {
-        const video = wrapper.querySelector('.custom-video');
-        const playBtn = wrapper.querySelector('.custom-play-btn');
-        const muteBtn = wrapper.querySelector('.custom-mute-btn');
-        if(!video) return;
-
-        // Play/Pause toggle
-        const togglePlay = () => {
-          if (video.paused) {
-            video.play();
-          } else {
-            video.pause();
-          }
-        };
-
-        if(playBtn) {
-          video.addEventListener('click', togglePlay);
-          playBtn.addEventListener('click', togglePlay);
-
-          video.addEventListener('play', () => {
-            playBtn.classList.add('hidden');
-          });
-
-          video.addEventListener('pause', () => {
-            playBtn.classList.remove('hidden');
-          });
-        }
-
-        // Mute/Unmute toggle
-        if(muteBtn) {
-          const muteIcon = muteBtn.querySelector('i');
-          muteBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent clicking video underneath
-            video.muted = !video.muted;
-            if (video.muted) {
-              muteIcon.className = 'fas fa-volume-mute';
-            } else {
-              muteIcon.className = 'fas fa-volume-up';
-            }
-          });
         }
       });
     });

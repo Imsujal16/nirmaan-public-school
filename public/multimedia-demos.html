@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Multimedia Gallery Demos | Nirmaan Public School</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <!-- Global Styles -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* Demo Page Specific Styles */
+    body {
+      background: var(--bg-main);
+      color: var(--text-dark);
+      padding-top: 100px; /* Space for navbar */
+    }
+    
+    .demo-header {
+      text-align: center;
+      margin-bottom: 60px;
+      padding: 0 20px;
+    }
+    .demo-header h1 {
+      font-size: 2.5rem;
+      color: var(--blue-deep);
+      margin-bottom: 16px;
+    }
+    .demo-header p {
+      color: var(--text-mid);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .demo-section {
+      padding: 60px 20px;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .demo-section:nth-child(even) {
+      background: #ffffff;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 1.8rem;
+      color: var(--blue-deep);
+      margin-bottom: 40px;
+    }
+
+    /* Common Utility: Play Button Overlay */
+    .play-btn-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 64px;
+      height: 64px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+    .play-btn-overlay:hover {
+      background: rgba(255, 255, 255, 0.4);
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+    
+    /* Image placeholder styling */
+    .media-card {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .media-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .media-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+    .media-card:hover img {
+      transform: scale(1.05);
+    }
+
+    /* 1. Cinematic Campus Reel */
+    .cinematic-reel-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .main-video-player {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border-radius: 32px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      margin-bottom: 24px;
+    }
+    .main-video-player .play-btn-overlay {
+      width: 90px;
+      height: 90px;
+      font-size: 2rem;
+    }
+    .mini-carousel {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 16px;
+      scroll-snap-type: x mandatory;
+    }
+    .mini-carousel::-webkit-scrollbar { display: none; }
+    .carousel-thumb {
+      min-width: 160px;
+      height: 100px;
+      border-radius: 16px;
+      scroll-snap-align: start;
+      opacity: 0.6;
+      transition: opacity 0.3s ease;
+    }
+    .carousel-thumb.active, .carousel-thumb:hover {
+      opacity: 1;
+    }
+
+    /* 2. Interactive Masonry Gallery */
+    .masonry-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      grid-auto-rows: 200px;
+      gap: 20px;
+    }
+    .masonry-item-tall { grid-row: span 2; }
+    .masonry-item-wide { grid-column: span 2; }
+    @media (max-width: 768px) {
+      .masonry-item-wide { grid-column: span 1; }
+    }
+
+    /* 3. Filterable Portfolio */
+    .filter-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .filter-pills {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .filter-pill {
+      padding: 10px 24px;
+      border-radius: 30px;
+      background: white;
+      border: 1px solid rgba(0,0,0,0.1);
+      color: var(--text-mid);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .filter-pill.active, .filter-pill:hover {
+      background: var(--blue-deep);
+      color: white;
+      box-shadow: 0 4px 12px rgba(27, 43, 91, 0.2);
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    /* 4. Horizontal Slider */
+    .slider-section {
+      width: 100%;
+      overflow: hidden;
+    }
+    .horizontal-slider {
+      display: flex;
+      gap: 24px;
+      padding: 20px 5%;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-padding: 20px;
+    }
+    .horizontal-slider::-webkit-scrollbar { display: none; }
+    .slider-card {
+      min-width: 350px;
+      aspect-ratio: 4/3;
+      scroll-snap-align: center;
+    }
+    .slider-card .card-label {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(4px);
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-weight: 600;
+      color: var(--blue-deep);
+      z-index: 10;
+    }
+    @media (max-width: 768px) {
+      .slider-card { min-width: 280px; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Reused Navbar (Simplified for demo) -->
+  <nav class="navbar" style="position: fixed; top: 0; width: 100%; background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.05); padding: 15px 5%;">
+    <div style="font-weight: 800; color: var(--blue-deep); font-size: 1.5rem;">NIRMAAN</div>
+    <a href="index.html" style="text-decoration: none; color: var(--text-mid); font-weight: 500;">Back to Home</a>
+  </nav>
+
+  <div class="demo-header">
+    <h1>Multimedia Gallery Demos</h1>
+    <p>Explore four premium ways to showcase our campus life, smart classrooms, and events through video and photos.</p>
+  </div>
+
+  <!-- DEMO 1 -->
+  <section class="demo-section">
+    <h2 class="section-title">1. The Cinematic Campus Reel</h2>
+    <div class="cinematic-reel-container">
+      <div class="main-video-player media-card">
+        <img src="/nirmaan image.jpeg" alt="Main Highlight Reel" />
+        <div class="play-btn-overlay"><i class="fas fa-play"></i></div>
+      </div>
+      <div class="mini-carousel">
+        <div class="media-card carousel-thumb active"><img src="/smart-classroom.jpg" /></div>
+        <div class="media-card carousel-thumb"><img src="/award-ceremony.jpg" /></div>
+        <div class="media-card carousel-thumb"><img src="/our-storyedit.jpeg" /></div>
+        <div class="media-card carousel-thumb"><img src="/nirmaan image.jpeg" /></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO 2 -->
+  <section class="demo-section">
+    <h2 class="section-title">2. Interactive Masonry Gallery</h2>
+    <div class="masonry-grid">
+      <div class="media-card masonry-item-tall">
+        <img src="/nirmaan image.jpeg" />
+        <div class="play-btn-overlay"><i class="fas fa-play"></i></div>
+      </div>
+      <div class="media-card">
+        <img src="/smart-classroom.jpg" />
+      </div>
+      <div class="media-card masonry-item-wide">
+        <img src="/award-ceremony.jpg" />
+      </div>
+      <div class="media-card masonry-item-tall">
+        <img src="/our-storyedit.jpeg" />
+      </div>
+      <div class="media-card">
+        <img src="/smart-classroom.jpg" />
+        <div class="play-btn-overlay"><i class="fas fa-play"></i></div>
+      </div>
+      <div class="media-card">
+        <img src="/nirmaan image.jpeg" />
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO 3 -->
+  <section class="demo-section">
+    <h2 class="section-title">3. "Day in the Life" Filterable Portfolio</h2>
+    <div class="filter-container">
+      <div class="filter-pills">
+        <div class="filter-pill active" onclick="filterGallery('all')">All</div>
+        <div class="filter-pill" onclick="filterGallery('video')">Videos</div>
+        <div class="filter-pill" onclick="filterGallery('campus')">Campus</div>
+        <div class="filter-pill" onclick="filterGallery('events')">Events</div>
+      </div>
+      
+      <div class="portfolio-grid" id="portfolioGrid">
+        <div class="media-card" data-category="video campus">
+          <img src="/smart-classroom.jpg" />
+          <div class="play-btn-overlay"><i class="fas fa-play"></i></div>
+        </div>
+        <div class="media-card" data-category="campus">
+          <img src="/nirmaan image.jpeg" />
+        </div>
+        <div class="media-card" data-category="events">
+          <img src="/award-ceremony.jpg" />
+        </div>
+        <div class="media-card" data-category="events video">
+          <img src="/our-storyedit.jpeg" />
+          <div class="play-btn-overlay"><i class="fas fa-play"></i></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO 4 -->
+  <section class="demo-section">
+    <h2 class="section-title">4. Campus Tour Horizontal Slider</h2>
+    <div class="slider-section">
+      <div class="horizontal-slider">
+        <div class="media-card slider-card">
+          <img src="/smart-classroom.jpg" />
+          <div class="play-btn-overlay"><i class="fas fa-play"></i></div>
+          <div class="card-label">Smart Classrooms</div>
+        </div>
+        <div class="media-card slider-card">
+          <img src="/nirmaan image.jpeg" />
+          <div class="card-label">Morning Assembly</div>
+        </div>
+        <div class="media-card slider-card">
+          <img src="/award-ceremony.jpg" />
+          <div class="play-btn-overlay"><i class="fas fa-play"></i></div>
+          <div class="card-label">Annual Events</div>
+        </div>
+        <div class="media-card slider-card">
+          <img src="/our-storyedit.jpeg" />
+          <div class="card-label">Student Life</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightweight JS for Demo Interactions -->
+  <script>
+    // Filter Logic for Demo 3
+    function filterGallery(category) {
+      // Update pills
+      document.querySelectorAll('.filter-pill').forEach(pill => {
+        pill.classList.remove('active');
+        if(pill.innerText.toLowerCase() === category || (category === 'all' && pill.innerText === 'All')) {
+          pill.classList.add('active');
+        }
+      });
+      
+      // Filter items
+      const items = document.querySelectorAll('#portfolioGrid .media-card');
+      items.forEach(item => {
+        item.style.display = 'none';
+        item.style.opacity = '0';
+        
+        if (category === 'all' || item.dataset.category.includes(category)) {
+          item.style.display = 'block';
+          // Small timeout to allow display:block to apply before animating opacity
+          setTimeout(() => {
+            item.style.transition = 'opacity 0.4s ease';
+            item.style.opacity = '1';
+          }, 10);
+        }
+      });
+    }
+  </script>
+</body>
+</html>
