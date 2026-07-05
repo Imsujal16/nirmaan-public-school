@@ -8,6 +8,7 @@ const nodemailer = require('nodemailer');
 const { Resend } = require('resend');
 const fs = require('fs/promises');
 const path = require('path');
+const chatbotKnowledge = require('./chatbot-knowledge');
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
@@ -328,6 +329,93 @@ async function saveEnquiry(enquiry) {
   await fs.mkdir(DATA_DIR, { recursive: true });
   await fs.appendFile(ENQUIRIES_FILE, `${JSON.stringify(enquiry)}\n`, 'utf8');
 }
+
+function normalizeChatText(value) {
+  return clean(value).toLowerCase();
+}
+
+function isRestrictedChatQuestion(question) {
+  return chatbotKnowledge.restrictedKeywords.some((keyword) => chatKeywordMatches(question, keyword));
+}
+
+function escapeRegExp(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function chatKeywordMatches(question, keyword) {
+  const normalizedKeyword = keyword.toLowerCase();
+  const pattern = new RegExp(`(^|[^a-z0-9])${escapeRegExp(normalizedKeyword)}($|[^a-z0-9])`, 'i');
+  return pattern.test(question);
+}
+
+function scoreChatTopic(question, topic) {
+  return topic.keywords.reduce((score, keyword) => {
+    const normalizedKeyword = keyword.toLowerCase();
+    if (question === normalizedKeyword) return score + 5;
+    if (chatKeywordMatches(question, normalizedKeyword)) return score + Math.max(1, normalizedKeyword.split(/\s+/).length);
+    return score;
+  }, 0);
+}
+
+function buildChatLinks(topic) {
+  if (!topic || !Array.isArray(topic.links)) return [];
+
+  return topic.links.slice(0, 3).map((href) => {
+    const hrefWithoutHash = href.split('#')[0];
+    const page = chatbotKnowledge.publicPages.find((item) => item.href === hrefWithoutHash);
+    return {
+      href,
+      label: page ? page.label : 'Learn More'
+    };
+  });
+}
+
+function answerChatQuestion(rawQuestion) {
+  const question = normalizeChatText(rawQuestion);
+
+  if (!question) {
+    return {
+      answer: 'Please ask a question about Nirmaan Public School admissions, academics, contact details, timings, facilities, or other public website information.',
+      links: chatbotKnowledge.publicPages.slice(0, 3)
+    };
+  }
+
+  if (isRestrictedChatQuestion(question)) {
+    return {
+      answer: 'I can only answer questions based on the public Nirmaan Public School website. I cannot access or describe any admin panel, CMS, private dashboard, passwords, student records, or backend management features because those are not public website content. For school enquiries, please call 991-822-5511.',
+      links: [{ label: 'Contact Us', href: '/contact.html' }]
+    };
+  }
+
+  const scoredTopics = chatbotKnowledge.topics
+    .map((topic) => ({ topic, score: scoreChatTopic(question, topic) }))
+    .filter((item) => item.score > 0)
+    .sort((a, b) => b.score - a.score);
+
+  if (!scoredTopics.length) {
+    return {
+      answer: chatbotKnowledge.fallbackAnswer,
+      links: [{ label: 'Contact Us', href: '/contact.html' }]
+    };
+  }
+
+  const bestTopic = scoredTopics[0].topic;
+  return {
+    answer: bestTopic.answer,
+    topic: bestTopic.title,
+    links: buildChatLinks(bestTopic)
+  };
+}
+
+app.post('/api/chatbot', (req, res) => {
+  const question = clean(req.body?.question).slice(0, 300);
+  const result = answerChatQuestion(question);
+
+  return res.status(200).json({
+    success: true,
+    ...result
+  });
+});
 
 app.post('/api/admission-enquiries', async (req, res) => {
   const { enquiry, errors } = validateAdmissionEnquiry(req.body || {});
