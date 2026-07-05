@@ -1,6 +1,7 @@
 import Spline from '@splinetool/react-spline';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import type React from 'react';
 
 interface LauncherProps {
   isOpen: boolean;
@@ -74,34 +75,50 @@ export function Launcher({ isOpen, onOpen }: LauncherProps) {
           width: '100%',
           height: '100%',
           border: 'none',
-          borderRadius: 0,         // ← no circle mask
+          borderRadius: 0,
           background: 'transparent',
           cursor: 'pointer',
           padding: 0,
-          overflow: 'visible',     // ← nothing clips the canvas
+          overflow: 'visible',
           zIndex: 10000,
         }}
       >
         {/*
-         * Spline canvas:
-         * - pointer-events:none → clicks fall through to the button above
-         * - No transform scaling so the canvas pixel ratio stays native
-         * - Width/height 100% fills the button bounding box exactly
-         * - background:transparent so no dark box shows behind the model
+         * GPU-accelerated wrapper around the Spline canvas.
+         * - translateZ(0): forces browser to promote this to its own GPU
+         *   compositing layer — bypassing CPU rasterisation entirely.
+         * - will-change:transform: signals the browser to pre-allocate the
+         *   GPU layer before the first paint, eliminating the initial blur
+         *   flash that occurs when the layer is promoted mid-render.
+         * - image-rendering:high-quality: prevents the CSS engine from
+         *   applying lossy bicubic/nearest-neighbour downsampling.
+         * - Explicit 150×150px dimensions match the outer shell exactly so
+         *   the WebGL canvas is never internally sized small and then CSS-
+         *   stretched, which is the primary cause of blurriness on HiDPI.
          */}
-        <Spline
-          scene="https://prod.spline.design/I2lNQqFpD1pRfkdW/scene.splinecode"
+        <div
           style={{
             position: 'absolute',
             inset: 0,
-            width: '100%',
-            height: '100%',
-            background: 'transparent',
+            width: 150,
+            height: 150,
+            transform: 'translateZ(0)',
+            willChange: 'transform',
+            imageRendering: 'high-quality' as React.CSSProperties['imageRendering'],
             pointerEvents: 'none',
-            userSelect: 'none',
-            imageRendering: 'auto',
           }}
-        />
+        >
+          <Spline
+            scene="https://prod.spline.design/I2lNQqFpD1pRfkdW/scene.splinecode"
+            style={{
+              width: '100%',
+              height: '100%',
+              background: 'transparent',
+              pointerEvents: 'none',
+              userSelect: 'none',
+            }}
+          />
+        </div>
       </motion.button>
     </div>
   );
