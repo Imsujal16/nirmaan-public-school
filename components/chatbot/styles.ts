@@ -7,44 +7,17 @@ export function injectChatbotStyles() {
   style.id = CHATBOT_STYLE_ID;
   style.textContent = `
     /* ── Shell & font ── */
-    .nps2-shell{position:fixed;inset:auto 22px 22px auto;z-index:9999;font-family:'Inter','Outfit','Poppins',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--text-dark,#0d1545)}
+    .nps2-shell{position:fixed;inset:auto 0px 0px auto;z-index:9999;font-family:'Inter','Outfit','Poppins',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--text-dark,#0d1545)}
 
-    /* ── Robot Launcher ── */
-    .nps2-robot-launcher{position:relative;width:72px;height:72px;border:0;border-radius:50%;background:linear-gradient(160deg,#1a3a8f,#0f1f5c 60%,#071240);box-shadow:0 8px 32px rgba(15,31,92,.45),0 0 0 2px rgba(100,160,255,.25),inset 0 1px 0 rgba(255,255,255,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;overflow:visible;padding:0}
-    .nps2-robot-launcher.is-open .nps2-robot-head{transform:scale(.92);opacity:.8}
-    .nps2-robot-launcher:before{content:'';position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 35% 20%,rgba(100,160,255,.22),transparent 55%);pointer-events:none}
-
-    /* ── Antenna ── */
-    .nps2-robot-antenna{position:absolute;top:-14px;left:50%;transform:translateX(-50%);width:3px;height:14px;background:linear-gradient(to top,#3a5fc0,#6ab0ff);border-radius:2px}
-    .nps2-robot-antenna-ball{position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#7fffff,#00c8ff);box-shadow:0 0 10px 3px rgba(0,200,255,.7),0 0 20px 6px rgba(0,200,255,.3);animation:nps2-pulse 1.8s ease-in-out infinite}
-
-    /* ── Robot head ── */
-    .nps2-robot-head{position:relative;width:52px;height:44px;background:linear-gradient(160deg,#1e3fa0,#0d1f5e);border-radius:16px 16px 12px 12px;box-shadow:0 6px 18px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.12);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transition:transform .25s ease,opacity .25s ease}
-
-    /* ── Visor ── */
-    .nps2-robot-visor{width:40px;height:22px;background:linear-gradient(160deg,#050d2a,#0a1840);border-radius:10px;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:inset 0 2px 8px rgba(0,0,0,.6),inset 0 -1px 0 rgba(100,160,255,.1);position:relative;overflow:hidden}
-    .nps2-robot-visor:before{content:'';position:absolute;top:1px;left:8px;right:8px;height:1px;background:linear-gradient(90deg,transparent,rgba(100,200,255,.35),transparent);border-radius:1px}
-
-    /* ── Eyes ── */
-    .nps2-robot-eye-socket{width:10px;height:10px;border-radius:50%;background:rgba(0,0,0,.5);display:grid;place-items:center;box-shadow:inset 0 1px 3px rgba(0,0,0,.8)}
-    .nps2-robot-eye{width:6px;height:6px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#88ffff,#00d4ff);box-shadow:0 0 6px 2px rgba(0,212,255,.85),0 0 12px 4px rgba(0,212,255,.4);transition:transform .05s linear;will-change:transform}
-
-    /* ── Mouth LEDs ── */
-    .nps2-robot-mouth{display:flex;gap:4px;align-items:center;margin-top:1px}
-    .nps2-robot-mouth-led{width:5px;height:3px;border-radius:2px;background:#00d4ff;box-shadow:0 0 5px rgba(0,212,255,.7);animation:nps2-blink-led 2s ease-in-out infinite}
-    .nps2-robot-mouth-led:nth-child(2){animation-delay:.3s;width:8px}
-    .nps2-robot-mouth-led:nth-child(3){animation-delay:.6s}
-
-    /* ── Waving hand ── */
-    .nps2-robot-hand{position:absolute;bottom:2px;right:-28px;font-size:22px;opacity:0;transform:rotate(20deg) translateX(0px);transform-origin:bottom left;transition:opacity .3s ease;pointer-events:none}
-    .nps2-robot-hand.waving{opacity:1;animation:nps2-wave 0.55s ease-in-out 4;animation-fill-mode:forwards}
+    /* ── Spline Launcher outer wrapper ── */
+    /* The button itself is styled via inline styles in Launcher.tsx */
 
     /* ── Greeting bubble ── */
-    .nps2-robot-greeting{position:absolute;bottom:80px;right:0;background:white;color:#0d1545;font-size:.78rem;font-weight:700;padding:8px 13px;border-radius:16px 16px 4px 16px;box-shadow:0 8px 24px rgba(15,31,92,.2);white-space:nowrap;animation:nps2-greet-in .35s cubic-bezier(.34,1.56,.64,1) forwards,nps2-greet-out .35s ease 2.4s forwards;pointer-events:none}
+    .nps2-robot-greeting{position:absolute;bottom:88px;right:0;background:white;color:#0d1545;font-size:.78rem;font-weight:700;padding:8px 13px;border-radius:16px 16px 4px 16px;box-shadow:0 8px 24px rgba(15,31,92,.2);white-space:nowrap;animation:nps2-greet-in .35s cubic-bezier(.34,1.56,.64,1) forwards,nps2-greet-out .35s ease 2.4s forwards;pointer-events:none;z-index:10000}
     .nps2-robot-greeting:before{content:'';position:absolute;bottom:-6px;right:12px;width:12px;height:12px;background:white;clip-path:polygon(0 0,100% 0,0 100%)}
 
     /* ── Notification badge ── */
-    .nps2-badge{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:#f5a623;color:#0f1f5c;border:2px solid white;font-weight:900;font-size:10px;display:grid;place-items:center;box-shadow:0 4px 12px rgba(245,166,35,.5)}
+    .nps2-badge{position:absolute;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:#f5a623;color:#0f1f5c;border:2px solid white;font-weight:900;font-size:10px;display:grid;place-items:center;box-shadow:0 4px 12px rgba(245,166,35,.5)}
 
     /* ── Chat window ── */
     .nps2-window{position:fixed;right:22px;bottom:98px;width:min(456px,calc(100vw - 28px));height:min(720px,calc(100vh - 128px));display:flex;flex-direction:column;border:1px solid rgba(255,255,255,.55);border-radius:32px;background:linear-gradient(180deg,rgba(255,255,255,.88),rgba(247,249,255,.82));box-shadow:0 34px 90px rgba(15,31,92,.28);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);overflow:hidden;isolation:isolate}
@@ -139,9 +112,6 @@ export function injectChatbotStyles() {
 
     /* ── Keyframes ── */
     @keyframes nps2-typing{0%,80%,100%{transform:translateY(0);opacity:.45}40%{transform:translateY(-4px);opacity:1}}
-    @keyframes nps2-pulse{0%,100%{box-shadow:0 0 10px 3px rgba(0,200,255,.7),0 0 20px 6px rgba(0,200,255,.3)}50%{box-shadow:0 0 16px 6px rgba(0,200,255,.9),0 0 28px 10px rgba(0,200,255,.5)}}
-    @keyframes nps2-blink-led{0%,90%,100%{opacity:1}95%{opacity:.2}}
-    @keyframes nps2-wave{0%{transform:rotate(20deg)}25%{transform:rotate(-10deg)}50%{transform:rotate(20deg)}75%{transform:rotate(-5deg)}100%{transform:rotate(20deg)}}
     @keyframes nps2-greet-in{from{opacity:0;transform:scale(.8) translateY(6px)}to{opacity:1;transform:scale(1) translateY(0)}}
     @keyframes nps2-greet-out{from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(.85) translateY(4px)}}
 

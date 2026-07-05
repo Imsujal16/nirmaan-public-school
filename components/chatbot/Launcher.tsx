@@ -1,5 +1,6 @@
+import Spline from '@splinetool/react-spline';
 import { motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface LauncherProps {
   isOpen: boolean;
@@ -7,105 +8,101 @@ interface LauncherProps {
 }
 
 export function Launcher({ isOpen, onOpen }: LauncherProps) {
-  const leftEyeRef = useRef<HTMLSpanElement>(null);
-  const rightEyeRef = useRef<HTMLSpanElement>(null);
-  const containerRef = useRef<HTMLButtonElement>(null);
   const [showGreeting, setShowGreeting] = useState(false);
-  const [waving, setWaving] = useState(false);
 
-  // Mouse-following eyes
   useEffect(() => {
-    function handleMouseMove(e: MouseEvent) {
-      const eyes = [leftEyeRef.current, rightEyeRef.current];
-      eyes.forEach((eye) => {
-        if (!eye) return;
-        const rect = eye.getBoundingClientRect();
-        const eyeCenterX = rect.left + rect.width / 2;
-        const eyeCenterY = rect.top + rect.height / 2;
-        const angle = Math.atan2(e.clientY - eyeCenterY, e.clientX - eyeCenterX);
-        const maxDist = 3;
-        const x = Math.cos(angle) * maxDist;
-        const y = Math.sin(angle) * maxDist;
-        eye.style.transform = `translate(${x}px, ${y}px)`;
-      });
-    }
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  // Welcome wave on first load
-  useEffect(() => {
-    const waveTimer = setTimeout(() => {
-      setWaving(true);
-      setShowGreeting(true);
-    }, 1200);
-
-    const stopWaveTimer = setTimeout(() => {
-      setWaving(false);
-    }, 4200);
-
-    const hideGreetingTimer = setTimeout(() => {
-      setShowGreeting(false);
-    }, 3800);
-
-    return () => {
-      clearTimeout(waveTimer);
-      clearTimeout(stopWaveTimer);
-      clearTimeout(hideGreetingTimer);
-    };
+    const t1 = setTimeout(() => setShowGreeting(true), 1200);
+    const t2 = setTimeout(() => setShowGreeting(false), 4000);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []);
 
   return (
-    <motion.button
-      ref={containerRef}
-      className={`nps2-launcher nps2-robot-launcher${isOpen ? ' is-open' : ''}`}
-      type="button"
-      aria-label={isOpen ? 'NPS assistant is open' : 'Open NPS assistant'}
-      onClick={onOpen}
-      whileHover={{ y: -4, scale: 1.04 }}
-      whileTap={{ scale: 0.92 }}
+    /*
+     * Outermost shell: fixed position in the viewport bottom-right.
+     * position:relative lets the badge and greeting bubble anchor to it.
+     * overflow:visible ensures NOTHING clips the 3D canvas.
+     */
+    <div
+      style={{
+        position: 'relative',
+        width: 150,
+        height: 150,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
     >
-      {/* Greeting bubble */}
+      {/* ── Greeting speech bubble ── */}
       {showGreeting && !isOpen && (
-        <span className="nps2-robot-greeting">Hi there! 👋</span>
+        <span
+          className="nps2-robot-greeting"
+          style={{ bottom: 158, right: 0 }}
+        >
+          Hi there! 👋
+        </span>
       )}
 
-      {/* Antenna */}
-      <span className="nps2-robot-antenna">
-        <span className="nps2-robot-antenna-ball" />
-      </span>
-
-      {/* Robot head */}
-      <span className="nps2-robot-head">
-
-        {/* Visor / faceplate */}
-        <span className="nps2-robot-visor">
-
-          {/* Left eye */}
-          <span className="nps2-robot-eye-socket nps2-eye-left">
-            <span className="nps2-robot-eye" ref={leftEyeRef} />
-          </span>
-
-          {/* Right eye */}
-          <span className="nps2-robot-eye-socket nps2-eye-right">
-            <span className="nps2-robot-eye" ref={rightEyeRef} />
-          </span>
+      {/* ── Orange notification badge (outside clipping zone) ── */}
+      {!isOpen && (
+        <span
+          className="nps2-badge"
+          style={{
+            position: 'absolute',
+            top: 16,
+            right: 16,
+            zIndex: 10002,
+          }}
+        >
+          1
         </span>
+      )}
 
-        {/* Chin strip / mouth */}
-        <span className="nps2-robot-mouth">
-          <span className="nps2-robot-mouth-led" />
-          <span className="nps2-robot-mouth-led" />
-          <span className="nps2-robot-mouth-led" />
-        </span>
-      </span>
-
-      {/* Waving hand */}
-      <span className={`nps2-robot-hand${waving ? ' waving' : ''}`}>👋</span>
-
-      {/* Notification badge */}
-      {!isOpen && <span className="nps2-badge">1</span>}
-    </motion.button>
+      {/*
+       * Interactive click target: transparent, no border, no background.
+       * Covers the full 150×150 bounding box so the user can click anywhere
+       * on or around the 3D robot to toggle the chat window.
+       */}
+      <motion.button
+        type="button"
+        aria-label={isOpen ? 'NPS assistant is open' : 'Open NPS assistant'}
+        onClick={onOpen}
+        whileHover={{ y: -4, scale: 1.06 }}
+        whileTap={{ scale: 0.92 }}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          border: 'none',
+          borderRadius: 0,         // ← no circle mask
+          background: 'transparent',
+          cursor: 'pointer',
+          padding: 0,
+          overflow: 'visible',     // ← nothing clips the canvas
+          zIndex: 10000,
+        }}
+      >
+        {/*
+         * Spline canvas:
+         * - pointer-events:none → clicks fall through to the button above
+         * - No transform scaling so the canvas pixel ratio stays native
+         * - Width/height 100% fills the button bounding box exactly
+         * - background:transparent so no dark box shows behind the model
+         */}
+        <Spline
+          scene="https://prod.spline.design/I2lNQqFpD1pRfkdW/scene.splinecode"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            background: 'transparent',
+            pointerEvents: 'none',
+            userSelect: 'none',
+            imageRendering: 'auto',
+          }}
+        />
+      </motion.button>
+    </div>
   );
 }
