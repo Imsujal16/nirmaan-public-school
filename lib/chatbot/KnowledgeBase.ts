@@ -65,21 +65,73 @@ export const knowledgeBase: KnowledgeEntry[] = [
     ],
   },
 
-  // ── LEADERSHIP ────────────────────────────────────────────────────────────
+  // ── LEADERSHIP & MESSAGES ──────────────────────────────────────────────────
   {
     id: 'leadership',
     title: 'School Leadership',
     intent: 'leadership',
-    summary: 'NPS is guided by an experienced and dedicated leadership team committed to academic excellence and student welfare.',
+    summary: 'NPS is guided by an experienced and dedicated leadership team committed to academic excellence and student welfare. You can ask for specific messages from the Founder, Director, Manager, or Principal.',
     details: [
-      'Founder: Mr. Rajesh Dubey "Nirmaan" (Advocate) — M.A., L.L.B. — "I request you to support me in building a better future for your children."',
-      'Director: Mr. Ajay Kumar Dubey — M.Sc. (Chemistry), B.Ed. (Lucknow University), L.L.B. (Awadh University) — "Primary education forms the foundation of a child\'s future."',
-      'Manager: Mr. Satyendra Panday — Language Expert — "Our goal is to use smart classrooms to prepare children for the future."',
-      'Principal: Mr. Faizan Ahmad Ansari — M.A., B.Ed. (Awadh University) — "Education builds a better society. It makes children cultured, aware, and self-reliant."',
+      'Founder: Mr. Rajesh Dubey "Nirmaan" (Advocate) — M.A., L.L.B.',
+      'Director: Mr. Ajay Kumar Dubey — M.Sc. (Chemistry), B.Ed., L.L.B.',
+      'Manager: Mr. Satyendra Panday — Language Expert',
+      'Principal: Mr. Faizan Ahmad Ansari — M.A., B.Ed.'
     ],
-    keywords: ['principal', 'headmaster', 'founder', 'director', 'manager', 'leadership', 'head', 'message', 'vision', 'rajesh dubey', 'ajay dubey', 'faizan ansari', 'satyendra panday'],
-    aliases: ['principal message', 'who is principal', 'school head', 'founder message', 'who founded', 'management team'],
+    keywords: ['leadership', 'head', 'management team', 'who runs', 'visionaries'],
+    aliases: ['who runs the school', 'management team', 'school head'],
     links: [{ label: 'Meet Our Leadership', href: '/about.html#leadership', variant: 'primary' }],
+  },
+
+  {
+    id: 'founder_message',
+    title: 'Message from the Founder',
+    intent: 'leadership',
+    summary: 'Message from Mr. Rajesh Dubey "Nirmaan" (Advocate), Founder of Nirmaan Public School (M.A., L.L.B.)',
+    details: [
+      "Nowadays every parent wants to provide their child with the best education — an education through which the child can build their life, move ahead, and adapt to changing times. For this reason, parents make every possible effort to give their children a good education. They enroll them in reputed educational institutions and spend substantial fees. This is necessary.\n\nHowever, our responsibility does not end there. Today we often see that parents do not have enough time for their children. Most parents only talk to their children and do not try to understand their problems. Today, we must change this traditional way of thinking and fully cooperate with our children. We need to make them aware of what is right and wrong in life. It is just as important to teach children what they should not do as it is to teach them what they should do.\n\nWe save money for our children, but I request you not to leave only wealth for them. Instead, make them capable and educated. Friends, some decisions in life give immediate results, while some decisions bear fruit later. Therefore, I request you to support me in building a better future for your children. Friends, a single step has taught us that one step can take us further. Come, let us work together to educate our children and make their future bright."
+    ],
+    keywords: ['founder', 'rajesh dubey', 'founder message', 'nirmaan'],
+    aliases: ['who founded', 'founder message', 'message from founder', 'rajesh dubey message'],
+    links: [{ label: 'About the Founder', href: '/about.html#leadership', variant: 'primary' }],
+  },
+
+  {
+    id: 'director_message',
+    title: 'Message from the Director',
+    intent: 'leadership',
+    summary: 'Message from Mr. Ajay Kumar Dubey, Director of Nirmaan Public School (M.Sc. Chemistry, B.Ed., L.L.B.)',
+    details: [
+      "Time is extremely important in the field of education for providing children with a better future. Primary education is especially important because it forms the foundation of a child's future. However, most parents focus more on their children's higher education and often overlook the importance of primary education. Today, many parents pay attention to higher studies, but they underestimate the significance of primary education.\n\nJust think about it: how can a strong building be constructed on a weak foundation? A tree can bear good fruit only when its roots are strong. If the roots are weak, the tree may be destroyed by storms. Similarly, if a child's primary education is not strong, how can we expect them to have a bright future? How will they be prepared to face competition? How will they establish themselves in society? And how will they become an inspiration for future generations?\n\nTherefore, I humbly request you to pay special attention to your children's primary education. Come, let us move forward together. Let us take one step forward. Take a step toward building a bright future for your children."
+    ],
+    keywords: ['director', 'ajay dubey', 'ajay kumar', 'director message'],
+    aliases: ['director message', 'message from director', 'who is the director', 'ajay dubey message'],
+    links: [{ label: 'About the Director', href: '/about.html#leadership', variant: 'primary' }],
+  },
+
+  {
+    id: 'manager_message',
+    title: 'Message from the Manager',
+    intent: 'leadership',
+    summary: 'Message from Mr. Satyendra Panday, Manager of Nirmaan Public School (Language Expert)',
+    details: [
+      "Today, education is no longer limited to books alone. In this era of globalization, competition has increased tremendously, and the role of technology has become extremely important.\n\nThe intellectual development of children now requires the support of technology. God has gifted every child with a unique talent. It is our responsibility to identify that talent and help children progress in their chosen fields.\n\nOur goal should be to use modern technological tools such as Smart Classrooms and Computer Labs to prepare children for the future. These technologies provide a strong foundation for their intellectual growth and learning. Understanding this responsibility, it has become essential to provide children with education that is meaningful and aligned with their abilities and talents."
+    ],
+    keywords: ['manager', 'satyendra panday', 'manager message'],
+    aliases: ['manager message', 'message from manager', 'who is the manager', 'satyendra panday message'],
+    links: [{ label: 'About the Manager', href: '/about.html#leadership', variant: 'primary' }],
+  },
+
+  {
+    id: 'principal_message',
+    title: 'Message from the Principal',
+    intent: 'leadership',
+    summary: 'Message from Mr. Faizan Ahmad Ansari, Principal of Nirmaan Public School (M.A., B.Ed.)',
+    details: [
+      "Education is extremely important for modern society. It is the foundation of a successful life and plays a vital role in the mental development of children, helping them become responsible and capable citizens.\n\nEducation builds a better society. It makes children cultured, aware, and self-reliant. Through education, children are empowered from an early age and are given opportunities to achieve their goals. Education also helps develop good values, discipline, and positive habits in children.\n\nChildren are the future of the world. Therefore, education is of great importance to them. Their knowledge and abilities will keep the world alive and prosperous. For this reason, please ensure that your children receive a proper education. 'No Knowledge Without College.'"
+    ],
+    keywords: ['principal', 'headmaster', 'faizan ansari', 'faizan ahmad', 'principal message'],
+    aliases: ['principal message', 'message from principal', 'who is the principal', 'faizan ansari message'],
+    links: [{ label: 'About the Principal', href: '/about.html#leadership', variant: 'primary' }],
   },
 
   // ── FACULTY ───────────────────────────────────────────────────────────────
