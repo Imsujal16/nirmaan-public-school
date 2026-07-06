@@ -1,7 +1,10 @@
 import Spline from '@splinetool/react-spline';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useCallback } from 'react';
 import type React from 'react';
+
+// ─── localStorage key ───────────────────────────────────────────────────────
+const BADGE_STORAGE_KEY = 'nps_chatbot_badge_cleared';
 
 interface LauncherProps {
   isOpen: boolean;
@@ -10,7 +13,21 @@ interface LauncherProps {
 
 export function Launcher({ isOpen, onOpen }: LauncherProps) {
   const [showGreeting, setShowGreeting] = useState(false);
-  const [badgeCount, setBadgeCount] = useState(1);
+
+  // ── Task 3: Persistent badge state ──────────────────────────────────────
+  // Default to 0 to prevent a flash of "1" before we read localStorage.
+  const [badgeCount, setBadgeCount] = useState(0);
+
+  useEffect(() => {
+    // On mount, only show the badge if the user has NOT previously cleared it.
+    const hasCleared = localStorage.getItem(BADGE_STORAGE_KEY);
+    if (!hasCleared) {
+      setBadgeCount(1);
+    }
+  }, []);
+
+  // ── Task 2: Spline loading state ─────────────────────────────────────────
+  const [isModelLoaded, setIsModelLoaded] = useState(false);
 
   useEffect(() => {
     const t1 = setTimeout(() => setShowGreeting(true), 1200);
@@ -19,9 +36,15 @@ export function Launcher({ isOpen, onOpen }: LauncherProps) {
   }, []);
 
   const handleOpen = useCallback(() => {
+    // Clear badge and persist to localStorage so it never reappears.
     setBadgeCount(0);
+    localStorage.setItem(BADGE_STORAGE_KEY, 'true');
     onOpen();
   }, [onOpen]);
+
+  const handleModelLoad = useCallback(() => {
+    setIsModelLoaded(true);
+  }, []);
 
   return (
     /*
@@ -49,20 +72,27 @@ export function Launcher({ isOpen, onOpen }: LauncherProps) {
         </span>
       )}
 
-      {/* ── Orange notification badge (Fixed unmount logic) ── */}
-      {!isOpen && badgeCount > 0 && (
-        <span
-          className="nps2-badge"
-          style={{
-            position: 'absolute',
-            top: 16,
-            right: 16,
-            zIndex: 10002,
-          }}
-        >
-          {badgeCount}
-        </span>
-      )}
+      {/* ── Orange notification badge (persistent via localStorage) ── */}
+      <AnimatePresence>
+        {!isOpen && badgeCount > 0 && (
+          <motion.span
+            key="badge"
+            className="nps2-badge"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+            style={{
+              position: 'absolute',
+              top: 16,
+              right: 16,
+              zIndex: 10002,
+            }}
+          >
+            {badgeCount}
+          </motion.span>
+        )}
+      </AnimatePresence>
 
       {/*
        * Interactive click target: transparent, no border, no background.
@@ -90,19 +120,65 @@ export function Launcher({ isOpen, onOpen }: LauncherProps) {
         }}
       >
         {/*
-         * GPU-accelerated wrapper around the Spline canvas.
-         * - translateZ(0): forces browser to promote this to its own GPU
-         *   compositing layer — bypassing CPU rasterisation entirely.
-         * - will-change:transform: signals the browser to pre-allocate the
-         *   GPU layer before the first paint, eliminating the initial blur
-         *   flash that occurs when the layer is promoted mid-render.
-         * - image-rendering:high-quality: prevents the CSS engine from
-         *   applying lossy bicubic/nearest-neighbour downsampling.
-         * - Explicit 150×150px dimensions match the outer shell exactly so
-         *   the WebGL canvas is never internally sized small and then CSS-
-         *   stretched, which is the primary cause of blurriness on HiDPI.
+         * ── Task 2: Skeleton placeholder ────────────────────────────────
+         * Displayed while WebGL is compiling the Spline scene.
+         * A soft pulsing circle occupies the same footprint so the layout
+         * never shifts when the robot pops in.
          */}
-        <div
+        <AnimatePresence>
+          {!isModelLoaded && (
+            <motion.div
+              key="skeleton"
+              initial={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              style={{
+                position: 'absolute',
+                inset: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                pointerEvents: 'none',
+              }}
+            >
+              {/* Outer pulsing ring */}
+              <motion.div
+                animate={{ scale: [1, 1.12, 1], opacity: [0.5, 0.8, 0.5] }}
+                transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+                style={{
+                  width: 72,
+                  height: 72,
+                  borderRadius: '50%',
+                  background: 'radial-gradient(circle, rgba(99,102,241,0.35) 0%, rgba(99,102,241,0.08) 70%)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                {/* Inner dot */}
+                <motion.div
+                  animate={{ scale: [1, 0.88, 1] }}
+                  transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+                  style={{
+                    width: 36,
+                    height: 36,
+                    borderRadius: '50%',
+                    background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+                    boxShadow: '0 0 18px rgba(99,102,241,0.6)',
+                  }}
+                />
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/*
+         * GPU-accelerated wrapper around the Spline canvas.
+         * Fades in only after onLoad fires to avoid the awkward pop-in.
+         */}
+        <motion.div
+          animate={{ opacity: isModelLoaded ? 1 : 0 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
           style={{
             position: 'absolute',
             inset: 0,
@@ -116,6 +192,7 @@ export function Launcher({ isOpen, onOpen }: LauncherProps) {
         >
           <Spline
             scene="https://prod.spline.design/I2lNQqFpD1pRfkdW/scene.splinecode"
+            onLoad={handleModelLoad}
             style={{
               width: '100%',
               height: '100%',
@@ -124,7 +201,7 @@ export function Launcher({ isOpen, onOpen }: LauncherProps) {
               userSelect: 'none',
             }}
           />
-        </div>
+        </motion.div>
       </motion.button>
     </div>
   );

@@ -50,6 +50,11 @@
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
   <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
 
+  <!-- LCP Optimisation: Preload the above-the-fold hero image so the browser
+       fetches it at the highest network priority during HTML parsing,
+       eliminating the render-blocking delay that causes a poor LCP score. -->
+  <link rel="preload" as="image" href="/images/hero-students.png" fetchpriority="high" />
+
   <link rel="stylesheet" href="styles.css?v=1.2" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'" />
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" /></noscript>
@@ -999,7 +1004,10 @@
           <div class="hero-visual animate-fade-right delay-200">
             <div class="hero-img-main">
               <img src="images/hero-students.png"
-                   alt="Nirmaan Public School students in uniform smiling confidently" />
+                   alt="Nirmaan Public School students in uniform smiling confidently"
+                   fetchpriority="high"
+                   loading="eager"
+                   decoding="async" />
               <div class="hero-img-overlay"></div>
             </div>
 
