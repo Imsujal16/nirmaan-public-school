@@ -14,7 +14,8 @@ const synonymMap: Record<string, string[]> = {
   photos: ['gallery', 'images'],
   pictures: ['gallery', 'photos'],
   timings: ['office hours', 'time'],
-  admission: ['apply', 'enroll', 'admissions']
+  admission: ['apply', 'enroll', 'admissions'],
+  transport: ['bus', 'van', 'route', 'pickup', 'commute', 'facility']
 };
 
 function normalize(value: string) {
@@ -25,10 +26,14 @@ function normalize(value: string) {
     .trim();
 }
 
+const STOP_WORDS = new Set([
+  'a', 'an', 'and', 'are', 'as', 'at', 'be', 'but', 'by', 'for', 'if', 'in', 'into', 'is', 'it', 'no', 'not', 'of', 'on', 'or', 'such', 'that', 'the', 'their', 'then', 'there', 'these', 'they', 'this', 'to', 'was', 'will', 'with', 'tell', 'me', 'about', 'what', 'how', 'do', 'you', 'can', 'i', 'my', 'we', 'our', 'have', 'has', 'had', 'am', 'did', 'does', 'please', 'show'
+]);
+
 function tokenize(value: string) {
   return normalize(value)
     .split(' ')
-    .filter((token) => token.length > 1);
+    .filter((token) => token.length > 1 && !STOP_WORDS.has(token));
 }
 
 function levenshtein(a: string, b: string) {
