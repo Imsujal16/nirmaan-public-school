@@ -36,6 +36,18 @@ const quickActions = [
     title: 'Gallery',
     desc: 'Photos, videos, annual day and campus tour.',
     prompt: 'Show me the gallery.'
+  },
+  {
+    icon: '🧑‍🏫',
+    title: 'Leadership',
+    desc: 'Messages from the Principal and Founder.',
+    prompt: 'What is the principal\'s message?'
+  },
+  {
+    icon: '⏱️',
+    title: 'Fees & Timings',
+    desc: 'School office hours and fee structure.',
+    prompt: 'What are the office timings and fees?'
   }
 ];
 

@@ -15,22 +15,23 @@ function suggestionsFor(intent: string) {
     'How do I apply for admission?',
     'What classes are offered?',
     'What are the office hours?',
-    'Do you have smart classrooms?'
+    'What is the fee structure?',
+    'Who is the principal?'
   ];
 
   const byIntent: Record<string, string[]> = {
     admissions: ['What documents are required?', 'What is the age criteria?', 'Is there an entrance test?'],
-    documents: ['What is the age criteria?', 'How do I apply for admission?', 'What is the admission process?'],
+    documents: ['What is the age criteria?', 'How do I apply for admission?', 'What is the fee structure?'],
     academics: ['What curriculum do you follow?', 'Tell me about smart classrooms', 'What activities are available?'],
     facilities: ['Tell me about smart classrooms', 'Is the campus safe?', 'Show me the gallery'],
     transport: ['What are the office hours?', 'What is the school address?', 'How do I contact the school?'],
-    contact: ['What are the office hours?', 'Where is the school located?', 'How do I apply?'],
+    contact: ['What are the office hours?', 'Where is the school located?', 'Who runs the school?'],
     sports: ['What subjects are taught?', 'What facilities are available?', 'Show me the gallery'],
-    fees: ['How do I contact the school?', 'What are the office hours?', 'How do I apply?'],
-    safety: ['What facilities are available?', 'Who is the school principal?', 'How do I apply?'],
-    leadership: ['About Nirmaan Public School', 'What curriculum do you follow?', 'How do I apply?'],
+    fees: ['How do I contact the school?', 'What are the office hours?', 'How do I apply for admission?'],
+    safety: ['What facilities are available?', 'Who is the school principal?', 'What are the office timings?'],
+    leadership: ['What is the principal\'s message?', 'Message from the Founder', 'Message from the Director'],
     gallery: ['What sports activities are available?', 'Tell me about the campus', 'How do I apply?'],
-    timings: ['What is the school address?', 'How do I contact the school?', 'How do I apply?']
+    timings: ['What is the school address?', 'How do I contact the school?', 'What is the fee structure?']
   };
 
   return byIntent[intent] || defaults;
