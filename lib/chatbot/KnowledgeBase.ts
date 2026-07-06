@@ -228,6 +228,7 @@ export const knowledgeBase: KnowledgeEntry[] = [
     aliases: ['where is school', 'contact number', 'school address', 'how to reach'],
     links: [
       { label: 'Contact Page', href: '/contact.html', variant: 'primary' },
+      { label: '💬 WhatsApp', href: 'https://api.whatsapp.com/send/?phone=919918225511&text&type=phone_number&app_absent=0' },
       { label: 'Call', href: 'tel:9918225511' },
       { label: 'Email', href: 'mailto:info@nirmaanpublicschool.in' }
     ]
@@ -293,5 +294,26 @@ export const knowledgeBase: KnowledgeEntry[] = [
       { label: 'Contact', href: '/contact.html', variant: 'primary' },
       { label: 'Gallery', href: '/gallery.html' }
     ]
+  },
+  {
+    id: 'social',
+    title: 'Social Media & Online Presence',
+    intent: 'contact',
+    summary: 'Stay connected with NPS on social media for the latest updates, event photos, campus videos, and school news.',
+    details: [
+      '💬 WhatsApp: Chat directly with the school admissions team.',
+      '📸 Instagram: @nirmaan_public_school — daily highlights and student moments.',
+      '📘 Facebook: Nirmaan Public School Aliganj — events, notices, and announcements.',
+      '▶️ YouTube: @nirmanpublicschoolaliganj4860 — campus tours, annual day videos, and more.'
+    ],
+    keywords: ['social media', 'social', 'instagram', 'facebook', 'youtube', 'whatsapp', 'follow', 'online', 'channel', 'video', 'videos', 'connect', 'media'],
+    aliases: ['school instagram', 'school facebook', 'school youtube', 'whatsapp number', 'follow school', 'social links', 'online presence'],
+    links: [
+      { label: '💬 WhatsApp', href: 'https://api.whatsapp.com/send/?phone=919918225511&text&type=phone_number&app_absent=0', variant: 'primary' },
+      { label: '📸 Instagram', href: 'https://www.instagram.com/nirmaan_public_school/' },
+      { label: '📘 Facebook', href: 'https://www.facebook.com/nirmaan.public.school.aliganj/' },
+      { label: '▶️ YouTube', href: 'https://www.youtube.com/@nirmanpublicschoolaliganj4860/videos' }
+    ]
   }
 ];
+

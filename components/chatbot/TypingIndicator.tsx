@@ -10,10 +10,13 @@ export function TypingIndicator() {
       exit={{ opacity: 0, y: 8 }}
     >
       <Avatar compact />
-      <div className="nps2-typing" aria-label="Assistant is typing">
-        <span />
-        <span />
-        <span />
+      <div className="nps2-typing-wrap">
+        <span className="nps2-typing-label">Nirmaan is typing</span>
+        <div className="nps2-typing" aria-label="Assistant is typing">
+          <span />
+          <span />
+          <span />
+        </div>
       </div>
     </motion.div>
   );

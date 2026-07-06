@@ -94,7 +94,10 @@ export function injectChatbotStyles() {
     .nps2-suggestion{border:1px solid #dce5f8;background:white;color:#1a2d6b;border-radius:999px;padding:6px 11px;font-size:.73rem;font-weight:700;cursor:pointer;transition:all .2s ease}
     .nps2-suggestion:hover{background:#f0f5ff;border-color:#9fb7ff}
 
-    /* ── Typing dots ── */
+    /* ── Typing indicator ── */
+    .nps2-typing-wrap{display:flex;flex-direction:column;gap:5px}
+    .nps2-typing-label{font-size:.68rem;font-weight:600;color:#8a96bd;letter-spacing:.02em;padding-left:2px;animation:nps2-label-pulse 1.8s ease-in-out infinite}
+    @keyframes nps2-label-pulse{0%,100%{opacity:.55}50%{opacity:1}}
     .nps2-typing{display:flex;align-items:center;gap:5px;padding:12px 14px;border-radius:18px;background:white;border:1px solid #e2e8f5;width:max-content;box-shadow:0 10px 24px rgba(15,31,92,.08)}
     .nps2-typing span{width:7px;height:7px;border-radius:50%;background:#8ca0d4;animation:nps2-typing 1.1s infinite ease-in-out}.nps2-typing span:nth-child(2){animation-delay:.15s}.nps2-typing span:nth-child(3){animation-delay:.3s}
 
