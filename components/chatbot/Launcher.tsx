@@ -1,6 +1,6 @@
 import Spline from '@splinetool/react-spline';
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import type React from 'react';
 
 interface LauncherProps {
@@ -10,12 +10,18 @@ interface LauncherProps {
 
 export function Launcher({ isOpen, onOpen }: LauncherProps) {
   const [showGreeting, setShowGreeting] = useState(false);
+  const [badgeCount, setBadgeCount] = useState(1);
 
   useEffect(() => {
     const t1 = setTimeout(() => setShowGreeting(true), 1200);
     const t2 = setTimeout(() => setShowGreeting(false), 4000);
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []);
+
+  const handleOpen = useCallback(() => {
+    setBadgeCount(0);
+    onOpen();
+  }, [onOpen]);
 
   return (
     /*
@@ -43,8 +49,8 @@ export function Launcher({ isOpen, onOpen }: LauncherProps) {
         </span>
       )}
 
-      {/* ── Orange notification badge (outside clipping zone) ── */}
-      {!isOpen && (
+      {/* ── Orange notification badge (Fixed unmount logic) ── */}
+      {!isOpen && badgeCount > 0 && (
         <span
           className="nps2-badge"
           style={{
@@ -54,7 +60,7 @@ export function Launcher({ isOpen, onOpen }: LauncherProps) {
             zIndex: 10002,
           }}
         >
-          1
+          {badgeCount}
         </span>
       )}
 
@@ -66,7 +72,7 @@ export function Launcher({ isOpen, onOpen }: LauncherProps) {
       <motion.button
         type="button"
         aria-label={isOpen ? 'NPS assistant is open' : 'Open NPS assistant'}
-        onClick={onOpen}
+        onClick={handleOpen}
         whileHover={{ y: -4, scale: 1.06 }}
         whileTap={{ scale: 0.92 }}
         style={{
