@@ -425,6 +425,9 @@
         <div class="filter-pill" id="filter-sports" onclick="filterGallery('sports')">
           <i class="fas fa-running"></i> Sports
         </div>
+        <div class="filter-pill" id="filter-photos" onclick="filterGallery('photos')">
+          <i class="fas fa-image"></i> Photos
+        </div>
         <div class="filter-pill" id="filter-videos" onclick="filterGallery('videos')">
           <i class="fas fa-play-circle"></i> Videos
         </div>
@@ -880,7 +883,7 @@
       // Filter items
       document.querySelectorAll('.gallery-grid-item').forEach(item => {
         const cats = item.dataset.category || '';
-        if (category === 'all' || cats.includes(category)) {
+        if (category === 'all' || cats.includes(category) || (category === 'photos' && !item.classList.contains('video-wrapper'))) {
           item.style.display = 'block';
           requestAnimationFrame(() => {
             item.style.opacity = '1';
