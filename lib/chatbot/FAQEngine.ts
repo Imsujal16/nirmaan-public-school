@@ -75,15 +75,29 @@ export class FAQEngine {
     const hits = this.searchEngine.search(question);
     const best = hits[0];
 
-    if (!best || best.score < 2) {
+    // ── Strict confidence gate ─────────────────────────────────────────────
+    // Minimum score of 8 is required. Additionally, the top result must either
+    // score above 12 (high confidence) OR lead the 2nd result by at least 4
+    // points (clear winner). This prevents the catch-all 'overview' entry
+    // from bleeding into unrelated queries like transport or fees.
+    const second = hits[1];
+    const isLowConfidence =
+      !best ||
+      best.score < 8 ||
+      (best.score < 12 && second && best.score - second.score < 4);
+
+    if (isLowConfidence) {
       return {
         intent: 'unknown',
-        title: 'I can check public website information',
-        markdown: `I could not find that detail in the public website content.\n\nFor the most accurate current information, please contact the school office at ${CHATBOT_CONFIG.phone}.`,
+        title: "I'm still learning!",
+        markdown: `I'm still learning all the details! For specific questions like this, please contact our administration office directly at **${CHATBOT_CONFIG.phone}** or via WhatsApp — they will be happy to help you. 😊`,
         confidence: 0,
         cards: [],
-        links: [{ label: 'Contact Office', href: '/contact.html', variant: 'primary' }],
-        suggestions: ['Admissions process', 'Office timings', 'Transport facility']
+        links: [
+          { label: '💬 WhatsApp Us', href: 'https://api.whatsapp.com/send/?phone=919918225511&text&type=phone_number&app_absent=0', variant: 'primary' },
+          { label: 'Contact Office', href: '/contact.html' }
+        ],
+        suggestions: ['How do I apply for admission?', 'What are the office hours?', 'Tell me about transport facility']
       };
     }
 

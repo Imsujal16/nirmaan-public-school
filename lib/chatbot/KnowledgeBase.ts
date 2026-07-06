@@ -15,7 +15,7 @@ export const knowledgeBase: KnowledgeEntry[] = [
       'Established under the vision of Founder Mr. Rajesh Dubey "Nirmaan" (Advocate), the school serves the Sultanpur region with 10+ years of excellence.',
       'Over 600 happy students, 25+ expert teachers, and 11 grade levels — 100% English medium from Day 1.',
     ],
-    keywords: ['school', 'overview', 'about', 'nirmaan', 'nps', 'english medium', 'motto', 'tagline', 'what is', 'history', 'sultanpur'],
+    keywords: ['overview', 'about', 'nirmaan', 'nps', 'english medium', 'motto', 'tagline', 'sultanpur', 'aliganj', 'who are you'],
     aliases: ['who are you', 'tell me about school', 'about nps', 'what school is this', 'school info'],
     links: [
       { label: 'About Us', href: '/about.html', variant: 'primary' },
@@ -57,7 +57,7 @@ export const knowledgeBase: KnowledgeEntry[] = [
       'Modern campus features smart classrooms, dedicated activity spaces, and a safe, nurturing environment.',
       'English Medium — full English instruction from the very first day, even in Playgroup.',
     ],
-    keywords: ['history', 'story', 'founded', 'legacy', 'origin', 'established', 'background', 'when', 'how old', 'started'],
+    keywords: ['history', 'story', 'founded', 'legacy', 'origin', 'established', 'background', 'started', 'how old'],
     aliases: ['school history', 'how old is school', 'when was nps founded', 'school background', 'tell me the story'],
     links: [
       { label: 'Our Story', href: '/about.html#story', variant: 'primary' },
@@ -366,7 +366,7 @@ export const knowledgeBase: KnowledgeEntry[] = [
       'Dedicated activity spaces for arts, sports, and co-curricular programmes.',
       'CCTV surveillance and trained security throughout the campus.',
     ],
-    keywords: ['facilities', 'facility', 'infrastructure', 'smart classroom', 'smart class', 'classroom', 'led', 'technology', 'computer', 'lab', 'labs', 'campus', 'digital', 'interactive', 'board'],
+    keywords: ['facilities', 'facility', 'infrastructure', 'smart classroom', 'smart class', 'classroom', 'led', 'technology', 'lab', 'labs', 'campus', 'digital', 'interactive', 'board'],
     aliases: ['computer lab', 'do you have labs', 'school building', 'campus facilities', 'smart board', 'what facilities', 'infrastructure'],
     links: [
       { label: 'Smart Classrooms', href: '/academics.html#smart', variant: 'primary' },
@@ -415,21 +415,22 @@ export const knowledgeBase: KnowledgeEntry[] = [
     links: [{ label: 'Contact & FAQ', href: '/contact.html#faq', variant: 'primary' }],
   },
 
-  // ── TRANSPORT ─────────────────────────────────────────────────────────────
   {
     id: 'transport',
     title: 'Transport & Bus Service',
     intent: 'transport',
-    summary: 'NPS provides a transport facility for students. For specific routes and area coverage, please contact the school office directly.',
+    summary: 'Yes, transport facilities are available! Please call the school office to check the availability and details for your specific route.',
     details: [
-      'Route and pickup details are updated each academic session.',
-      'Call 991-822-5511 or visit the office for the current list of routes and stops.',
+      'Bus and van services are available for students across several areas of Sultanpur.',
+      'Route and pickup point details are updated each academic session.',
+      'To confirm if your area is covered, call 991-822-5511 or visit the school office.',
       'Office hours: Monday–Friday 8:00 AM–3:00 PM, Saturday 8:00 AM–1:00 PM.',
     ],
-    keywords: ['transport', 'bus', 'van', 'route', 'pickup', 'drop', 'vehicle', 'cab', 'conveyance'],
-    aliases: ['school bus', 'bus route', 'van facility', 'pickup service', 'is there transport', 'how to reach school'],
+    keywords: ['transport', 'bus', 'van', 'commute', 'vehicle', 'route', 'pickup', 'drop', 'conveyance'],
+    aliases: ['school bus', 'bus route', 'van facility', 'pickup service', 'is there transport', 'do you have bus', 'school van', 'how to reach school', 'does school have bus'],
     links: [
-      { label: 'Contact Office', href: '/contact.html#faq', variant: 'primary' },
+      { label: 'Contact Office', href: '/contact.html', variant: 'primary' },
+      { label: '💬 WhatsApp', href: 'https://api.whatsapp.com/send/?phone=919918225511&text&type=phone_number&app_absent=0' },
       { label: 'Call Now', href: 'tel:9918225511' },
     ],
   },
