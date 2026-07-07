@@ -30,6 +30,21 @@ app.use('/api/', rateLimit({
   legacyHeaders: false
 }));
 
+// ── SEO: Block Vercel staging domain from Google indexing ────────────────────
+// Checks the Host header on every request. If it contains "vercel.app", we
+// inject X-Robots-Tag: noindex, nofollow at the HTTP level — the most
+// authoritative directive Google respects (overrides even meta tags).
+// Production domain (nirmaanpublicschool.in) explicitly gets index, follow.
+app.use((req, res, next) => {
+  const host = (req.headers['x-forwarded-host'] || req.headers.host || '').toLowerCase();
+  if (host.includes('vercel.app')) {
+    res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+  } else {
+    res.setHeader('X-Robots-Tag', 'index, follow');
+  }
+  next();
+});
+
 function clean(value) {
   return String(value || '').trim().replace(/\s+/g, ' ');
 }

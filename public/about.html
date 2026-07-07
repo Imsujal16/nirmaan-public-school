@@ -6,7 +6,20 @@
   <meta name="description" content="About Nirmaan Public School, Sultanpur — Our mission, history, experienced faculty, and core values. Building bright futures for children from Playgroup to Grade 10 in Uttar Pradesh." />
   <meta name="keywords" content="About Nirmaan Public School, NPS Sultanpur history, school mission values, experienced teachers Sultanpur, school leadership Sultanpur UP, best school Sultanpur" />
   <meta name="author" content="Nirmaan Public School" />
-  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta id="meta-robots" name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <!-- SEO Guard: block Vercel staging from Google indexing -->
+  <script>
+    (function() {
+      var h = window.location.hostname;
+      var tag = document.getElementById('meta-robots');
+      if (!tag) return;
+      if (h.indexOf('vercel.app') !== -1) {
+        tag.setAttribute('content', 'noindex, nofollow');
+      } else {
+        tag.setAttribute('content', 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1');
+      }
+    })();
+  </script>
   <meta name="geo.region" content="IN-UP" />
   <meta name="geo.placename" content="Sultanpur, Uttar Pradesh" />
 

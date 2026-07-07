@@ -6,7 +6,20 @@
   <meta name="description" content="Nirmaan Public School — Best English Medium School in Sultanpur, U.P. Quality education from Playgroup to Grade 10. Admissions Open 2026-27. Smart classrooms, experienced faculty. Call: 991-822-5511." />
   <meta name="keywords" content="Nirmaan Public School, best school Sultanpur, English medium school Sultanpur UP, school admission 2026, playgroup admission Sultanpur, primary school Sultanpur, CBSE school Sultanpur, NPS Sultanpur, Aliganj school" />
   <meta name="author" content="Nirmaan Public School" />
-  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta id="meta-robots" name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <!-- SEO Guard: block Vercel staging from Google indexing -->
+  <script>
+    (function() {
+      var h = window.location.hostname;
+      var tag = document.getElementById('meta-robots');
+      if (!tag) return;
+      if (h.indexOf('vercel.app') !== -1) {
+        tag.setAttribute('content', 'noindex, nofollow');
+      } else {
+        tag.setAttribute('content', 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1');
+      }
+    })();
+  </script>
   <meta name="geo.region" content="IN-UP" />
   <meta name="geo.placename" content="Sultanpur, Uttar Pradesh" />
   <meta name="geo.position" content="26.2636;82.0728" />

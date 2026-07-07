@@ -4,8 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Gallery — Explore the moments that make Nirmaan Public School campus special. Smart classrooms, annual events, student life, sports activities and more at NPS Sultanpur, Uttar Pradesh." />
-  <meta name="robots" content="index, follow, max-image-preview:large" />
-  <link rel="canonical" href="https://www.nirmaanpublicschool.in/gallery.html" />
+  <meta id="meta-robots" name="robots" content="index, follow, max-image-preview:large" />
+  <!-- SEO Guard: block Vercel staging from Google indexing -->
+  <script>
+    (function() {
+      var h = window.location.hostname;
+      var tag = document.getElementById('meta-robots');
+      if (!tag) return;
+      if (h.indexOf('vercel.app') !== -1) {
+        tag.setAttribute('content', 'noindex, nofollow');
+      } else {
+        tag.setAttribute('content', 'index, follow, max-image-preview:large');
+      }
+    })();
+  </script>
+  <link rel="canonical" href="https://www.nirmaanpublicschool.in/gallery" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />

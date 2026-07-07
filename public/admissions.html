@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -6,7 +6,20 @@
   <meta name="description" content="Admissions Open 2026-27 at Nirmaan Public School, Sultanpur, U.P. Apply now for Playgroup to Grade 10. Simple 4-step process, limited seats. Call 991-822-5511 to enroll your child today." />
   <meta name="keywords" content="school admission 2026 Sultanpur, Nirmaan Public School admission, playgroup admission 2026, nursery admission Sultanpur, class 1 admission Sultanpur UP, school enrolment 2026-27, best school admission Sultanpur" />
   <meta name="author" content="Nirmaan Public School" />
-  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta id="meta-robots" name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <!-- SEO Guard: block Vercel staging from Google indexing -->
+  <script>
+    (function() {
+      var h = window.location.hostname;
+      var tag = document.getElementById('meta-robots');
+      if (!tag) return;
+      if (h.indexOf('vercel.app') !== -1) {
+        tag.setAttribute('content', 'noindex, nofollow');
+      } else {
+        tag.setAttribute('content', 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1');
+      }
+    })();
+  </script>
   <meta name="geo.region" content="IN-UP" />
   <meta name="geo.placename" content="Sultanpur, Uttar Pradesh" />
 

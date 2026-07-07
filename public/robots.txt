@@ -1,7 +1,8 @@
-﻿# robots.txt — Nirmaan Public School
-# Updated: June 2026
-# https://www.nirmaanpublicschool.in
+# robots.txt — Nirmaan Public School
+# Updated: July 2026
+# Production: https://www.nirmaanpublicschool.in
 
+# ── Production domain: allow all crawlers ────────────────────────────────────
 User-agent: *
 Allow: /
 
@@ -9,9 +10,18 @@ Allow: /
 Disallow: /api/
 Disallow: /.env
 Disallow: /node_modules/
+Disallow: /index_masonry_backup.html
 
 # Sitemap location
 Sitemap: https://www.nirmaanpublicschool.in/sitemap.xml
 
 # Crawl-delay for polite crawling
 Crawl-delay: 1
+
+# ── NOTE FOR VERCEL STAGING ───────────────────────────────────────────────────
+# The Vercel deployment (nirmaan-public-school.vercel.app) is a staging/preview
+# environment. It is blocked from Google indexing via:
+#   1. X-Robots-Tag: noindex, nofollow HTTP response header (server.js middleware)
+#   2. <meta name="robots" content="noindex, nofollow"> injected via client JS
+# This robots.txt is served by the production domain only and does not apply
+# to the Vercel deployment (which has its own response headers).

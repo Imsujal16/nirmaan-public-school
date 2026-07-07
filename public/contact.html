@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -6,7 +6,20 @@
   <meta name="description" content="Contact Nirmaan Public School — Aliganj Bazar, Sultanpur, Uttar Pradesh 227805. Phone: 991-822-5511. Get directions, send an enquiry, or visit us. Open Monday–Saturday, 7:30 AM to 2:30 PM." />
   <meta name="keywords" content="Nirmaan Public School contact, NPS Sultanpur phone number, school address Sultanpur, Aliganj Bazar school, school enquiry Sultanpur UP, admission enquiry NPS, contact school Sultanpur" />
   <meta name="author" content="Nirmaan Public School" />
-  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta id="meta-robots" name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <!-- SEO Guard: block Vercel staging from Google indexing -->
+  <script>
+    (function() {
+      var h = window.location.hostname;
+      var tag = document.getElementById('meta-robots');
+      if (!tag) return;
+      if (h.indexOf('vercel.app') !== -1) {
+        tag.setAttribute('content', 'noindex, nofollow');
+      } else {
+        tag.setAttribute('content', 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1');
+      }
+    })();
+  </script>
   <meta name="geo.region" content="IN-UP" />
   <meta name="geo.placename" content="Sultanpur, Uttar Pradesh" />
   <meta name="geo.position" content="26.2636;82.0728" />
